@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreatePengajuanDanasTable extends Migration
+class CreateResumeJurnalsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,10 @@ class CreatePengajuanDanasTable extends Migration
      */
     public function up()
     {
-        Schema::create('pengajuan_danas', function (Blueprint $table) {
+        Schema::create('resume_jurnals', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('divisi_id')->nullable();
-            $table->unsignedBigInteger('paket_id')->nullable();
             $table->string('image_name');
             $table->string('image_path');
-            $table->string('excel_name');
-            $table->string('excel_path');
             $table->timestamp('tanggal');
             $table->timestamps();
         });
@@ -33,6 +29,6 @@ class CreatePengajuanDanasTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengajuan_danas');
+        Schema::dropIfExists('resume_jurnals');
     }
 }

@@ -8,4 +8,16 @@ use Illuminate\Database\Eloquent\Model;
 class JurnalHarian extends Model
 {
     use HasFactory;
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
+    protected $fillable = [
+        'image_name', 
+        'image_path', 
+        'excel_name',
+        'excel_path',
+        'tanggal',
+    ];
 }

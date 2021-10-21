@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Management GB</title>
+  <title>Layout &rsaquo; Top Navigation &mdash; Stisla</title>
 
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 
   <!-- CSS Libraries -->
-  @yield('css-library')
+  @yield('css-libraries')
 
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
@@ -18,28 +18,72 @@
 
   @yield('css')
 
+  <style>
+
+    .custom-fa-10x {
+      font-size: 10em;
+    }
+
+    .custom-fa-1x-2 {
+      font-size: 1.2em;
+    }
+    .custom-bg-folder {
+      color: #FFE8A1;
+    }
+    
+    .custom-card-folder {
+      transition: box-shadow 0.2s ease-in-out;
+    }
+    .custom-card-folder:hover {
+      box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+    }
+    .custom-color-inherit {
+      color: inherit;
+    }
+    .custom-border-y {
+      border-top: 1px solid #dee2e6!important;
+      border-bottom: 1px solid #dee2e6!important;
+    }
+    
+    .custom-article-badge {
+        padding-left: 10px;
+        padding-right: 10px;
+        left: 0 !important;
+    }
+    .custom-article-badge>.article-badge-item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .custom-bg-transparent-white {
+        background-color: #ffffffe6;
+        color: #6c757d !important;
+        border: 1px #efefef solid;
+    }
+  </style>
+
   <script src="{{ mix('js/app.js') }}" defer></script>
 </head>
 
-<body class="layout-2">
+<body class="layout-3">
   <div id="app">
-    <div class="main-wrapper">
+    <div class="main-wrapper container">
       <div class="navbar-bg"></div>
 
       @include('layouts.dashboard.navbar')
 
-      @include('layouts.dashboard.sidebar')
+      @include('layouts.dashboard.navbar_menu')
 
       <!-- Main Content -->
       <div class="main-content">
-        {{ $slot }}
+        {{$slot}}
       </div>
       <footer class="main-footer">
         <div class="footer-left">
           PT GANTARI BAWANA &copy; 2021 <div class="bullet"></div>
         </div>
         <div class="footer-right">
-          BETA VERSION
+          v.1.0.0
         </div>
       </footer>
     </div>
@@ -54,8 +98,7 @@
   <script src="{{ asset('assets/js/stisla.js') }}"></script>
 
   <!-- JS Libraies -->
-  {{-- <script src="{{ asset('node_modules/sticky-kit/dist/sticky-kit.min.js')}}></script> --}}
-  <script src="https://cdn.rawgit.com/leafo/sticky-kit/v1.1.2/jquery.sticky-kit.min.js"></script>
+  @stack('script-libraries')
 
   <!-- Page Specific JS File -->
 

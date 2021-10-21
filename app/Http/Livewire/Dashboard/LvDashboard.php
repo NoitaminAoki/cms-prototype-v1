@@ -11,7 +11,7 @@ class LvDashboard extends Component
 {
     public function render()
     {
-        $data['kasbesar'] = KasBesar::sum('jumlah');
+        $data = [];
         return view('livewire.dashboard.lv-dashboard')
         ->with($data)
         ->layout('layouts.dashboard.main');

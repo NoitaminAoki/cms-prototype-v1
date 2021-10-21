@@ -15,9 +15,10 @@ class CreateJurnalHariansTable extends Migration
     {
         Schema::create('jurnal_harians', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('paket_id')->nullable();
-            $table->string('format_code', 25);
-            $table->bigInteger('total_harga');
+            $table->string('image_name');
+            $table->string('image_path');
+            $table->string('excel_name');
+            $table->string('excel_path');
             $table->timestamp('tanggal');
             $table->timestamps();
         });

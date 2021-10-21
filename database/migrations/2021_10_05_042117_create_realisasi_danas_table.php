@@ -15,16 +15,11 @@ class CreateRealisasiDanasTable extends Migration
     {
         Schema::create('realisasi_danas', function (Blueprint $table) {
             $table->id();
-            $table->string('format_code', 25);
-            $table->unsignedBigInteger('kwitansi_id')->nullable();
-            $table->unsignedBigInteger('pengajuan_dana_id')->nullable();
-            $table->unsignedBigInteger('divisi_id')->nullable();
-            $table->string('asal');
-            $table->string('keterangan')->nullable();
-            $table->timestamp('tanggal')->useCurrent();
-            $table->bigInteger('jumlah');
-            $table->string('bukti_transfer_path')->nullable();
-            $table->enum('status', ['process', 'complete']);
+            $table->string('image_name');
+            $table->string('image_path');
+            $table->string('excel_name');
+            $table->string('excel_path');
+            $table->timestamp('tanggal');
             $table->timestamps();
         });
     }

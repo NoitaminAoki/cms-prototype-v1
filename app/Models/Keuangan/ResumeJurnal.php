@@ -4,15 +4,8 @@ namespace App\Models\Keuangan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{
-    Master\MsSubCode,
-    Master\MsSubDivisiItem,
 
-    Keuangan\RealisasiDana,
-    Keuangan\MaterialPengajuanDana,
-};
-
-class PengajuanDana extends Model
+class ResumeJurnal extends Model
 {
     use HasFactory;
     /**
@@ -21,11 +14,8 @@ class PengajuanDana extends Model
      * @var array
      */
     protected $fillable = [
-        'paket_id',
         'image_name', 
         'image_path', 
-        'excel_name',
-        'excel_path',
         'tanggal',
     ];
 }

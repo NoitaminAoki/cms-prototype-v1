@@ -15,11 +15,9 @@ class CreateKasBesarsTable extends Migration
     {
         Schema::create('kas_besars', function (Blueprint $table) {
             $table->id();
-            $table->string('kode_transaksi_bank')->nullable();
-            $table->enum('tipe_transaksi', ['debit', 'kredit']);
-            $table->string('sumber');
-            $table->bigInteger('jumlah');
-            $table->timestamp('tanggal')->useCurrent();
+            $table->string('image_name');
+            $table->string('image_path');
+            $table->timestamp('tanggal');
             $table->timestamps();
         });
     }

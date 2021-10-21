@@ -14,9 +14,8 @@ class KasBesar extends Model
      * @var array
      */
     protected $fillable = [
-        'kode_transaksi_bank', 
-        'tipe_transaksi', 
-        'sumber', 
-        'jumlah', 
+        'image_name', 
+        'image_path',
+        'tanggal',
     ];
 }

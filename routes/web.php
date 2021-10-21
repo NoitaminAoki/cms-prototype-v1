@@ -28,36 +28,28 @@ use App\Http\Livewire\Dashboard\{
     LvDashboard,
 };
 
+use App\Http\Livewire\Pelaksanaan\{
+    LvPelaksanaan,
+    Keuangan\LvKeuangan,
+    Keuangan\LvPengajuanDana,
+    Keuangan\LvJurnalKeuangan,
+    Keuangan\LvJurnalHarian,
+    Keuangan\LvResumeJurnal,
+};
+
 use App\Http\Livewire\Manage\{
     LvRoles as LvRolesAdmin,
     LvUserRoles as LvUserRolesAdmin,
 };
 
-use App\Http\Livewire\Perencanaan\{
-    LvDivisi,
-    LvMaterialDetail,
-    LvListSubItem,
-    
-    LvTemplateRab,
-};
-
 use App\Http\Livewire\Keuangan\{
     LvKasBesar,
-    LvPengajuanDana,
-    LvPengajuanDanaCreate,
     LvRealisasiDana,
-    LvRealisasiDanaCreate,
-    LvKwitansi,
-    LvKwitansiCreate,
-    LvJurnalHarian,
-    LvJurnalHarianCreate,
-    LvJurnalKeuangan,
 };
 
 use App\Http\Livewire\Master\{
     LvMsCode,
     LvMsSubCode,
-    LvMsSatuan,
 };
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -84,37 +76,39 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('/dashboard', LvDashboard::class)->name('dashboard');
     
     /* PERENCANAAN */
-    Route::prefix('perencanaan')->name('perencanaan.')->group(function () {
-        Route::get('/divisi', LvDivisi::class)->name('divisi.index');
-        Route::get('/material-detail', LvMaterialDetail::class)->name('material_detail.index');
-        Route::get('/list-sub-item', LvListSubItem::class)->name('list_sub_item.index');
-        Route::get('/template-rab', LvTemplateRab::class)->name('template_rab.index');
-    });
+    // Route::prefix('perencanaan')->name('perencanaan.')->group(function () {
+    // });
     /* END PERENCANAAN */
+
+    /* PELAKSANAAN */
+    Route::prefix('pelaksanaan')->name('pelaksanaan.')->group(function () {
+        Route::get('/', LvPelaksanaan::class)->name('index');
+        
+        Route::prefix('keuangan')->name('keuangan.')->group(function () {
+            Route::get('/', LvKeuangan::class)->name('index');
+            Route::middleware(['permission:pengajuan-dana view'])->group(function () {
+                Route::get('/pengajuan-dana', LvPengajuanDana::class)->name('pengajuan_dana.index');
+            });
+            Route::middleware(['permission:jurnal-keuangan view'])->group(function () {
+                Route::get('/jurnal-keuangan', LvJurnalKeuangan::class)->name('jurnal_keuangan.index');
+            });
+            Route::middleware(['permission:jurnal-harian view'])->group(function () {
+                Route::get('/jurnal-harian', LvJurnalHarian::class)->name('jurnal_harian.index');
+            });
+            Route::middleware(['permission:jurnal-harian view'])->group(function () {
+                Route::get('/resume-jurnal', LvResumeJurnal::class)->name('resume_jurnal.index');
+            });
+        });
+    });
+    /* END PELAKSANAAN */
     
     /* KEUANGAN */
     Route::prefix('keuangan')->name('keuangan.')->group(function () {
         Route::middleware(['permission:kas-besar view'])->group(function () {
             Route::get('/kas-besar', LvKasBesar::class)->name('kas_besar.index');
         });
-        Route::middleware(['permission:pengajuan-dana view'])->group(function () {
-            Route::get('/pengajuan-dana', LvPengajuanDana::class)->name('pengajuan_dana.index');
-            Route::get('/pengajuan-dana/create', LvPengajuanDanaCreate::class)->middleware('permission:pengajuan-dana add')->name('pengajuan_dana.create');
-        });
         Route::middleware(['permission:realisasi-dana view'])->group(function () {
             Route::get('/realisasi-dana', LvRealisasiDana::class)->name('realisasi_dana.index');
-            Route::get('/realisasi-dana/{pengajuan_dana_id}/create', LvRealisasiDanaCreate::class)->middleware('permission:realisasi-dana add')->name('realisasi_dana.create');
-        });
-        Route::middleware(['permission:kwitansi view'])->group(function () {
-            Route::get('/kwitansi', LvKwitansi::class)->name('kwitansi.index');
-            Route::get('/kwitansi/create', LvKwitansiCreate::class)->middleware('permission:kwitansi add')->name('kwitansi.create');
-        });
-        Route::middleware(['permission:jurnal-harian view'])->group(function () {
-            Route::get('/jurnal-harian', LvJurnalHarian::class)->name('jurnal_harian.index');
-            // Route::get('/jurnal-harian/create', LvJurnalHarianCreate::class)->middleware('permission:jurnal-harian add')->name('jurnal_harian.create');
-        });
-        Route::middleware(['permission:jurnal-keuangan view'])->group(function () {
-            Route::get('/jurnal-keuangan', LvJurnalKeuangan::class)->name('jurnal_keuangan.index');
         });
     });
     /* END KEUANGAN */
@@ -123,17 +117,13 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::prefix('master')->name('master.')->group(function () {
         Route::get('/code', LvMsCode::class)->name('code.index');
         Route::get('/code/{parent_code_id}/sub-codes', LvMsSubCode::class)->name('code.sub_code');
-        
-        Route::get('/satuan', LvMsSatuan::class)->name('satuan.index');
     });
     /* END MASTER */
     
-    /* TEMPLATE EXCEL */
-    Route::get('templates/excel/jurnal-harian', [FileStorageController::class, 'exportExcel']);
-    /* END TEMPLATE EXCEL */
-    
     /* FILE STORAGE */
-    Route::get('files/keuangan/realisasi-dana/{id}/img', [FileStorageController::class, 'fileRealisasiDana'])->name('file.keuangan.realisasi_dana');
+    Route::get('images/keuangan/pengajuan-dana/{id}/img', [FileStorageController::class, 'imagePengajuanDana'])->name('image.keuangan.pengajuan_dana');
+    Route::get('images/keuangan/jurnal-harian/{id}/img', [FileStorageController::class, 'imageJurnalHarian'])->name('image.keuangan.jurnal_harian');
+    Route::get('images/keuangan/resume-jurnal/{id}/img', [FileStorageController::class, 'imageResumeJurnal'])->name('image.keuangan.resume_jurnal');
     /* END FILE STORAGE */
 });
 
