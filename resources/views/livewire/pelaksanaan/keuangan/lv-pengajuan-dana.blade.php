@@ -12,7 +12,7 @@
         <div class="section-header">
             <h1>Pengajuan Anggaran Proyek</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.index') }}">Pelaksanaan</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.keuangan.index') }}">Divisi Keuangan</a></div>
             </div>
@@ -79,13 +79,6 @@
                             <input wire:model="input_tanggal" type="text" class="form-control form-date" name="input_date" id="input_date" />
                         </div>
                         <div class="form-group">
-                            <label>File Excel</label>
-                            <input type="file" wire:model="file_excel" class="form-control" id="upload_excel_{{$iteration}}" required>
-                        </div>
-                        @error('file_excel')
-                        <span class="text-danger">{{$message}}</span>
-                        @enderror
-                        <div class="form-group">
                             <label>Image</label>
                             <input type="file" wire:model="file_image" accept="image/*" class="form-control" id="upload_image_{{$iteration}}" required>
                         </div>
@@ -119,21 +112,46 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                    <div class="modal-body">
-                        <div class="w-100">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6 col-12">
+                            <div class="common-section-title">Code</div>
+                            <p>{{$selected_pengajuan['paket']['code'] ?? 'N/A'}} - {{$selected_pengajuan['paket']['nama'] ?? 'N/A'}}</p>
+                        </div>
+                        <div class="col-md-6 col-12">
+                            <div class="common-section-title">Image Name</div>
+                            <p>{{$selected_pengajuan['image_name'] ?? '-'}}</p>
+                        </div>
+                        <div class="col-md-6 col-12 mb-4">
+                            <div class="common-section-title">Date</div>
                             @if ($selected_pengajuan)
-                            <img id="img_id_{{$selected_pengajuan['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                            <p>{{date('d F Y', strtotime($selected_pengajuan['tanggal']))}}</p>
+                            @else
+                            <p>-</p>
                             @endif
                         </div>
                     </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button wire:click="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary">Download</button>
+                    <div class="w-100">
+                        @if ($selected_pengajuan)
+                        <img id="img_id_{{$selected_pengajuan['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                        @endif
                     </div>
-                </form>
-            </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <div class="mr-auto">
+                        @if ($selected_pengajuan)
+                        @can($page_permission['delete'])
+                        <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_pengajuan['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
+                        @endcan
+                        <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
+                        @endif
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -152,7 +170,44 @@
             autoApply: true,
         });
     })
-    
+    $(document).on('click', '.btn-delete', function() {
+        var id = $(this).attr('data-id');
+        var target = $(this).attr('data-target');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                var data = await @this.delete(id)
+                return data
+            },
+            allowOutsideClick: () => !Swal.fire.isLoading()
+        }).then(async (result) => {
+            if (result.value && result.value.status_code == 200) {
+                $('.modal').modal('hide');
+                
+                setTimeout(function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: result.value.message,
+                    });
+                }, 600);
+            }
+            else if (result.value && result.value.status_code == 403) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed!',
+                    text: result.value.message,
+                });
+            }
+        })
+    })
     $('#select_paket').on('change', function() {
         value = $(this).val();
         Livewire.emit('evSetPaket', value);

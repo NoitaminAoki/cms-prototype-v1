@@ -9,7 +9,7 @@
     <div class="section-header">
       <h1>Pelaksanaan</h1>
       <div class="section-header-breadcrumb">
-        <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+        <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
         <div class="breadcrumb-item">Pelaksanaan</div>
       </div>
     </div>
@@ -59,7 +59,7 @@
           </a>
         </div>
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-          <a class="text-decoration-none custom-color-inherit" href="#">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.index') }}">
             <div class="card custom-card-folder">
               <div class="card-body">
                 <div class="text-center">

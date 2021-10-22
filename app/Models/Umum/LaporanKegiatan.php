@@ -1,14 +1,11 @@
 <?php
 
-namespace App\Models\Keuangan;
+namespace App\Models\Umum;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\{
-    Master\MsSubCode,
-};
 
-class PengajuanDana extends Model
+class LaporanKegiatan extends Model
 {
     use HasFactory;
     /**
@@ -17,14 +14,8 @@ class PengajuanDana extends Model
      * @var array
      */
     protected $fillable = [
-        'paket_id',
         'image_name', 
         'image_path', 
         'tanggal',
     ];
-
-    public function paket()
-    {
-        return $this->belongsTo(MsSubCode::class, 'paket_id');
-    }
 }

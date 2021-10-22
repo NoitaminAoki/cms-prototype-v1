@@ -14,7 +14,7 @@
         <div class="section-header">
             <h1>Divisi Keuangan</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.index') }}">Pelaksanaan</a></div>
                 <div class="breadcrumb-item">Divisi Keuangan</div>
             </div>
@@ -48,6 +48,7 @@
                                         </td>
                                     </tr>
                                     @endcan
+                                    @can('realisasi-dana add')
                                     <tr class="border-bottom">
                                         <td>
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.realisasi_dana.index') }}">
@@ -58,6 +59,7 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    @endcan
                                     @can('jurnal-harian add')
                                     <tr class="border-bottom">
                                         <td>
@@ -70,6 +72,7 @@
                                         </td>
                                     </tr>
                                     @endcan
+                                    @can('progress-keuangan add')
                                     <tr class="border-bottom">
                                         <td>
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.progress_keuangan.index') }}">
@@ -80,6 +83,7 @@
                                             </a>
                                         </td>
                                     </tr>
+                                    @endcan
                                 </tbody>
                             </table>
                         </div>
