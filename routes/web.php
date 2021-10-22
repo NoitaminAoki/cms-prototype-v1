@@ -30,6 +30,7 @@ use App\Http\Livewire\Dashboard\{
 
 use App\Http\Livewire\Pelaksanaan\{
     LvPelaksanaan,
+
     Keuangan\LvKeuangan,
     Keuangan\LvPengajuanDana,
     Keuangan\LvJurnalKeuangan,
@@ -37,11 +38,13 @@ use App\Http\Livewire\Pelaksanaan\{
     Keuangan\LvResumeJurnal,
     Keuangan\LvRealisasiDana,
     Keuangan\LvProgressKeuangan,
-};
 
-use App\Http\Livewire\Manage\{
-    LvRoles as LvRolesAdmin,
-    LvUserRoles as LvUserRolesAdmin,
+    Umum\LvUmum,
+    Umum\LvAsetPerusahaan,
+    Umum\LvInventoriPerusahaan,
+    Umum\LvLaporanKegiatan,
+    Umum\LvLegalitasPerusahaan,
+    Umum\LvSdmPerusahaan,
 };
 
 use App\Http\Livewire\Keuangan\{
@@ -49,6 +52,9 @@ use App\Http\Livewire\Keuangan\{
 };
 
 use App\Http\Livewire\Master\{
+    LvMasterAdmin,
+    LvUserRoles as LvUserRolesAdmin,
+    LvRoles as LvRolesAdmin,
     LvMsCode,
     LvMsSubCode,
 };
@@ -90,10 +96,8 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
             Route::middleware(['permission:pengajuan-dana view'])->group(function () {
                 Route::get('/pengajuan-dana', LvPengajuanDana::class)->name('pengajuan_dana.index');
             });
-            Route::middleware(['permission:jurnal-keuangan view'])->group(function () {
-                Route::get('/jurnal-keuangan', LvJurnalKeuangan::class)->name('jurnal_keuangan.index');
-            });
             Route::middleware(['permission:jurnal-harian view'])->group(function () {
+                Route::get('/jurnal-keuangan', LvJurnalKeuangan::class)->name('jurnal_keuangan.index');
                 Route::get('/jurnal-harian', LvJurnalHarian::class)->name('jurnal_harian.index');
             });
             Route::middleware(['permission:jurnal-harian view'])->group(function () {
@@ -104,6 +108,24 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
             });
             Route::middleware(['permission:progress-keuangan view'])->group(function () {
                 Route::get('/progress-keuangan', LvProgressKeuangan::class)->name('progress_keuangan.index');
+            });
+        });
+        Route::prefix('umum')->name('umum.')->group(function () {
+            Route::get('/', LvUmum::class)->name('index');
+            Route::middleware(['permission:aset-perusahaan view'])->group(function () {
+                Route::get('/aset-perusahaan', LvAsetPerusahaan::class)->name('aset_perusahaan.index');
+            });
+            Route::middleware(['permission:inventori-perusahaan view'])->group(function () {
+                Route::get('/inventori-perusahaan', LvInventoriPerusahaan::class)->name('inventori_perusahaan.index');
+            });
+            Route::middleware(['permission:laporan-kegiatan view'])->group(function () {
+                Route::get('/laporan-kegiatan', LvLaporanKegiatan::class)->name('laporan_kegiatan.index');
+            });
+            Route::middleware(['permission:legalitas-perusahaan view'])->group(function () {
+                Route::get('/legalitas-perusahaan', LvLegalitasPerusahaan::class)->name('legalitas_perusahaan.index');
+            });
+            Route::middleware(['permission:sdm-perusahaan view'])->group(function () {
+                Route::get('/sdm-perusahaan', LvSdmPerusahaan::class)->name('sdm_perusahaan.index');
             });
         });
     });
@@ -119,6 +141,9 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     
     /* MASTER */
     Route::prefix('master')->name('master.')->group(function () {
+        Route::get('/', LvMasterAdmin::class)->name('index');
+        Route::get('/user-roles', LvUserRolesAdmin::class)->name('user_roles.index');
+        Route::get('/roles', LvRolesAdmin::class)->name('roles.index');
         Route::get('/code', LvMsCode::class)->name('code.index');
         Route::get('/code/{parent_code_id}/sub-codes', LvMsSubCode::class)->name('code.sub_code');
     });
@@ -130,6 +155,12 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('images/keuangan/resume-jurnal/{id}/img', [FileStorageController::class, 'imageResumeJurnal'])->name('image.keuangan.resume_jurnal');
     Route::get('images/keuangan/realisasi-dana/{id}/img', [FileStorageController::class, 'imageRealisasiDana'])->name('image.keuangan.realisasi_dana');
     Route::get('images/keuangan/progress-keuangan/{id}/img', [FileStorageController::class, 'imageProgressKeuangan'])->name('image.keuangan.progress_keuangan');
+    
+    Route::get('images/umum/aset-perusahaan/{id}/img', [FileStorageController::class, 'imageAsetPerusahaan'])->name('image.umum.aset_perusahaan');
+    Route::get('images/umum/inventori-perusahaan/{id}/img', [FileStorageController::class, 'imageInventoriPerusahaan'])->name('image.umum.inventori_perusahaan');
+    Route::get('images/umum/laporan-kegiatan/{id}/img', [FileStorageController::class, 'imageLaporanKegiatan'])->name('image.umum.laporan_kegiatan');
+    Route::get('images/umum/legalitas-perusahaan/{id}/img', [FileStorageController::class, 'imageLegalitasPerusahaan'])->name('image.umum.legalitas_perusahaan');
+    Route::get('images/umum/sdm-perusahaan/{id}/img', [FileStorageController::class, 'imageSdmPerusahaan'])->name('image.umum.sdm_perusahaan');
     /* END FILE STORAGE */
 });
 
@@ -145,9 +176,7 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->
     
     /* MANAGE (ADMIN) */
     Route::prefix('manage')->name('manage.')->group(function () {
-        Route::get('/roles', LvRolesAdmin::class)->name('roles.index');
         
-        Route::get('/user-roles', LvUserRolesAdmin::class)->name('user_roles.index');
     });
     /* END MANAGE (ADMIN) */
     

@@ -12,11 +12,11 @@
 <div>
     <section class="section">
         <div class="section-header">
-            <h1>Divisi Keuangan</h1>
+            <h1>Divisi Umum</h1>
             <div class="section-header-breadcrumb">
-                <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
+                <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.index') }}">Pelaksanaan</a></div>
-                <div class="breadcrumb-item">Divisi Keuangan</div>
+                <div class="breadcrumb-item">Divisi Umum</div>
             </div>
         </div>
         
@@ -36,10 +36,9 @@
                         <div class="table-responsive">
                             <table class="table custom-table-folder mb-0">
                                 <tbody>
-                                    @can('pengajuan-dana add')
                                     <tr class="border-bottom">
                                         <td>
-                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.pengajuan_dana.index') }}">
+                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.legalitas_perusahaan.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
                                                     A. Legalitas Perusahaan Dan Perijinan Proyek
@@ -47,35 +46,42 @@
                                             </a>
                                         </td>
                                     </tr>
-                                    @endcan
                                     <tr class="border-bottom">
                                         <td>
-                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.realisasi_dana.index') }}">
+                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.laporan_kegiatan.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    B. Realisasi Dana Masuk
+                                                    B. Laporan Kegiatan Perijinan Proyek
                                                 </h6>
                                             </a>
                                         </td>
                                     </tr>
-                                    @can('jurnal-harian add')
                                     <tr class="border-bottom">
                                         <td>
-                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.jurnal_keuangan.index') }}">
+                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.aset_perusahaan.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    C. Jurnal Keuangan Proyek
+                                                    C. Daftar Aset Perusahaan
                                                 </h6>
                                             </a>
                                         </td>
                                     </tr>
-                                    @endcan
                                     <tr class="border-bottom">
                                         <td>
-                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.progress_keuangan.index') }}">
+                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.inventori_perusahaan.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    D. Posisi Keuangan dan Progres Pekerjaan Lapangan
+                                                    D. Daftar Invetori Perusahaan
+                                                </h6>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr class="border-bottom">
+                                        <td>
+                                            <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.sdm_perusahaan.index') }}">
+                                                <h6 class="text-uppercase mb-0">
+                                                    <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
+                                                    D. SDM Perusahaan
                                                 </h6>
                                             </a>
                                         </td>

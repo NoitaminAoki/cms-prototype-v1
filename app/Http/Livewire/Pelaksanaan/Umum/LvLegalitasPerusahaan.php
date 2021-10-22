@@ -1,17 +1,15 @@
 <?php
 
-namespace App\Http\Livewire\Pelaksanaan\Keuangan;
+namespace App\Http\Livewire\Pelaksanaan\Umum;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Illuminate\Support\Facades\Storage;
 use App\Models\{
-    Keuangan\PengajuanDana,
-
-    Master\MsSubCode,
+    Umum\LegalitasPerusahaan,
 };
 
-class LvPengajuanDana extends Component
+class LvLegalitasPerusahaan extends Component
 {
     use WithFileUploads;
 
@@ -20,47 +18,43 @@ class LvPengajuanDana extends Component
         'evSetInputTanggal' => 'setInputTanggal',
     ];
 
-    public $page_permission = [
-        'add' => 'pengajuan-dana add',
-        'delete' => 'pengajuan-dana delete',
+    public $page_attribute = [
+        'title' => 'Legalitas Perusahaan',
     ];
+    public $page_permission = [
+        'add' => 'legalitas-perusahaan add',
+        'delete' => 'legalitas-perusahaan delete',
+    ];
+
+    public $route_image_item = "image.umum.legalitas_perusahaan";
 
     public $paket_id;
     public $file_image;
     public $input_tanggal;
     public $iteration;
 
-    public $selected_pengajuan;
+    public $selected_item;
     public $selected_url;
     
     public function render()
     {
-        $data['pakets'] = MsSubCode::all();
-
-        $data['pengajuan_danas'] = PengajuanDana::all();
-        return view('livewire.pelaksanaan.keuangan.lv-pengajuan-dana')
+        $data['items'] = LegalitasPerusahaan::all();
+        return view('livewire.pelaksanaan.umum.lv-legalitas-perusahaan')
         ->with($data)
         ->layout('layouts.dashboard.main');
     }
 
-    public function setPaket($value)
-    {
-        $this->paket_id = $value;
-    }
-
-    public function addPengajuanDana()
+    public function addItem()
     {
         $this->validate([
-            'paket_id' => 'required|integer',
             'file_image' => 'required|image',
             'input_tanggal' => 'required|string',
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
-        $image_name = 'image_pengajuan_dana_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/keuangan/pengajuan_dana/', $this->file_image, $image_name);
+        $image_name = 'image_legalitas_perusahaan_'.Date('YmdHis').'.'.$this->file_image->extension();
+        $image_path = Storage::putFileAs('images/umum/legalitas_perusahaan/', $this->file_image, $image_name);
 
-        $insert = PengajuanDana::create([
-            'paket_id' => $this->paket_id,
+        $insert = LegalitasPerusahaan::create([
             'image_name' => $this->file_image->getClientOriginalName(),
             'image_path' => $image_path,
             'tanggal' => $date_now,
@@ -78,21 +72,21 @@ class LvPengajuanDana extends Component
 
     public function resetInput()
     {
-        $this->reset('paket_id', 'file_image', 'selected_pengajuan');
+        $this->reset('file_image', 'selected_item');
         $input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
-    public function setPengajuanDana($id)
+    public function setItem($id)
     {
-        $pengajuan = PengajuanDana::findOrFail($id);
-        $this->selected_pengajuan = $pengajuan;
-        $this->selected_url = route('image.keuangan.pengajuan_dana', ['id' => $pengajuan->id]);
+        $resume = LegalitasPerusahaan::findOrFail($id);
+        $this->selected_item = $resume;
+        $this->selected_url = route('image.umum.legalitas_perusahaan', ['id' => $resume->id]);
     }
 
     public function downloadImage()
     {
-        $file = PengajuanDana::findOrFail($this->selected_pengajuan['id']);
+        $file = LegalitasPerusahaan::findOrFail($this->selected_item['id']);
         $path = storage_path('app/'.$file->image_path);
         
         return response()->download($path, $file->image_name);
@@ -100,7 +94,7 @@ class LvPengajuanDana extends Component
 
     public function delete($id)
     {
-        $item = PengajuanDana::findOrFail($id);
+        $item = LegalitasPerusahaan::findOrFail($id);
         Storage::delete($item->image_path);
         $item->delete();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
