@@ -35,6 +35,8 @@ use App\Http\Livewire\Pelaksanaan\{
     Keuangan\LvJurnalKeuangan,
     Keuangan\LvJurnalHarian,
     Keuangan\LvResumeJurnal,
+    Keuangan\LvRealisasiDana,
+    Keuangan\LvProgressKeuangan,
 };
 
 use App\Http\Livewire\Manage\{
@@ -44,7 +46,6 @@ use App\Http\Livewire\Manage\{
 
 use App\Http\Livewire\Keuangan\{
     LvKasBesar,
-    LvRealisasiDana,
 };
 
 use App\Http\Livewire\Master\{
@@ -98,6 +99,12 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
             Route::middleware(['permission:jurnal-harian view'])->group(function () {
                 Route::get('/resume-jurnal', LvResumeJurnal::class)->name('resume_jurnal.index');
             });
+            Route::middleware(['permission:realisasi-dana view'])->group(function () {
+                Route::get('/realisasi-dana', LvRealisasiDana::class)->name('realisasi_dana.index');
+            });
+            Route::middleware(['permission:progress-keuangan view'])->group(function () {
+                Route::get('/progress-keuangan', LvProgressKeuangan::class)->name('progress_keuangan.index');
+            });
         });
     });
     /* END PELAKSANAAN */
@@ -106,9 +113,6 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::prefix('keuangan')->name('keuangan.')->group(function () {
         Route::middleware(['permission:kas-besar view'])->group(function () {
             Route::get('/kas-besar', LvKasBesar::class)->name('kas_besar.index');
-        });
-        Route::middleware(['permission:realisasi-dana view'])->group(function () {
-            Route::get('/realisasi-dana', LvRealisasiDana::class)->name('realisasi_dana.index');
         });
     });
     /* END KEUANGAN */
@@ -124,6 +128,8 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('images/keuangan/pengajuan-dana/{id}/img', [FileStorageController::class, 'imagePengajuanDana'])->name('image.keuangan.pengajuan_dana');
     Route::get('images/keuangan/jurnal-harian/{id}/img', [FileStorageController::class, 'imageJurnalHarian'])->name('image.keuangan.jurnal_harian');
     Route::get('images/keuangan/resume-jurnal/{id}/img', [FileStorageController::class, 'imageResumeJurnal'])->name('image.keuangan.resume_jurnal');
+    Route::get('images/keuangan/realisasi-dana/{id}/img', [FileStorageController::class, 'imageRealisasiDana'])->name('image.keuangan.realisasi_dana');
+    Route::get('images/keuangan/progress-keuangan/{id}/img', [FileStorageController::class, 'imageProgressKeuangan'])->name('image.keuangan.progress_keuangan');
     /* END FILE STORAGE */
 });
 

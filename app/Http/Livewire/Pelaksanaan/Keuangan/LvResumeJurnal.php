@@ -69,9 +69,9 @@ class LvResumeJurnal extends Component
 
     public function setResumeJurnal($id)
     {
-        $pengajuan = ResumeJurnal::findOrFail($id);
-        $this->selected_resume_jurnal = $pengajuan;
-        $this->selected_url = route('image.keuangan.resume_jurnal', ['id' => $pengajuan->id]);
+        $resume = ResumeJurnal::findOrFail($id);
+        $this->selected_resume_jurnal = $resume;
+        $this->selected_url = route('image.keuangan.resume_jurnal', ['id' => $resume->id]);
     }
 
     public function downloadImage()
@@ -80,5 +80,13 @@ class LvResumeJurnal extends Component
         $path = storage_path('app/'.$file->image_path);
         
         return response()->download($path, $file->image_name);
+    }
+
+    public function delete($id)
+    {
+        $resume_jurnal = ResumeJurnal::findOrFail($id);
+        Storage::delete($resume_jurnal->image_path);
+        $resume_jurnal->delete();
+        return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }
 }

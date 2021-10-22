@@ -108,14 +108,31 @@
                 </div>
                     <div class="modal-body">
                         <div class="w-100">
+                            <div class="common-section-title">Image Name</div>
+                            <p>{{$selected_resume_jurnal['image_name'] ?? '-'}}</p>
+                        </div>
+                        <div class="w-100 mb-4">
+                            <div class="common-section-title">Date</div>
+                            @if ($selected_resume_jurnal)
+                            <p>{{date('d F Y', strtotime($selected_resume_jurnal['tanggal']))}}</p>
+                            @else
+                            <p>-</p>
+                            @endif
+                        </div>
+                        <div class="w-100">
                             @if ($selected_resume_jurnal)
                             <img id="img_id_{{$selected_resume_jurnal['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
                             @endif
                         </div>
                     </div>
                     <div class="modal-footer bg-whitesmoke br">
+                        <div class="mr-auto">
+                            @if ($selected_resume_jurnal)
+                            <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_resume_jurnal['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
+                            <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
+                            @endif
+                        </div>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button wire:click="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary">Download</button>
                     </div>
                 </form>
             </div>
@@ -137,6 +154,45 @@
     
     $('.form-date').on('change', function(event) {
         Livewire.emit('evSetInputTanggal', event.target.value);
+    })
+
+    $(document).on('click', '.btn-delete', function() {
+        var id = $(this).attr('data-id');
+        var target = $(this).attr('data-target');
+        Swal.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, delete it!',
+            showLoaderOnConfirm: true,
+            preConfirm: async () => {
+                var data = await @this.delete(id)
+                return data
+            },
+            allowOutsideClick: () => !Swal.fire.isLoading()
+        }).then(async (result) => {
+            if (result.value && result.value.status_code == 200) {
+                $('.modal').modal('hide');
+                
+                setTimeout(function() {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Success!',
+                        text: result.value.message,
+                    });
+                }, 600);
+            }
+            else if (result.value && result.value.status_code == 403) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Failed!',
+                    text: result.value.message,
+                });
+            }
+        })
     })
     
     document.addEventListener('notification:success', function (event) {

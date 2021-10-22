@@ -9,32 +9,31 @@
 <div>
     <section class="section">
         <div class="section-header">
-            <h1>Jurnal Harian</h1>
+            <h1>{{$page_attribute['title']}}</h1>
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="#">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.index') }}">Pelaksanaan</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.keuangan.index') }}">Divisi Keuangan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.keuangan.jurnal_keuangan.index') }}">Jurnal Keuangan</a></div>
             </div>
         </div>
         
         <div class="section-body">
             <div class="row">
-                @can('jurnal-harian add')
+                @can($page_permission['add'])
                 <div class="col-12 mb-4">
-                    <button data-toggle="modal" data-target="#modalAddJurnalHarian" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add</button>
+                    <button data-toggle="modal" data-target="#modalAddItem" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add</button>
                 </div>
                 @endcan
-                @forelse ($jurnal_harians as $jurnal_harian)
+                @forelse ($items as $item)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setJurnalHarian({{$jurnal_harian->id}})" data-toggle="modal" data-target="#modalViewJurnalHarian">
+                    <a href="#" wire:click="setItem({{$item->id}})" data-toggle="modal" data-target="#modalViewItem">
                         <div class="card shadow-sm custom-card-folder">
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
-                                    <div class="article-image" style="background-image: url({{ route('image.keuangan.jurnal_harian', ['id'=>$jurnal_harian->id]) }});">
+                                    <div class="article-image" style="background-image: url({{ route($route_image_item, ['id'=>$item->id]) }});">
                                     </div>
                                     <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$jurnal_harian->image_name}}</div>
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->image_name}}</div>
                                     </div>
                                 </div>
                             </article>
@@ -54,16 +53,16 @@
         </div>
     </section>
     
-    <div wire:ignore.self class="modal fade" role="dialog" id="modalAddJurnalHarian">
+    <div wire:ignore.self class="modal fade" role="dialog" id="modalAddItem">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Jurnal Harian</h5>
+                    <h5 class="modal-title">{{$page_attribute['title']}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <form wire:submit.prevent="addJurnalHarian" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
+                <form wire:submit.prevent="addItem" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                     <div class="modal-body">
                         <div class="form-group mb-3">
                             <label for="input_date">Tanggal</label>
@@ -97,47 +96,49 @@
             </div>
         </div>
     </div>
-    <div wire:ignore.self class="modal fade" role="dialog" id="modalViewJurnalHarian">
+    <div wire:ignore.self class="modal fade" role="dialog" id="modalViewItem">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Jurnal Harian</h5>
+                    <h5 class="modal-title">{{$page_attribute['title']}}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body">
-                    <div class="w-100">
-                        <div class="common-section-title">Image Name</div>
-                        <p>{{$selected_jurnal_harian['image_name'] ?? '-'}}</p>
+                    <div class="modal-body">
+                        <div class="w-100">
+                            <div class="common-section-title">Image Name</div>
+                            <p>{{$selected_item['image_name'] ?? '-'}}</p>
+                        </div>
+                        <div class="w-100 mb-4">
+                            <div class="common-section-title">Date</div>
+                            @if ($selected_item)
+                            <p>{{date('d F Y', strtotime($selected_item['tanggal']))}}</p>
+                            @else
+                            <p>-</p>
+                            @endif
+                        </div>
+                        <div class="w-100">
+                            @if ($selected_item)
+                            <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                            @endif
+                        </div>
                     </div>
-                    <div class="w-100 mb-4">
-                        <div class="common-section-title">Date</div>
-                        @if ($selected_jurnal_harian)
-                        <p>{{date('d F Y', strtotime($selected_jurnal_harian['tanggal']))}}</p>
-                        @else
-                        <p>-</p>
-                        @endif
+                    <div class="modal-footer bg-whitesmoke br">
+                        <div class="mr-auto">
+                            @if ($selected_item)
+                            @can($page_permission['delete'])
+                            <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_item['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
+                            @endcan
+                            <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
+                            @endif
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </div>
-                    <div class="w-100">
-                        @if ($selected_jurnal_harian)
-                        <img id="img_id_{{$selected_jurnal_harian['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
-                        @endif
-                    </div>
-                </div>
-                <div class="modal-footer bg-whitesmoke br">
-                    <div class="mr-auto">
-                        @if ($selected_jurnal_harian)
-                        <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_jurnal_harian['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
-                        <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
-                        @endif
-                    </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </div>
-            </form>
+                </form>
+            </div>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -152,6 +153,10 @@
         });
     })
     
+    $('.form-date').on('change', function(event) {
+        Livewire.emit('evSetInputTanggal', event.target.value);
+    })
+
     $(document).on('click', '.btn-delete', function() {
         var id = $(this).attr('data-id');
         var target = $(this).attr('data-target');
@@ -172,7 +177,7 @@
         }).then(async (result) => {
             if (result.value && result.value.status_code == 200) {
                 $('.modal').modal('hide');
-
+                
                 setTimeout(function() {
                     Swal.fire({
                         icon: 'success',
@@ -189,10 +194,6 @@
                 });
             }
         })
-    })
-    
-    $('.form-date').on('change', function(event) {
-        Livewire.emit('evSetInputTanggal', event.target.value);
     })
     
     document.addEventListener('notification:success', function (event) {

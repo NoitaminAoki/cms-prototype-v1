@@ -16,8 +16,6 @@ class JurnalKeuangan extends Model
     protected $fillable = [
         'image_name', 
         'image_path', 
-        'excel_name',
-        'excel_path',
         'tanggal',
     ];
 }

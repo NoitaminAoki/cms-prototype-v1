@@ -47,6 +47,10 @@ class RoleAndPermissionSeeder extends Seeder
             'jurnal-harian update',
             'jurnal-harian delete',
             'jurnal-keuangan view', 
+            'progress-keuangan view', 
+            'progress-keuangan add', 
+            'progress-keuangan update', 
+            'progress-keuangan delete', 
         ];
 
         $permissions = collect($arrayOfPermissionNames)->map(function ($permission) {

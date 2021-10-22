@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateJurnalKeuangansTable extends Migration
+class CreateProgressKeuangansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateJurnalKeuangansTable extends Migration
      */
     public function up()
     {
-        Schema::create('jurnal_keuangans', function (Blueprint $table) {
+        Schema::create('progress_keuangans', function (Blueprint $table) {
             $table->id();
             $table->string('image_name');
             $table->string('image_path');
@@ -29,6 +29,6 @@ class CreateJurnalKeuangansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jurnal_keuangans');
+        Schema::dropIfExists('progress_keuangans');
     }
 }

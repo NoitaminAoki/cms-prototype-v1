@@ -19,8 +19,6 @@ class CreatePengajuanDanasTable extends Migration
             $table->unsignedBigInteger('paket_id')->nullable();
             $table->string('image_name');
             $table->string('image_path');
-            $table->string('excel_name');
-            $table->string('excel_path');
             $table->timestamp('tanggal');
             $table->timestamps();
         });

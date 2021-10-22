@@ -21,7 +21,6 @@ class LvPengajuanDana extends Component
     ];
 
     public $paket_id;
-    public $file_excel;
     public $file_image;
     public $input_tanggal;
     public $iteration;
@@ -49,22 +48,16 @@ class LvPengajuanDana extends Component
         $this->validate([
             'paket_id' => 'required|integer',
             'file_image' => 'required|image',
-            'file_excel' => 'required',
             'input_tanggal' => 'required|string',
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_pengajuan_dana_'.Date('YmdHis').'.'.$this->file_image->extension();
         $image_path = Storage::putFileAs('images/keuangan/pengajuan_dana/', $this->file_image, $image_name);
 
-        $excel_name = 'excel_pengajuan_dana_'.Date('YmdHis').'.'.$this->file_excel->extension();
-        $excel_path = Storage::putFileAs('files/keuangan/pengajuan_dana/', $this->file_excel, $excel_name);
-
         $insert = PengajuanDana::create([
             'paket_id' => $this->paket_id,
             'image_name' => $this->file_image->getClientOriginalName(),
             'image_path' => $image_path,
-            'excel_name' => $this->file_excel->getClientOriginalName(),
-            'excel_path' => $excel_path,
             'tanggal' => $date_now,
         ]);
 
@@ -80,7 +73,7 @@ class LvPengajuanDana extends Component
 
     public function resetInput()
     {
-        $this->reset('paket_id', 'file_image', 'file_excel', 'selected_pengajuan');
+        $this->reset('paket_id', 'file_image', 'selected_pengajuan');
         $input_tanggal = date('m/d/Y');
         $this->iteration++;
     }

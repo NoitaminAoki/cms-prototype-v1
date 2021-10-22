@@ -60,6 +60,14 @@
         color: #6c757d !important;
         border: 1px #efefef solid;
     }
+    
+    .common-section-title {
+        margin-bottom: 5px;
+        font-size: 16px;
+        color: #191d21;
+        font-weight: 600;
+        position: relative;
+    }
   </style>
 
   <script src="{{ mix('js/app.js') }}" defer></script>

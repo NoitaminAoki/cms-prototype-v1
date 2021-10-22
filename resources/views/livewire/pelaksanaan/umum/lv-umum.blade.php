@@ -42,7 +42,7 @@
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.pengajuan_dana.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    A. Pengajuan Anggaran Proyek
+                                                    A. Legalitas Perusahaan Dan Perijinan Proyek
                                                 </h6>
                                             </a>
                                         </td>
