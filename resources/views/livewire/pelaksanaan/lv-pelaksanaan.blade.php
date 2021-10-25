@@ -45,7 +45,7 @@
           </a>
         </div>
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-          <a class="text-decoration-none custom-color-inherit" href="#">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.marketing.index') }}">
             <div class="card custom-card-folder">
               <div class="card-body">
                 <div class="text-center">

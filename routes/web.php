@@ -41,10 +41,26 @@ use App\Http\Livewire\Pelaksanaan\{
 
     Umum\LvUmum,
     Umum\LvAsetPerusahaan,
+    Umum\LvItemAsetPerusahaan,
     Umum\LvInventoriPerusahaan,
     Umum\LvLaporanKegiatan,
     Umum\LvLegalitasPerusahaan,
+    Umum\LvItemLegalitasPerusahaan,
     Umum\LvSdmPerusahaan,
+
+    Marketing\LvMarketing,
+    Marketing\LvItemMarketing,
+};
+
+use App\Http\Livewire\Perencanaan\{
+    LvPerencanaan,
+    LvFinancialAnalysis,
+    LvGambarUnitRumah,
+    LvKonstruksiUnitRumah,
+    LvItemUnitRumah,
+    LvKonstruksiSarana,
+    LvItemKonstruksiSarana,
+    LvBrosurPerumahan,
 };
 
 use App\Http\Livewire\Keuangan\{
@@ -114,6 +130,7 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
             Route::get('/', LvUmum::class)->name('index');
             Route::middleware(['permission:aset-perusahaan view'])->group(function () {
                 Route::get('/aset-perusahaan', LvAsetPerusahaan::class)->name('aset_perusahaan.index');
+                Route::get('/aset-perusahaan/{slug}', LvItemAsetPerusahaan::class)->name('aset_perusahaan.item.index');
             });
             Route::middleware(['permission:inventori-perusahaan view'])->group(function () {
                 Route::get('/inventori-perusahaan', LvInventoriPerusahaan::class)->name('inventori_perusahaan.index');
@@ -123,14 +140,46 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
             });
             Route::middleware(['permission:legalitas-perusahaan view'])->group(function () {
                 Route::get('/legalitas-perusahaan', LvLegalitasPerusahaan::class)->name('legalitas_perusahaan.index');
+                Route::get('/legalitas-perusahaan/{slug}', LvItemLegalitasPerusahaan::class)->name('legalitas_perusahaan.item.index');
             });
             Route::middleware(['permission:sdm-perusahaan view'])->group(function () {
                 Route::get('/sdm-perusahaan', LvSdmPerusahaan::class)->name('sdm_perusahaan.index');
             });
         });
+        Route::prefix('marketing')->name('marketing.')->group(function () {
+            Route::middleware(['permission:aset-perusahaan view'])->group(function () {
+                Route::get('/', LvMarketing::class)->name('index');
+                Route::get('/marketing/{slug}', LvItemMarketing::class)->name('item.index');
+            });
+        });
     });
     /* END PELAKSANAAN */
     
+    /* PERENCANAAN */
+    Route::prefix('perencanaan')->name('perencanaan.')->group(function () {
+        Route::get('/', LvPerencanaan::class)->name('index');
+        
+        Route::middleware(['permission:financial-analysis view'])->group(function () {
+            Route::get('financial-analysis', LvFinancialAnalysis::class)->name('financial_analysis.index');
+        });
+        Route::middleware(['permission:gambar-unit-rumah view'])->group(function () {
+            Route::get('gambar-unit-rumah', LvGambarUnitRumah::class)->name('gambar_unit_rumah.index');
+        });
+        Route::middleware(['permission:konstruksi-unit-rumah view'])->group(function () {
+            Route::get('konstruksi-unit-rumah', LvKonstruksiUnitRumah::class)->name('konstruksi_unit_rumah.index');
+            Route::get('konstruksi-unit-rumah/{slug}', LvItemUnitRumah::class)->name('konstruksi_unit_rumah.item.index');
+        });
+        Route::middleware(['permission:konstruksi-sarana view'])->group(function () {
+            Route::get('konstruksi-sarana', LvKonstruksiSarana::class)->name('konstruksi_sarana.index');
+            Route::get('konstruksi-sarana/{slug}', LvItemKonstruksiSarana::class)->name('konstruksi_sarana.item.index');
+        });
+        Route::middleware(['permission:brosur-perumahan view'])->group(function () {
+            Route::get('brosur-perumahan', LvBrosurPerumahan::class)->name('brosur_perumahan.index');
+        });
+
+    });
+    /* END PERENCANAAN */
+
     /* KEUANGAN */
     Route::prefix('keuangan')->name('keuangan.')->group(function () {
         Route::middleware(['permission:kas-besar view'])->group(function () {
@@ -156,11 +205,19 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('images/keuangan/realisasi-dana/{id}/img', [FileStorageController::class, 'imageRealisasiDana'])->name('image.keuangan.realisasi_dana');
     Route::get('images/keuangan/progress-keuangan/{id}/img', [FileStorageController::class, 'imageProgressKeuangan'])->name('image.keuangan.progress_keuangan');
     
-    Route::get('images/umum/aset-perusahaan/{id}/img', [FileStorageController::class, 'imageAsetPerusahaan'])->name('image.umum.aset_perusahaan');
+    Route::get('images/umum/item-aset-perusahaan/{id}/img', [FileStorageController::class, 'imageItemAsetPerusahaan'])->name('image.umum.item_aset_perusahaan');
     Route::get('images/umum/inventori-perusahaan/{id}/img', [FileStorageController::class, 'imageInventoriPerusahaan'])->name('image.umum.inventori_perusahaan');
     Route::get('images/umum/laporan-kegiatan/{id}/img', [FileStorageController::class, 'imageLaporanKegiatan'])->name('image.umum.laporan_kegiatan');
-    Route::get('images/umum/legalitas-perusahaan/{id}/img', [FileStorageController::class, 'imageLegalitasPerusahaan'])->name('image.umum.legalitas_perusahaan');
+    Route::get('images/umum/item-legalitas-perusahaan/{id}/img', [FileStorageController::class, 'imageItemLegalitasPerusahaan'])->name('image.umum.item_legalitas_perusahaan');
     Route::get('images/umum/sdm-perusahaan/{id}/img', [FileStorageController::class, 'imageSdmPerusahaan'])->name('image.umum.sdm_perusahaan');
+    
+    Route::get('images/marketing/item-marketing/{id}/img', [FileStorageController::class, 'imageItemMarketing'])->name('image.marketing.item_marketing');
+    
+    Route::get('files/perencanaan/financial-analysis/{id}/pdf', [FileStorageController::class, 'pdfFinancialAnalysis'])->name('pdf.perencanaan.financial_analysis');
+    Route::get('files/perencanaan/gambar-unit-rumah/{id}/pdf', [FileStorageController::class, 'pdfGambarUnitRumah'])->name('pdf.perencanaan.gambar_unit_rumah');
+    Route::get('files/perencanaan/item-unit-rumah/{id}/pdf', [FileStorageController::class, 'pdfItemUnitRumah'])->name('pdf.perencanaan.item_unit_rumah');
+    Route::get('files/perencanaan/item-konstruksi-sarana/{id}/pdf', [FileStorageController::class, 'pdfItemKonstruksiSarana'])->name('pdf.perencanaan.item_konstruksi_sarana');
+    Route::get('files/perencanaan/brosur-perumahan/{id}/pdf', [FileStorageController::class, 'pdfBrosurPerumahan'])->name('pdf.perencanaan.brosur_perumahan');
     /* END FILE STORAGE */
 });
 

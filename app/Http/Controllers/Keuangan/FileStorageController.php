@@ -11,11 +11,19 @@ use App\Models\{
     Keuangan\RealisasiDana,
     Keuangan\ProgressKeuangan,
 
-    Umum\AsetPerusahaan,
+    Umum\ItemAsetPerusahaan,
     Umum\InventoriPerusahaan,
     Umum\LaporanKegiatan,
-    Umum\LegalitasPerusahaan,
+    Umum\ItemLegalitasPerusahaan,
     Umum\SdmPerusahaan,
+
+    Marketing\ItemMarketing,
+
+    Perencanaan\FinancialAnalysis,
+    Perencanaan\GambarUnitRumah,
+    Perencanaan\ItemUnitRumah,
+    Perencanaan\ItemKonstruksiSarana,
+    Perencanaan\BrosurPerumahan,
 };
 
 class FileStorageController extends Controller
@@ -92,9 +100,9 @@ class FileStorageController extends Controller
         abort(404);
     }
 
-    public function imageAsetPerusahaan($id)
+    public function imageItemAsetPerusahaan($id)
     {
-        $file = AsetPerusahaan::findOrFail($id);
+        $file = ItemAsetPerusahaan::findOrFail($id);
         $path = storage_path('app/'.$file->image_path);
         
         if (file_exists($path)) {
@@ -108,7 +116,7 @@ class FileStorageController extends Controller
     }
     public function imageInventoriPerusahaan($id)
     {
-        $file = AsetPerusahaan::findOrFail($id);
+        $file = InventoriPerusahaan::findOrFail($id);
         $path = storage_path('app/'.$file->image_path);
         
         if (file_exists($path)) {
@@ -134,9 +142,9 @@ class FileStorageController extends Controller
         
         abort(404);
     }
-    public function imageLegalitasPerusahaan($id)
+    public function imageItemLegalitasPerusahaan($id)
     {
-        $file = LegalitasPerusahaan::findOrFail($id);
+        $file = ItemLegalitasPerusahaan::findOrFail($id);
         $path = storage_path('app/'.$file->image_path);
         
         if (file_exists($path)) {
@@ -157,6 +165,90 @@ class FileStorageController extends Controller
             
             return response()
             ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+    public function imageItemMarketing($id)
+    {
+        $file = ItemMarketing::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+    public function pdfFinancialAnalysis($id)
+    {
+        $file = FinancialAnalysis::findOrFail($id);
+        $path = storage_path('app/'.$file->pdf_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'application/pdf'));
+            
+        }
+        
+        abort(404);
+    }
+    public function pdfGambarUnitRumah($id)
+    {
+        $file = GambarUnitRumah::findOrFail($id);
+        $path = storage_path('app/'.$file->pdf_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'application/pdf'));
+            
+        }
+        
+        abort(404);
+    }
+    public function pdfItemUnitRumah($id)
+    {
+        $file = ItemUnitRumah::findOrFail($id);
+        $path = storage_path('app/'.$file->pdf_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'application/pdf'));
+            
+        }
+        
+        abort(404);
+    }
+    public function pdfItemKonstruksiSarana($id)
+    {
+        $file = ItemKonstruksiSarana::findOrFail($id);
+        $path = storage_path('app/'.$file->pdf_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'application/pdf'));
+            
+        }
+        
+        abort(404);
+    }
+    public function pdfBrosurPerumahan($id)
+    {
+        $file = BrosurPerumahan::findOrFail($id);
+        $path = storage_path('app/'.$file->pdf_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'application/pdf'));
             
         }
         

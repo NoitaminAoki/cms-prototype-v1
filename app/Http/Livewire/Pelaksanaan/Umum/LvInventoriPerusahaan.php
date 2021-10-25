@@ -52,7 +52,7 @@ class LvInventoriPerusahaan extends Component
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_inventori_perusahaan_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/umum/inventori_perusahaan/', $this->file_image, $image_name);
+        $image_path = Storage::putFileAs('images/umum/inventori_perusahaan', $this->file_image, $image_name);
 
         $insert = InventoriPerusahaan::create([
             'image_name' => $this->file_image->getClientOriginalName(),

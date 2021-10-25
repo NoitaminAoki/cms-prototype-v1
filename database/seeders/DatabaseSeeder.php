@@ -19,6 +19,11 @@ class DatabaseSeeder extends Seeder
             MsSubCodeSeeder::class,
             RoleAndPermissionSeeder::class,
             AdminSeeder::class,
+            KonstruksiUnitRumahSeeder::class,
+            KonstruksiSaranaSeeder::class,
+            AsetPerusahaanSeeder::class,
+            LegalitasPerusahaanSeeder::class,
+            MarketingSeeder::class,
         ]);
     }
 }

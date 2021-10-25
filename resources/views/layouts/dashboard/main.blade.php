@@ -30,6 +30,14 @@
     .custom-bg-folder {
       color: #FFE8A1;
     }
+
+    .custom-bg-red-pdf {
+      color: #df3c33;
+    }
+
+    .custom-article-header-pdf {
+      height: 170px !important;
+    }
     
     .custom-card-folder {
       transition: box-shadow 0.2s ease-in-out;

@@ -15,9 +15,8 @@ class CreateAsetPerusahaansTable extends Migration
     {
         Schema::create('aset_perusahaans', function (Blueprint $table) {
             $table->id();
-            $table->string('image_name');
-            $table->string('image_path');
-            $table->timestamp('tanggal');
+            $table->string('name');
+            $table->string('slug_name')->unique();
             $table->timestamps();
         });
     }

@@ -42,7 +42,7 @@ class LvResumeJurnal extends Component
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_resume_jurnal_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/keuangan/resume_jurnal/', $this->file_image, $image_name);
+        $image_path = Storage::putFileAs('images/keuangan/resume_jurnal', $this->file_image, $image_name);
 
         $insert = ResumeJurnal::create([
             'image_name' => $this->file_image->getClientOriginalName(),
