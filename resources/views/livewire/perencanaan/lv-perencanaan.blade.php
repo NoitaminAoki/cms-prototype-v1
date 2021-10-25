@@ -40,7 +40,7 @@
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('perencanaan.financial_analysis.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    I. Financial Analysis Proyek Perak Green Land
+                                                    I. Financial Analysis Proyek
                                                 </h6>
                                             </a>
                                         </td>
@@ -50,7 +50,7 @@
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('perencanaan.gambar_unit_rumah.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    II. Gambar Unit-Unit Rumah Perak Green Land
+                                                    II. Gambar Unit-Unit Rumah
                                                 </h6>
                                             </a>
                                         </td>
@@ -60,7 +60,7 @@
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('perencanaan.konstruksi_unit_rumah.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    III. Perencanaan Konstruksi Unit-Unit Rumah - PGL
+                                                    III. Perencanaan Konstruksi Unit-Unit Rumah
                                                 </h6>
                                             </a>
                                         </td>
@@ -70,7 +70,7 @@
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('perencanaan.konstruksi_sarana.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    IV. Perencanaan Prasarana & Sarana Umum - PGL
+                                                    IV. Perencanaan Prasarana & Sarana Umum
                                                 </h6>
                                             </a>
                                         </td>
@@ -80,7 +80,7 @@
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('perencanaan.brosur_perumahan.index') }}">
                                                 <h6 class="text-uppercase mb-0">
                                                     <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
-                                                    V. Brosur Perumahaan Perak Green Land
+                                                    V. Brosur Perumahaan
                                                 </h6>
                                             </a>
                                         </td>
