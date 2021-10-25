@@ -57,7 +57,7 @@ class LvPengajuanDana extends Component
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_pengajuan_dana_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/keuangan/pengajuan_dana/', $this->file_image, $image_name);
+        $image_path = Storage::putFileAs('images/keuangan/pengajuan_dana', $this->file_image, $image_name);
 
         $insert = PengajuanDana::create([
             'paket_id' => $this->paket_id,

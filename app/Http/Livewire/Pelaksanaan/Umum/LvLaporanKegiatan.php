@@ -52,7 +52,7 @@ class LvLaporanKegiatan extends Component
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_laporan_kegiatan_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/umum/laporan_kegiatan/', $this->file_image, $image_name);
+        $image_path = Storage::putFileAs('images/umum/laporan_kegiatan', $this->file_image, $image_name);
 
         $insert = LaporanKegiatan::create([
             'image_name' => $this->file_image->getClientOriginalName(),

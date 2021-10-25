@@ -40,7 +40,7 @@ class LvJurnalHarian extends Component
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_jurnal_harian_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/keuangan/jurnal_harian/', $this->file_image, $image_name);
+        $image_path = Storage::putFileAs('images/keuangan/jurnal_harian', $this->file_image, $image_name);
 
         $insert = JurnalHarian::create([
             'image_name' => $this->file_image->getClientOriginalName(),
