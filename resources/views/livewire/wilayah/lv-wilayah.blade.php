@@ -7,7 +7,7 @@
 <div>
     <section class="section">
         <div class="section-header">
-            <h1>Wilayah</h1>
+            <h1>Lokasi Proyek</h1>
             <div class="section-header-breadcrumb">
             </div>
         </div>
@@ -15,7 +15,7 @@
         <div class="section-body">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://yogyakarta.managementgb.com">
                         <div class="card custom-card-folder">
                             <div class="card-body">
                                 <div class="text-center">
