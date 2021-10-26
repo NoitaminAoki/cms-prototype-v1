@@ -28,6 +28,10 @@ use App\Http\Livewire\Dashboard\{
     LvDashboard,
 };
 
+use App\Http\Livewire\Wilayah\{
+    LvWilayah,
+};
+
 use App\Http\Livewire\Pelaksanaan\{
     LvPelaksanaan,
 
@@ -100,9 +104,7 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-Route::get('/', function () {
-    return redirect(route('dashboard')); /* jangan diganti ke login [FIX ERROR] */
-});
+Route::get('/', LvWilayah::class);
 
 Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('/dashboard', LvDashboard::class)->name('dashboard');
