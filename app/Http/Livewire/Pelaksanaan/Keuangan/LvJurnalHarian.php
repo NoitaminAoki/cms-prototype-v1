@@ -61,7 +61,7 @@ class LvJurnalHarian extends Component
     public function resetInput()
     {
         $this->reset('file_image', 'selected_jurnal_harian');
-        $input_tanggal = date('m/d/Y');
+        $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
@@ -85,6 +85,7 @@ class LvJurnalHarian extends Component
         $jurnal_harian = JurnalHarian::findOrFail($id);
         Storage::delete($jurnal_harian->image_path);
         $jurnal_harian->delete();
+        $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }
 }

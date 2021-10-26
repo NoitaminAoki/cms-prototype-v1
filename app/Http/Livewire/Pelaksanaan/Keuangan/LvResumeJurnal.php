@@ -63,7 +63,7 @@ class LvResumeJurnal extends Component
     public function resetInput()
     {
         $this->reset('file_image', 'selected_resume_jurnal');
-        $input_tanggal = date('m/d/Y');
+        $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
@@ -87,6 +87,7 @@ class LvResumeJurnal extends Component
         $resume_jurnal = ResumeJurnal::findOrFail($id);
         Storage::delete($resume_jurnal->image_path);
         $resume_jurnal->delete();
+        $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }
 }

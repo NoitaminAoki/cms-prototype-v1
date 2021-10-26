@@ -1,9 +1,9 @@
 
 <nav class="navbar navbar-expand-lg main-navbar">
   <a href="{{route('dashboard')}}" class="navbar-brand sidebar-gone-hide">GANTARI</a>
-  <div class="navbar-nav">
+  {{-- <div class="navbar-nav">
     <a href="{{route('dashboard')}}" class="nav-link sidebar-gone-show" data-toggle="sidebar"><i class="fas fa-bars"></i></a>
-  </div>
+  </div> --}}
   <form class="form-inline ml-auto">
   </form>
   

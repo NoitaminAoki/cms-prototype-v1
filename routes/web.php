@@ -50,6 +50,15 @@ use App\Http\Livewire\Pelaksanaan\{
 
     Marketing\LvMarketing,
     Marketing\LvItemMarketing,
+
+    Konstruksi\LvKonstruksi,
+    Konstruksi\LvLaporanHarian,
+    Konstruksi\LvProgressKemajuan,
+    Konstruksi\LvItemProgressKemajuan,
+    Konstruksi\LvPhotoKegiatan,
+    Konstruksi\LvControlStock,
+    Konstruksi\LvResumeKegiatan,
+    Konstruksi\LvPerjanjianKontrak,
 };
 
 use App\Http\Livewire\Perencanaan\{
@@ -152,6 +161,28 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
                 Route::get('/marketing/{slug}', LvItemMarketing::class)->name('item.index');
             });
         });
+        Route::prefix('konstruksi')->name('konstruksi.')->group(function () {
+            Route::get('/', LvKonstruksi::class)->name('index');
+            Route::middleware(['permission:laporan-harian view'])->group(function () {
+                Route::get('/laporan-harian', LvLaporanHarian::class)->name('laporan_harian.index');
+            });
+            Route::middleware(['permission:progress-kemajuan view'])->group(function () {
+                Route::get('/progress-kemajuan', LvProgressKemajuan::class)->name('progress_kemajuan.index');
+                Route::get('/progress-kemajuan/{slug}', LvItemProgressKemajuan::class)->name('progress_kemajuan.item.index');
+            });
+            Route::middleware(['permission:photo-kegiatan view'])->group(function () {
+                Route::get('/photo-kegiatan', LvPhotoKegiatan::class)->name('photo_kegiatan.index');
+            });
+            Route::middleware(['permission:control-stock view'])->group(function () {
+                Route::get('/control-stock', LvControlStock::class)->name('control_stock.index');
+            });
+            Route::middleware(['permission:resume-kegiatan view'])->group(function () {
+                Route::get('/resume-kegiatan', LvResumeKegiatan::class)->name('resume_kegiatan.index');
+            });
+            Route::middleware(['permission:perjanjian-kontrak view'])->group(function () {
+                Route::get('/perjanjian-kontrak', LvPerjanjianKontrak::class)->name('perjanjian_kontrak.index');
+            });
+        });
     });
     /* END PELAKSANAAN */
     
@@ -213,6 +244,13 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     
     Route::get('images/marketing/item-marketing/{id}/img', [FileStorageController::class, 'imageItemMarketing'])->name('image.marketing.item_marketing');
     
+    Route::get('images/konstruksi/laporan-harian/{id}/img', [FileStorageController::class, 'imageLaporanHarian'])->name('image.konstruksi.laporan_harian');
+    Route::get('images/konstruksi/item-progress-kemajuan/{id}/img', [FileStorageController::class, 'imageItemProgressKemajuan'])->name('image.konstruksi.progress_kemajuan');
+    Route::get('images/konstruksi/photo-kegiatan/{id}/img', [FileStorageController::class, 'imagePhotoKegiatan'])->name('image.konstruksi.photo_kegiatan');
+    Route::get('images/konstruksi/control-stock/{id}/img', [FileStorageController::class, 'imageControlStock'])->name('image.konstruksi.control_stock');
+    Route::get('images/konstruksi/resume-kegiatan/{id}/img', [FileStorageController::class, 'imageResumeKegiatan'])->name('image.konstruksi.resume_kegiatan');
+    Route::get('images/konstruksi/perjanjian-kontrak/{id}/img', [FileStorageController::class, 'imagePerjanjianKontrak'])->name('image.konstruksi.perjanjian_kontrak');
+
     Route::get('files/perencanaan/financial-analysis/{id}/pdf', [FileStorageController::class, 'pdfFinancialAnalysis'])->name('pdf.perencanaan.financial_analysis');
     Route::get('files/perencanaan/gambar-unit-rumah/{id}/pdf', [FileStorageController::class, 'pdfGambarUnitRumah'])->name('pdf.perencanaan.gambar_unit_rumah');
     Route::get('files/perencanaan/item-unit-rumah/{id}/pdf', [FileStorageController::class, 'pdfItemUnitRumah'])->name('pdf.perencanaan.item_unit_rumah');

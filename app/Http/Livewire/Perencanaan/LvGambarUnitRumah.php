@@ -70,7 +70,7 @@ class LvGambarUnitRumah extends Component
     public function resetInput()
     {
         $this->reset('file_pdf', 'selected_item');
-        $input_tanggal = date('m/d/Y');
+        $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
@@ -94,6 +94,7 @@ class LvGambarUnitRumah extends Component
         $item = GambarUnitRumah::findOrFail($id);
         Storage::delete($item->pdf_path);
         $item->delete();
+        $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }
 }

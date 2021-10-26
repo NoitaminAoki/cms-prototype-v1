@@ -65,7 +65,7 @@ class LvItemAsetPerusahaan extends Component
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
         $image_name = 'image_item_aset_perusahaan_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('image/pelaksanaan/umum/item_aset_perusahaan', $this->file_image, $image_name);
+        $image_path = Storage::putFileAs('images/pelaksanaan/umum/item_aset_perusahaan', $this->file_image, $image_name);
 
         $insert = ItemAsetPerusahaan::create([
             'aset_id' => $this->parent_id,
@@ -87,7 +87,7 @@ class LvItemAsetPerusahaan extends Component
     public function resetInput()
     {
         $this->reset('file_image', 'selected_item');
-        $input_tanggal = date('m/d/Y');
+        $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
@@ -110,6 +110,7 @@ class LvItemAsetPerusahaan extends Component
         $item = ItemAsetPerusahaan::findOrFail($id);
         Storage::delete($item->image_path);
         $item->delete();
+        $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }
 }

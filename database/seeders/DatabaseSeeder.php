@@ -24,6 +24,7 @@ class DatabaseSeeder extends Seeder
             AsetPerusahaanSeeder::class,
             LegalitasPerusahaanSeeder::class,
             MarketingSeeder::class,
+            ProgressKemajuanSeeder::class,
         ]);
     }
 }

@@ -19,6 +19,13 @@ use App\Models\{
 
     Marketing\ItemMarketing,
 
+    Konstruksi\LaporanHarian,
+    Konstruksi\ItemProgressKemajuan,
+    Konstruksi\PhotoKegiatan,
+    Konstruksi\ControlStock,
+    Konstruksi\ResumeKegiatan,
+    Konstruksi\PerjanjianKontrak,
+    
     Perencanaan\FinancialAnalysis,
     Perencanaan\GambarUnitRumah,
     Perencanaan\ItemUnitRumah,
@@ -184,6 +191,97 @@ class FileStorageController extends Controller
         
         abort(404);
     }
+
+    public function imageLaporanHarian($id)
+    {
+        $file = LaporanHarian::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
+    public function imageItemProgressKemajuan($id)
+    {
+        $file = ItemProgressKemajuan::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
+    public function imagePhotoKegiatan($id)
+    {
+        $file = PhotoKegiatan::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
+    public function imageControlStock($id)
+    {
+        $file = ControlStock::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
+    public function imageResumeKegiatan($id)
+    {
+        $file = ResumeKegiatan::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
+    public function imagePerjanjianKontrak($id)
+    {
+        $file = PerjanjianKontrak::findOrFail($id);
+        $path = storage_path('app/'.$file->image_path);
+        
+        if (file_exists($path)) {
+            
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
     public function pdfFinancialAnalysis($id)
     {
         $file = FinancialAnalysis::findOrFail($id);

@@ -73,7 +73,7 @@ class LvInventoriPerusahaan extends Component
     public function resetInput()
     {
         $this->reset('file_image', 'selected_item');
-        $input_tanggal = date('m/d/Y');
+        $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
@@ -97,6 +97,7 @@ class LvInventoriPerusahaan extends Component
         $item = InventoriPerusahaan::findOrFail($id);
         Storage::delete($item->image_path);
         $item->delete();
+        $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }
 }
