@@ -32,6 +32,10 @@ use App\Http\Livewire\Wilayah\{
     LvWilayah,
 };
 
+use App\Http\Livewire\Tester\{
+    LvFileStorage,
+};
+
 use App\Http\Livewire\Pelaksanaan\{
     LvPelaksanaan,
 
@@ -105,6 +109,8 @@ Route::get('/email/verify', function () {
 })->middleware('auth')->name('verification.notice');
 
 Route::get('/', LvWilayah::class);
+
+Route::get('/file-storage', LvFileStorage::class);
 
 Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('/dashboard', LvDashboard::class)->name('dashboard');

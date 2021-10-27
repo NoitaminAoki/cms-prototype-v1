@@ -7,7 +7,7 @@
 <div>
     <section class="section">
         <div class="section-header">
-            <h1>Wilayah</h1>
+            <h1>Lokasi Proyek</h1>
             <div class="section-header-breadcrumb">
             </div>
         </div>
