@@ -7,6 +7,7 @@
   <form class="form-inline ml-auto">
   </form>
   
+  @auth
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
       <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="mr-1 rounded-circle">
@@ -39,4 +40,5 @@
       </div>
     </li>
   </ul>
+  @endauth
 </nav>
