@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Models\{
     Keuangan\JurnalHarian,
 };
+use App\Helpers\StringGenerator;
 
 class LvJurnalHarian extends Component
 {
@@ -17,34 +18,43 @@ class LvJurnalHarian extends Component
         'evSetInputTanggal' => 'setInputTanggal',
     ];
 
+    public $page_attribute = [
+        'title' => 'Jurnal Harian',
+    ];
+    public $page_permission = [
+        'add' => 'jurnal-harian add',
+        'delete' => 'jurnal-harian delete',
+    ];
+
+    public $paket_id;
     public $file_image;
     public $input_tanggal;
     public $iteration;
 
-    public $selected_jurnal_harian;
+    public $selected_item;
     public $selected_url;
     
     public function render()
     {
-        $data['jurnal_harians'] = JurnalHarian::all();
+        $data['items'] = JurnalHarian::all();
         return view('livewire.pelaksanaan.keuangan.lv-jurnal-harian')
         ->with($data)
         ->layout('layouts.dashboard.main');
     }
 
-    public function addJurnalHarian()
+    public function addItem()
     {
         $this->validate([
             'file_image' => 'required|image',
             'input_tanggal' => 'required|string',
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
-        $image_name = 'image_jurnal_harian_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/keuangan/jurnal_harian', $this->file_image, $image_name);
-
+        $image_name = StringGenerator::fileName($this->file_image->extension());
+        $image_path = Storage::disk('sector_disk')->putFileAs(JurnalHarian::BASE_PATH, $this->file_image, $image_name);
+        
         $insert = JurnalHarian::create([
-            'image_name' => $this->file_image->getClientOriginalName(),
-            'image_path' => $image_path,
+            'image_real_name' => $this->file_image->getClientOriginalName(),
+            'image_name' => $image_name,
             'tanggal' => $date_now,
         ]);
 
@@ -60,31 +70,32 @@ class LvJurnalHarian extends Component
 
     public function resetInput()
     {
-        $this->reset('file_image', 'selected_jurnal_harian');
+        $this->reset('file_image', 'selected_item');
         $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
 
-    public function setJurnalHarian($id)
+    public function setItem($id)
     {
-        $pengajuan = JurnalHarian::findOrFail($id);
-        $this->selected_jurnal_harian = $pengajuan;
-        $this->selected_url = route('image.keuangan.jurnal_harian', ['id' => $pengajuan->id]);
+        $item = JurnalHarian::findOrFail($id);
+        $this->selected_item = $item;
+        $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
     }
 
     public function downloadImage()
     {
-        $file = JurnalHarian::findOrFail($this->selected_jurnal_harian['id']);
-        $path = storage_path('app/'.$file->image_path);
+        $item = JurnalHarian::findOrFail($this->selected_item['id']);
+        $path = $item->base_path.$item->image_name;
         
-        return response()->download($path, $file->image_name);
+        return Storage::disk('sector_disk')->download($path, $item->image_real_name);
     }
 
     public function delete($id)
     {
-        $jurnal_harian = JurnalHarian::findOrFail($id);
-        Storage::delete($jurnal_harian->image_path);
-        $jurnal_harian->delete();
+        $item = JurnalHarian::findOrFail($id);
+        $path = $item->base_path.$item->image_name;
+        Storage::disk('sector_disk')->delete($path);
+        $item->delete();
         $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }

@@ -13,7 +13,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.index') }}">Pelaksanaan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.marketing.index') }}">Divisi Marketing</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.umum.index') }}">Divisi Marketing</a></div>
             </div>
         </div>
         
@@ -30,10 +30,10 @@
                         <div class="card shadow-sm custom-card-folder">
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
-                                    <div class="article-image" style="background-image: url({{ route($route_image_item, ['id'=>$item->id]) }});">
+                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item->base_path, 'name' => $item->image_name]) }});">
                                     </div>
                                     <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->image_name}}</div>
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->image_real_name}}</div>
                                     </div>
                                 </div>
                             </article>
@@ -108,7 +108,7 @@
                     <div class="modal-body">
                         <div class="w-100">
                             <div class="common-section-title">Image Name</div>
-                            <p>{{$selected_item['image_name'] ?? '-'}}</p>
+                            <p>{{$selected_item['image_real_name'] ?? '-'}}</p>
                         </div>
                         <div class="w-100 mb-4">
                             <div class="common-section-title">Date</div>

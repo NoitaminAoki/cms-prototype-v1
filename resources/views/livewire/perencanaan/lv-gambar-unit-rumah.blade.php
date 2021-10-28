@@ -34,7 +34,7 @@
                                         <i class="fas fa-file-pdf custom-fa-10x custom-bg-red-pdf"></i>
                                     </div>
                                     <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->pdf_name}}</div>
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->pdf_real_name}}</div>
                                     </div>
                                 </div>
                             </article>
@@ -105,7 +105,7 @@
                         <div class="common-section-title">Pdf Name</div>
                         <p>
                         @if ($selected_item)
-                            <a href="{{ $selected_url }}" target="_blank" rel="noopener noreferrer">{{$selected_item['pdf_name']}} <i class="fas fa-external-link-alt"></i></a>
+                            <a href="{{ $selected_url }}" target="_blank" rel="noopener noreferrer">{{$selected_item['pdf_real_name']}} <i class="fas fa-external-link-alt"></i></a>
                         @else
                         -    
                         @endif
