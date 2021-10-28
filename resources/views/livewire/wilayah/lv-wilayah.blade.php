@@ -35,7 +35,7 @@
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
                             </div>
                             <div class="card-body">
-                                <div class="w-100 mt-2">
+                                <div class="w-100">
                                     <h6 class="text-uppercase text-primary mb-0">Griya Amarta Pamarayan</h6>
                                 </div>
                             </div>
@@ -49,7 +49,7 @@
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
                             </div>
                             <div class="card-body">
-                                <div class="w-100 mt-2">
+                                <div class="w-100">
                                     <h6 class="text-uppercase text-primary mb-0">Griya Amarta Cikembar</h6>
                                 </div>
                             </div>
@@ -63,7 +63,7 @@
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
                             </div>
                             <div class="card-body">
-                                <div class="w-100 mt-2">
+                                <div class="w-100">
                                     <h6 class="text-uppercase text-primary mb-0">Griya Amarta Ciherang</h6>
                                 </div>
                             </div>
@@ -77,7 +77,7 @@
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
                             </div>
                             <div class="card-body">
-                                <div class="w-100 mt-2">
+                                <div class="w-100">
                                     <h6 class="text-uppercase text-primary mb-0">Griya Amarta Jonggol</h6>
                                 </div>
                             </div>
@@ -91,7 +91,7 @@
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
                             </div>
                             <div class="card-body">
-                                <div class="w-100 mt-2">
+                                <div class="w-100">
                                     <h6 class="text-uppercase text-primary mb-0">Griya Amarta Rembang</h6>
                                 </div>
                             </div>
@@ -105,7 +105,7 @@
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
                             </div>
                             <div class="card-body">
-                                <div class="w-100 mt-2">
+                                <div class="w-100">
                                     <h6 class="text-uppercase text-primary mb-0">Griya Amarta Utama</h6>
                                 </div>
                             </div>
