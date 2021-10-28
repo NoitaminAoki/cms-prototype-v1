@@ -1,3 +1,4 @@
+@section('page-title', ' - Lokasi Proyek')
 @section('css-libraries')
 @endsection
 
