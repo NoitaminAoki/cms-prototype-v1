@@ -15,7 +15,7 @@
         <div class="section-body">
             <div class="row justify-content-center">
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://yogyakarta.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
