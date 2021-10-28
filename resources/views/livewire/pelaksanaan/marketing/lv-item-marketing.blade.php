@@ -1,3 +1,4 @@
+@section('title-page', ' - '. $page_attribute['title'])
 @section('css-libraries')
 <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css">
 <link rel="stylesheet" href="{{ asset('assets/library/sweetalert2/css/sweetalert2.min.css') }}">

@@ -138,6 +138,9 @@
                 </form>
               </div>
             </div>
+            <div class="mt-5 text-muted text-center">
+              Already have account? <a href="{{route('login')}}">Sign In</a>
+            </div>
             <div class="simple-footer">
             PT Gantari Bawana &copy; 2021
             </div>

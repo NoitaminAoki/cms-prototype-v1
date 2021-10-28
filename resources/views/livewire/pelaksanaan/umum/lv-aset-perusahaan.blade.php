@@ -1,3 +1,4 @@
+@section('title-page', ' - AsetPerusahaan')
 @section('css-libraries')
 @endsection
 

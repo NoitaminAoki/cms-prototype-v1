@@ -1,3 +1,4 @@
+@section('title-page', ' - Legalitas Perusahaan')
 @section('css-libraries')
 @endsection
 

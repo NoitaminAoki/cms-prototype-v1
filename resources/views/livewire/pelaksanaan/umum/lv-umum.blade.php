@@ -1,3 +1,4 @@
+@section('title-page', ' - Divisi Umum')
 @section('css-libraries')
 @endsection
 

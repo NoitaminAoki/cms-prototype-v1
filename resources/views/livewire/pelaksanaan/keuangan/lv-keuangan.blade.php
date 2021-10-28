@@ -1,3 +1,4 @@
+@section('title-page', ' - Divisi Keuangan')
 @section('css-libraries')
 @endsection
 

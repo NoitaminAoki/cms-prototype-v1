@@ -1,3 +1,4 @@
+@section('title-page', ' - Jurnal Keuangan Proyek')
 @section('css-libraries')
 @endsection
 

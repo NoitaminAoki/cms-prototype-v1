@@ -1,3 +1,4 @@
+@section('title-page', ' - Perencanaan')
 @section('css-libraries')
 @endsection
 

@@ -1,3 +1,4 @@
+@section('title-page', ' - Pelaksanaan')
 @section('css-libraries')
 @endsection
 
