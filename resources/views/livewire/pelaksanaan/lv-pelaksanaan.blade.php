@@ -52,7 +52,7 @@
                   <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
                 </div>
                 <div class="w-100 mt-2">
-                  <h6 class="text-uppercase mb-0">II. Divisi Marketing</h6>
+                  <h6 class="text-uppercase mb-0">III. Divisi Marketing</h6>
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@
                   <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
                 </div>
                 <div class="w-100 mt-2">
-                  <h6 class="text-uppercase mb-0">II. Divisi Umum</h6>
+                  <h6 class="text-uppercase mb-0">IV. Divisi Umum</h6>
                 </div>
               </div>
             </div>
