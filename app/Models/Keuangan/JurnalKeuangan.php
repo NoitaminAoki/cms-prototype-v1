@@ -14,6 +14,8 @@ class JurnalKeuangan extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
+        'full_path',
         'sector_id',
         'image_real_name', 
         'image_name', 

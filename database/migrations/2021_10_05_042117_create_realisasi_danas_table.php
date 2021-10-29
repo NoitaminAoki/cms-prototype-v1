@@ -15,6 +15,8 @@ class CreateRealisasiDanasTable extends Migration
     {
         Schema::create('realisasi_danas', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
+            $table->string('full_path');
             $table->string('sector_id', 15);
             $table->string('image_real_name');
             $table->string('image_name');

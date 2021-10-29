@@ -15,6 +15,8 @@ class CreatePengajuanDanasTable extends Migration
     {
         Schema::create('pengajuan_danas', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
+            $table->string('full_path');
             $table->unsignedBigInteger('divisi_id')->nullable();
             $table->unsignedBigInteger('paket_id')->nullable();
             $table->string('sector_id', 15);

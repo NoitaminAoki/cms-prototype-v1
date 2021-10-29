@@ -56,7 +56,10 @@ class LvPengajuanDana extends Component
         $image_name = StringGenerator::fileName($this->file_image->extension());
         $image_path = Storage::disk('sector_disk')->putFileAs(PengajuanDana::BASE_PATH, $this->file_image, $image_name);
         
+        $paket = MsSubCode::find($this->paket_id);
+
         $insert = PengajuanDana::create([
+            'divisi_id' => $paket->parent_code_id,
             'paket_id' => $this->paket_id,
             'image_real_name' => $this->file_image->getClientOriginalName(),
             'image_name' => $image_name,
@@ -83,6 +86,7 @@ class LvPengajuanDana extends Component
         $this->reset('paket_id', 'file_image', 'selected_item');
         $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
+        $this->dispatchBrowserEvent('select2:reset', ['selector' => '#select_paket']);
     }
 
     public function setItem($id)

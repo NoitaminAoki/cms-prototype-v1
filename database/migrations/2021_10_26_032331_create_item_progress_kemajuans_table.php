@@ -15,6 +15,8 @@ class CreateItemProgressKemajuansTable extends Migration
     {
         Schema::create('item_progress_kemajuans', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
+            $table->string('full_path');
             $table->unsignedBigInteger('progress_kemajuan_id')->nullable();
             $table->string('sector_id', 15);
             $table->string('image_real_name');

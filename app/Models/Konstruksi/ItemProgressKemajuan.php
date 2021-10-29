@@ -5,6 +5,7 @@ namespace App\Models\Konstruksi;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class ItemProgressKemajuan extends Model
 {
@@ -15,6 +16,8 @@ class ItemProgressKemajuan extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
+        'full_path',
         'progress_kemajuan_id',
         'sector_id',
         'image_real_name', 
@@ -31,8 +34,10 @@ class ItemProgressKemajuan extends Model
         parent::boot();
 
         Self::creating(function ($model) {
-           $model->sector_id = Config::get('app.sector_id'); 
-           $model->base_path = self::BASE_PATH; 
+            $model->uuid = Str::uuid();
+            $model->sector_id = Config::get('app.sector_id'); 
+            $model->base_path = self::BASE_PATH; 
+            $model->full_path = self::BASE_PATH . $model->image_name;
         });
     }
 }
