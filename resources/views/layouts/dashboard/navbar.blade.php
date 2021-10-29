@@ -7,18 +7,14 @@
   <form class="form-inline ml-auto">
   </form>
   
-  @auth
   <ul class="navbar-nav navbar-right">
     <li class="dropdown"><a href="#" data-toggle="dropdown" class="nav-link dropdown-toggle nav-link-lg nav-link-user">
       <img alt="image" src="{{ asset('assets/img/avatar/avatar-1.png') }}" class="mr-1 rounded-circle">
       <div class="d-sm-none d-lg-inline-block">Hi, {{ Auth::user()->name ?? 'Guest' }}</div></a>
       <div class="dropdown-menu dropdown-menu-right">
-        <div class="dropdown-title">Logged in 5 min ago</div>
-        <a href="features-profile.html" class="dropdown-item has-icon">
-          <i class="far fa-user"></i> Profile
-        </a>
-        <a href="features-settings.html" class="dropdown-item has-icon">
-          <i class="fas fa-cog"></i> Settings
+        <div class="dropdown-title">Menu</div>
+        <a href="{{ route('login') }}" class="dropdown-item has-icon">
+          <i class="far fa-user"></i> Sign In
         </a>
         <div class="dropdown-divider"></div>
         @auth('web')
@@ -40,5 +36,4 @@
       </div>
     </li>
   </ul>
-  @endauth
 </nav>
