@@ -108,12 +108,17 @@
                     </div>
                   </div>
 
-                  <div class="form-group">
+                  @error('email')
+                  <div class="mt-4 mb-3">
+                    <span class="text-danger">Invalid email or password. Please try again.</span>
+                  </div>
+                  @enderror
+                  {{-- <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="remember_me" class="custom-control-input" tabindex="3" id="remember_me">
                       <label class="custom-control-label" for="remember_me">Remember Me</label>
                     </div>
-                  </div>
+                  </div> --}}
 
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
