@@ -37,7 +37,7 @@
                         <div class="table-responsive">
                             <table class="table custom-table-folder mb-0">
                                 <tbody>
-                                    @can('pengajuan-dana add')
+                                    @can('pengajuan-dana view')
                                     <tr class="border-bottom">
                                         <td>
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.pengajuan_dana.index') }}">
@@ -49,7 +49,7 @@
                                         </td>
                                     </tr>
                                     @endcan
-                                    @can('realisasi-dana add')
+                                    @can('realisasi-dana view')
                                     <tr class="border-bottom">
                                         <td>
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.realisasi_dana.index') }}">
@@ -61,7 +61,7 @@
                                         </td>
                                     </tr>
                                     @endcan
-                                    @can('jurnal-harian add')
+                                    @can('jurnal-harian view')
                                     <tr class="border-bottom">
                                         <td>
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.jurnal_keuangan.index') }}">
@@ -73,7 +73,7 @@
                                         </td>
                                     </tr>
                                     @endcan
-                                    @can('progress-keuangan add')
+                                    @can('progress-keuangan view')
                                     <tr class="border-bottom">
                                         <td>
                                             <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.progress_keuangan.index') }}">

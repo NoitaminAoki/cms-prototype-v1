@@ -5,6 +5,8 @@
 @section('css')
 @endsection
 
+@inject('rolesData', 'App\Helpers\RolesData')
+
 <div>
   <section class="section">
     <div class="section-header">
@@ -17,6 +19,7 @@
     
     <div class="section-body">
       <div class="row">
+        @canany($rolesData::getAllPermissionByDivision('Keuangan'))
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
           <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.index') }}">
             <div class="card custom-card-folder">
@@ -31,6 +34,8 @@
             </div>
           </a>
         </div>
+        @endcanany
+        @canany($rolesData::getAllPermissionByDivision('Konstruksi'))
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
           <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.konstruksi.index') }}">
             <div class="card custom-card-folder">
@@ -45,6 +50,8 @@
             </div>
           </a>
         </div>
+        @endcanany
+        @canany($rolesData::getAllPermissionByDivision('Marketing'))
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
           <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.marketing.index') }}">
             <div class="card custom-card-folder">
@@ -59,6 +66,8 @@
             </div>
           </a>
         </div>
+        @endcanany
+        @canany($rolesData::getAllPermissionByDivision('Umum'))
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
           <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.index') }}">
             <div class="card custom-card-folder">
@@ -73,6 +82,7 @@
             </div>
           </a>
         </div>
+        @endcanany
       </div>
     </div>
   </section>

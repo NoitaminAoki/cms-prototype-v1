@@ -26,9 +26,6 @@ class RoleAndPermissionSeeder extends Seeder
         ]);
 
         $arrayOfPermissionNames = [
-            'kas-besar view',
-            'kas-besar add', 
-            'kas-besar delete',
             'pengajuan-dana view',
             'pengajuan-dana add', 
             'pengajuan-dana delete',
