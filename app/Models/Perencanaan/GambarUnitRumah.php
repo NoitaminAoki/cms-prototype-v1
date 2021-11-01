@@ -4,6 +4,8 @@ namespace App\Models\Perencanaan;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class GambarUnitRumah extends Model
 {
@@ -14,8 +16,27 @@ class GambarUnitRumah extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
+        'full_path',
+        'sector_id',
+        'pdf_real_name', 
         'pdf_name', 
-        'pdf_path', 
+        'base_path', 
         'tanggal',
     ];
+
+    public const BASE_PATH = 'images/perencanaan/gambar-unit-rumah/';
+
+    
+    protected static function boot()
+    {
+        parent::boot();
+
+        Self::creating(function ($model) {
+            $model->uuid = Str::uuid();
+            $model->sector_id = Config::get('app.sector_id'); 
+            $model->base_path = self::BASE_PATH; 
+            $model->full_path = self::BASE_PATH . $model->image_name;
+        });
+    }
 }

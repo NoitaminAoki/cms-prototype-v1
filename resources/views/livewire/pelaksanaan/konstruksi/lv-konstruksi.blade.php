@@ -1,3 +1,4 @@
+@section('title-page', ' - Divisi Konstruksi')
 @section('css-libraries')
 @endsection
 

@@ -1,3 +1,4 @@
+@section('title-page', ' - Divisi Marketing')
 @section('css-libraries')
 @endsection
 

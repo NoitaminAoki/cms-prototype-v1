@@ -15,9 +15,13 @@ class CreateItemLegalitasPerusahaansTable extends Migration
     {
         Schema::create('item_legalitas_perusahaans', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
+            $table->string('full_path');
             $table->unsignedBigInteger('legalitas_perusahaan_id')->nullable();
+            $table->string('sector_id', 15);
+            $table->string('image_real_name');
             $table->string('image_name');
-            $table->string('image_path');
+            $table->string('base_path');
             $table->timestamp('tanggal');
             $table->timestamps();
         });

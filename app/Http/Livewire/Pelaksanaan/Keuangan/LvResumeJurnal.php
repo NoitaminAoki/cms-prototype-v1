@@ -4,89 +4,143 @@ namespace App\Http\Livewire\Pelaksanaan\Keuangan;
 
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
 use App\Models\{
     Keuangan\ResumeJurnal,
 };
+use App\Helpers\StringGenerator;
 
 class LvResumeJurnal extends Component
 {
     use WithFileUploads;
-
+    
     protected $listeners = [
-        'evSetPaket' => 'setPaket',
         'evSetInputTanggal' => 'setInputTanggal',
     ];
-
-    public $paket_id;
+    
+    public $page_attribute = [
+        'title' => 'Resume Jurnal',
+    ];
+    public $page_permission = [
+        'add' => 'resume-jurnal add',
+        'delete' => 'resume-jurnal delete',
+    ];
+    
+    public $control_tabs = [
+        'list' => true,
+        'detail' => false,
+    ];
+    
     public $file_image;
     public $input_tanggal;
     public $iteration;
-
-    public $selected_resume_jurnal;
+    
+    public $items;
+    public $selected_item_group = [];
+    public $selected_group_name;
+    public $selected_item;
     public $selected_url;
     
     public function render()
     {
-        $data['resume_jurnals'] = ResumeJurnal::all();
+        $items = ResumeJurnal::query()
+        ->select('*')
+        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date')
+        ->orderBy('tanggal', 'ASC')
+        ->get()
+        ->groupBy('date');
+
+
+        $this->items = collect($items)->map(function ($values, $index)
+        {
+            return [
+                'name' => $index,
+                'items' => $values,
+            ];
+        });
+        
+        if ($this->selected_group_name) {
+            $item = $this->items->where('name', $this->selected_group_name)->first();
+            $this->selected_item_group = $item['items'] ?? [];
+        }
+        
         return view('livewire.pelaksanaan.keuangan.lv-resume-jurnal')
-        ->with($data)
+        ->with([])
         ->layout('layouts.dashboard.main');
     }
-
-    public function addResumeJurnal()
+    
+    public function addItem()
     {
         $this->validate([
             'file_image' => 'required|image',
             'input_tanggal' => 'required|string',
         ]);
         $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
-        $image_name = 'image_resume_jurnal_'.Date('YmdHis').'.'.$this->file_image->extension();
-        $image_path = Storage::putFileAs('images/keuangan/resume_jurnal', $this->file_image, $image_name);
-
+        $image_name = StringGenerator::fileName($this->file_image->extension());
+        $image_path = Storage::disk('sector_disk')->putFileAs(ResumeJurnal::BASE_PATH, $this->file_image, $image_name);
+        
         $insert = ResumeJurnal::create([
-            'image_name' => $this->file_image->getClientOriginalName(),
-            'image_path' => $image_path,
+            'image_real_name' => $this->file_image->getClientOriginalName(),
+            'image_name' => $image_name,
             'tanggal' => $date_now,
         ]);
-
+        
         $this->resetInput();
         
         return $this->dispatchBrowserEvent('notification:success', ['title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
-
+    
     public function setInputTanggal($value)
     {
         $this->input_tanggal = $value;
     }
-
+    
     public function resetInput()
     {
-        $this->reset('file_image', 'selected_resume_jurnal');
+        $this->reset('file_image', 'selected_item');
         $this->input_tanggal = date('m/d/Y');
         $this->iteration++;
     }
-
-    public function setResumeJurnal($id)
+    
+    public function setItem($id)
     {
-        $resume = ResumeJurnal::findOrFail($id);
-        $this->selected_resume_jurnal = $resume;
-        $this->selected_url = route('image.keuangan.resume_jurnal', ['id' => $resume->id]);
+        $item = ResumeJurnal::findOrFail($id);
+        $this->selected_item = $item;
+        $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
     }
-
+    
+    public function setGroupName($name)
+    {
+        $this->selected_group_name = $name;
+        $this->control_tabs = [
+            'list' => false,
+            'detail' => true,
+        ];
+    }
+    
+    public function openList()
+    {
+        $this->control_tabs = [
+            'list' => true,
+            'detail' => false,
+        ];
+    }
+    
     public function downloadImage()
     {
-        $file = ResumeJurnal::findOrFail($this->selected_resume_jurnal['id']);
-        $path = storage_path('app/'.$file->image_path);
+        $item = ResumeJurnal::findOrFail($this->selected_item['id']);
+        $path = $item->full_path;
         
-        return response()->download($path, $file->image_name);
+        return Storage::disk('sector_disk')->download($path, $item->image_real_name);
     }
-
+    
     public function delete($id)
     {
-        $resume_jurnal = ResumeJurnal::findOrFail($id);
-        Storage::delete($resume_jurnal->image_path);
-        $resume_jurnal->delete();
+        $item = ResumeJurnal::findOrFail($id);
+        $path = $item->full_path;
+        Storage::disk('sector_disk')->delete($path);
+        $item->delete();
         $this->resetInput();
         return ['status_code' => 200, 'message' => 'Data has been deleted.'];
     }

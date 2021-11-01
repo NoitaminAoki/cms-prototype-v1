@@ -57,8 +57,6 @@
                       please fill in your password
                     </div>
                   </div>
-                  
-                  
                   @error('email')
                   <div class="mt-4">
                     <span class="text-danger">Invalid email or password. Please try again.</span>
@@ -70,7 +68,6 @@
                       <label class="custom-control-label" for="remember_me">Remember Me</label>
                     </div>
                   </div> --}}
-                  
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                       Login

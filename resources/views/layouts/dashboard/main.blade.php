@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-  <title>Gantari Bawana @yield('page-title')</title>
+  <title>Gantari Bawana @yield('title-page')</title>
   
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -19,7 +19,21 @@
   @yield('css')
   
   <style>
-    
+    .card-link {
+      cursor: pointer;
+    }
+    .card-link:hover {
+      color: #0056b3;
+    }
+    .swal2-confirm.swal2-styled {
+        /* box-shadow: 0 2px 6px #acb5f6; */
+        background-color: #6777ef;
+    }
+    .swal2-cancel.swal2-styled {
+        color: #555;
+        background-color: #efefef;
+    }
+
     .custom-fa-10x {
       font-size: 10em;
     }

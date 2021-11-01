@@ -15,9 +15,13 @@ class CreateItemKonstruksiSaranasTable extends Migration
     {
         Schema::create('item_konstruksi_saranas', function (Blueprint $table) {
             $table->id();
+            $table->uuid('uuid');
+            $table->string('full_path');
             $table->unsignedBigInteger('konstruksi_sarana_id')->nullable();
+            $table->string('sector_id', 15);
+            $table->string('pdf_real_name');
             $table->string('pdf_name');
-            $table->string('pdf_path');
+            $table->string('base_path');
             $table->timestamp('tanggal');
             $table->timestamps();
         });

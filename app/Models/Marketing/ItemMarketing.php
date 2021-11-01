@@ -4,6 +4,8 @@ namespace App\Models\Marketing;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 
 class ItemMarketing extends Model
 {
@@ -14,9 +16,28 @@ class ItemMarketing extends Model
      * @var array
      */
     protected $fillable = [
+        'uuid',
+        'full_path',
         'marketing_id',
+        'sector_id',
+        'image_real_name', 
         'image_name', 
-        'image_path',
+        'base_path', 
         'tanggal',
     ];
+
+    public const BASE_PATH = 'images/marketing/item-marketing/';
+
+    
+    protected static function boot()
+    {
+        parent::boot();
+
+        Self::creating(function ($model) {
+            $model->uuid = Str::uuid();
+            $model->sector_id = Config::get('app.sector_id'); 
+            $model->base_path = self::BASE_PATH; 
+            $model->full_path = self::BASE_PATH . $model->image_name;
+        });
+    }
 }

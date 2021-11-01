@@ -42,9 +42,9 @@ return [
             'visibility' => 'public',
         ],
 
-        'custom' => [
+        'sector_disk' => [
             'driver' => 'local',
-            'root'   => '../../tester_storage',
+            'root'   => env('SECTOR_BASE').env('SECTOR_ID'),
         ],
 
         's3' => [

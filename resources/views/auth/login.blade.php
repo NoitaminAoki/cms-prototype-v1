@@ -1,50 +1,50 @@
 {{-- <x-guest-layout>
-    <x-jet-authentication-card>
-        <x-slot name="logo">
-            <x-jet-authentication-card-logo />
-        </x-slot>
-
-        <x-jet-validation-errors class="mb-4" />
-
-        @if (session('status'))
-            <div class="mb-4 font-medium text-sm text-green-600">
-                {{ session('status') }}
-            </div>
+  <x-jet-authentication-card>
+    <x-slot name="logo">
+      <x-jet-authentication-card-logo />
+    </x-slot>
+    
+    <x-jet-validation-errors class="mb-4" />
+    
+    @if (session('status'))
+    <div class="mb-4 font-medium text-sm text-green-600">
+      {{ session('status') }}
+    </div>
+    @endif
+    
+    <form method="POST" action="{{ route('login') }}">
+      @csrf
+      
+      <div>
+        <x-jet-label for="email" value="{{ __('Email') }}" />
+        <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
+      </div>
+      
+      <div class="mt-4">
+        <x-jet-label for="password" value="{{ __('Password') }}" />
+        <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
+      </div>
+      
+      <div class="block mt-4">
+        <label for="remember_me" class="flex items-center">
+          <x-jet-checkbox id="remember_me" name="remember" />
+          <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
+        </label>
+      </div>
+      
+      <div class="flex items-center justify-end mt-4">
+        @if (Route::has('password.request'))
+        <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
+          {{ __('Forgot your password?') }}
+        </a>
         @endif
-
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
-
-            <div>
-                <x-jet-label for="email" value="{{ __('Email') }}" />
-                <x-jet-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-            </div>
-
-            <div class="mt-4">
-                <x-jet-label for="password" value="{{ __('Password') }}" />
-                <x-jet-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="current-password" />
-            </div>
-
-            <div class="block mt-4">
-                <label for="remember_me" class="flex items-center">
-                    <x-jet-checkbox id="remember_me" name="remember" />
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
-
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
-
-                <x-jet-button class="ml-4">
-                    {{ __('Log in') }}
-                </x-jet-button>
-            </div>
-        </form>
-    </x-jet-authentication-card>
+        
+        <x-jet-button class="ml-4">
+          {{ __('Log in') }}
+        </x-jet-button>
+      </div>
+    </form>
+  </x-jet-authentication-card>
 </x-guest-layout> --}}
 
 
@@ -54,14 +54,14 @@
   <meta charset="UTF-8">
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
   <title>Login &mdash; GB</title>
-
+  
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-
+  
   <!-- CSS Libraries -->
   {{-- <link rel="stylesheet" href="../node_modules/bootstrap-social/bootstrap-social.css"> --}}
-
+  
   <!-- Template CSS -->
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <link rel="stylesheet" href="{{ asset('assets/css/components.css') }}">
@@ -76,15 +76,15 @@
             {{-- <div class="login-brand">
               <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
             </div> --}}
-
+            
             <div class="card card-primary">
               <div class="card-header">
                 <img src="{{ asset('assets/img/logo-dark.png') }}" alt="logo gantari" width="300px">
               </div>
-
+              
               <div class="card-body">
                 <form method="POST" action="{{ route('login') }}" class="needs-validation" novalidate="">
-                @csrf
+                  @csrf
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input id="email" type="email" class="form-control" name="email" tabindex="1" required autofocus autocomplete="off">
@@ -92,10 +92,10 @@
                       Please fill in your email
                     </div>
                   </div>
-
+                  
                   <div class="form-group">
                     <div class="d-block">
-                    	<label for="password" class="control-label">Password</label>
+                      <label for="password" class="control-label">Password</label>
                       <div class="float-right">
                         <a href="auth-forgot-password.html" class="text-small">
                           Forgot Password?
@@ -107,19 +107,19 @@
                       please fill in your password
                     </div>
                   </div>
-
-                  @error('email')
-                  <div class="mt-4 mb-3">
-                    <span class="text-danger">Invalid email or password. Please try again.</span>
-                  </div>
-                  @enderror
+                  
+                @error('email')
+                <div class="mt-4">
+                  <span class="text-danger">Invalid email or password. Please try again.</span>
+                </div>
+                @enderror
                   {{-- <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="remember_me" class="custom-control-input" tabindex="3" id="remember_me">
                       <label class="custom-control-label" for="remember_me">Remember Me</label>
                     </div>
                   </div> --}}
-
+                  
                   <div class="form-group">
                     <button type="submit" class="btn btn-primary btn-lg btn-block" tabindex="4">
                       Login
@@ -141,7 +141,7 @@
                     </a>
                   </div>
                 </div> --}}
-
+                
               </div>
             </div>
             <div class="mt-5 text-muted text-center">
@@ -155,7 +155,7 @@
       </div>
     </section>
   </div>
-
+  
   <!-- General JS Scripts -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
@@ -163,13 +163,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
   <script src="{{ asset('assets/js/stisla.js') }}"></script>
-
+  
   <!-- JS Libraies -->
-
+  
   <!-- Template JS File -->
   <script src="{{ asset('assets/js/scripts.js') }}"></script>
   <script src="{{ asset('assets/js/custom.js') }}"></script>
-
+  
   <!-- Page Specific JS File -->
 </body>
 </html>
