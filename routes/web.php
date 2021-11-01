@@ -241,7 +241,7 @@ Route::prefix('/admin')->name('admin.')->group(function(){
     Route::post('/logout',[AdminLoginController::class, 'logout'])->name('logout');
 });
 
-Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function () {
     
     /* MASTER */
     Route::prefix('master')->name('master.')->group(function () {
