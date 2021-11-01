@@ -227,16 +227,6 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     });
     /* END KEUANGAN */
     
-    /* MASTER */
-    Route::prefix('master')->name('master.')->group(function () {
-        Route::get('/', LvMasterAdmin::class)->name('index');
-        Route::get('/user-roles', LvUserRolesAdmin::class)->name('user_roles.index');
-        Route::get('/roles', LvRolesAdmin::class)->name('roles.index');
-        Route::get('/code', LvMsCode::class)->name('code.index');
-        Route::get('/code/{parent_code_id}/sub-codes', LvMsSubCode::class)->name('code.sub_code');
-    });
-    /* END MASTER */
-    
     /* FILE STORAGE */
     Route::get('files/image/stream', [FileStorageController::class, 'imageStream'])->name('files.image.stream');
     Route::get('files/pdf/stream', [FileStorageController::class, 'pdfStream'])->name('files.pdf.stream');
@@ -252,6 +242,16 @@ Route::prefix('/admin')->name('admin.')->group(function(){
 });
 
 Route::middleware(['auth:admin', 'verified'])->prefix('admin')->name('admin.')->group(function () {
+    
+    /* MASTER */
+    Route::prefix('master')->name('master.')->group(function () {
+        Route::get('/', LvMasterAdmin::class)->name('index');
+        Route::get('/user-roles', LvUserRolesAdmin::class)->name('user_roles.index');
+        Route::get('/roles', LvRolesAdmin::class)->name('roles.index');
+        Route::get('/code', LvMsCode::class)->name('code.index');
+        Route::get('/code/{parent_code_id}/sub-codes', LvMsSubCode::class)->name('code.sub_code');
+    });
+    /* END MASTER */
     
     /* MANAGE (ADMIN) */
     Route::prefix('manage')->name('manage.')->group(function () {
