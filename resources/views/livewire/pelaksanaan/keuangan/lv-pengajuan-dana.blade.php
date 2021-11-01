@@ -19,23 +19,52 @@
             </div>
         </div>
         
-        <div class="section-body">
-            <div class="row">
-                @can('pengajuan-dana add')
+        <div x-data="{ control_tabs: @entangle('control_tabs') }" class="section-body">
+            <div x-show="control_tabs.list" class="row">
+                @can($page_permission['add'])
                 <div class="col-12 mb-4">
                     <button data-toggle="modal" data-target="#modalAddItem" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add</button>
                 </div>
                 @endcan
                 @forelse ($items as $item)
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <a class="text-decoration-none custom-color-inherit" wire:click="setGroupName('{{$item['name']}}')" href="#">
+                        <div class="card custom-card-folder">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                                </div>
+                                <div class="w-100 mt-2">
+                                    <h6 class="text-uppercase mb-0">{{$item['name']}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @empty
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <span>Empty</span>
+                        </div>
+                    </div>
+                </div>
+                @endforelse
+            </div>
+            <div :class="{ 'd-block': control_tabs.detail }" class="row" style="display: none;">
+                <div class="col-12 mb-4">
+                    <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning">Back</button>
+                </div>
+                @forelse($selected_item_group as $item_group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item->id}})" data-toggle="modal" data-target="#modalViewItem">
+                    <a href="#" wire:click="setItem({{$item_group['id']}})" data-toggle="modal" data-target="#modalViewItem">
                         <div class="card shadow-sm custom-card-folder">
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item->base_path, 'name' => $item->image_name]) }});">
+                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
                                     </div>
                                     <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->image_real_name}}</div>
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
                                     </div>
                                 </div>
                             </article>

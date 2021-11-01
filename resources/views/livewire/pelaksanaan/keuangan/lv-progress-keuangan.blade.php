@@ -18,23 +18,52 @@
             </div>
         </div>
         
-        <div class="section-body">
-            <div class="row">
+        <div x-data="{ control_tabs: @entangle('control_tabs') }" class="section-body">
+            <div x-show="control_tabs.list" class="row">
                 @can($page_permission['add'])
                 <div class="col-12 mb-4">
                     <button data-toggle="modal" data-target="#modalAddItem" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add</button>
                 </div>
                 @endcan
                 @forelse ($items as $item)
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <a class="text-decoration-none custom-color-inherit" wire:click="setGroupName('{{$item['name']}}')" href="#">
+                        <div class="card custom-card-folder">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                                </div>
+                                <div class="w-100 mt-2">
+                                    <h6 class="text-uppercase mb-0">{{$item['name']}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @empty
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <span>Empty</span>
+                        </div>
+                    </div>
+                </div>
+                @endforelse
+            </div>
+            <div :class="{ 'd-block': control_tabs.detail }" class="row" style="display: none;">
+                <div class="col-12 mb-4">
+                    <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning">Back</button>
+                </div>
+                @forelse($selected_item_group as $item_group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item->id}})" data-toggle="modal" data-target="#modalViewItem">
+                    <a href="#" wire:click="setItem({{$item_group['id']}})" data-toggle="modal" data-target="#modalViewItem">
                         <div class="card shadow-sm custom-card-folder">
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item->base_path, 'name' => $item->image_name]) }});">
+                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
                                     </div>
                                     <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->image_real_name}}</div>
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
                                     </div>
                                 </div>
                             </article>
@@ -106,40 +135,40 @@
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                    <div class="modal-body">
-                        <div class="w-100">
-                            <div class="common-section-title">Image Name</div>
-                            <p>{{$selected_item['image_real_name'] ?? '-'}}</p>
-                        </div>
-                        <div class="w-100 mb-4">
-                            <div class="common-section-title">Date</div>
-                            @if ($selected_item)
-                            <p>{{date('d F Y', strtotime($selected_item['tanggal']))}}</p>
-                            @else
-                            <p>-</p>
-                            @endif
-                        </div>
-                        <div class="w-100">
-                            @if ($selected_item)
-                            <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
-                            @endif
-                        </div>
+                <div class="modal-body">
+                    <div class="w-100">
+                        <div class="common-section-title">Image Name</div>
+                        <p>{{$selected_item['image_real_name'] ?? '-'}}</p>
                     </div>
-                    <div class="modal-footer bg-whitesmoke br">
-                        <div class="mr-auto">
-                            @if ($selected_item)
-                            @can($page_permission['delete'])
-                            <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_item['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
-                            @endcan
-                            <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
-                            @endif
-                        </div>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <div class="w-100 mb-4">
+                        <div class="common-section-title">Date</div>
+                        @if ($selected_item)
+                        <p>{{date('d F Y', strtotime($selected_item['tanggal']))}}</p>
+                        @else
+                        <p>-</p>
+                        @endif
                     </div>
-                </form>
-            </div>
+                    <div class="w-100">
+                        @if ($selected_item)
+                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                        @endif
+                    </div>
+                </div>
+                <div class="modal-footer bg-whitesmoke br">
+                    <div class="mr-auto">
+                        @if ($selected_item)
+                        @can($page_permission['delete'])
+                        <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_item['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
+                        @endcan
+                        <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
+                        @endif
+                    </div>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -157,7 +186,7 @@
     $('.form-date').on('change', function(event) {
         Livewire.emit('evSetInputTanggal', event.target.value);
     })
-
+    
     $(document).on('click', '.btn-delete', function() {
         var id = $(this).attr('data-id');
         var target = $(this).attr('data-target');
