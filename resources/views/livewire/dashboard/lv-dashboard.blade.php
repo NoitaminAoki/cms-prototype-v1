@@ -58,6 +58,20 @@
             </div>
           </a>
         </div>
+        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.wilayah.filter_data.index') }}">
+            <div class="card custom-card-folder">
+              <div class="card-body">
+                <div class="text-center">
+                  <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                </div>
+                <div class="w-100 mt-2">
+                  <h6 class="text-uppercase mb-0">Manage</h6>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
         @endauth
       </div>
     </div>

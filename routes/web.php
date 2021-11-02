@@ -92,6 +92,10 @@ use App\Http\Livewire\Master\{
     LvMsSubCode,
 };
 
+use App\Http\Livewire\Manage\{
+    Wilayah\LvFilterData,
+};
+
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     
@@ -253,10 +257,10 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     });
     /* END MASTER */
     
-    /* MANAGE (ADMIN) */
+    /* MANAGE */
     Route::prefix('manage')->name('manage.')->group(function () {
-        
+        Route::get('wilayah/filter-data-masuk', LvFilterData::class)->name('wilayah.filter_data.index');
     });
-    /* END MANAGE (ADMIN) */
+    /* END MANAGE */
     
 });
