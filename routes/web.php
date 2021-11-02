@@ -125,7 +125,7 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
                 Route::get('/jurnal-keuangan', LvJurnalKeuangan::class)->name('jurnal_keuangan.index');
                 Route::get('/jurnal-harian', LvJurnalHarian::class)->name('jurnal_harian.index');
             });
-            Route::middleware(['permission:jurnal-harian view'])->group(function () {
+            Route::middleware(['permission:resume-harian view'])->group(function () {
                 Route::get('/resume-jurnal', LvResumeJurnal::class)->name('resume_jurnal.index');
             });
             Route::middleware(['permission:realisasi-dana view'])->group(function () {
@@ -156,7 +156,7 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
             });
         });
         Route::prefix('marketing')->name('marketing.')->group(function () {
-            Route::middleware(['permission:aset-perusahaan view'])->group(function () {
+            Route::middleware(['permission:marketing view'])->group(function () {
                 Route::get('/', LvMarketing::class)->name('index');
                 Route::get('/marketing/{slug}', LvItemMarketing::class)->name('item.index');
             });
