@@ -17,7 +17,9 @@ class ItemProgressKemajuan extends Model
      */
     protected $fillable = [
         'uuid',
+        'origin_uuid',
         'full_path',
+        'origin_sector_id',
         'progress_kemajuan_id',
         'sector_id',
         'image_real_name', 

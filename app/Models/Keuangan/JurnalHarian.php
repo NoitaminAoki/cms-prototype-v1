@@ -17,7 +17,9 @@ class JurnalHarian extends Model
      */
     protected $fillable = [
         'uuid',
+        'origin_uuid',
         'full_path',
+        'origin_sector_id',
         'sector_id',
         'image_real_name', 
         'image_name', 
@@ -38,5 +40,10 @@ class JurnalHarian extends Model
             $model->base_path = self::BASE_PATH; 
             $model->full_path = self::BASE_PATH . $model->image_name; 
         });
+    }
+
+    public function jurnal_pusat()
+    {
+        return $this->belongsTo(JurnalHarian::class, 'uuid', 'origin_uuid');
     }
 }

@@ -46,6 +46,10 @@ return [
             'driver' => 'local',
             'root'   => env('SECTOR_BASE').env('SECTOR_ID'),
         ],
+        'sector_base' => [
+            'driver' => 'local',
+            'root'   => env('SECTOR_BASE'),
+        ],
 
         's3' => [
             'driver' => 's3',

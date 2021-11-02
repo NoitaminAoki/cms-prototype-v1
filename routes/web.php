@@ -233,6 +233,7 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     
     /* FILE STORAGE */
     Route::get('files/image/stream', [FileStorageController::class, 'imageStream'])->name('files.image.stream');
+    Route::get('files/image/sector/stream', [FileStorageController::class, 'imageSectorStream'])->name('files.image.sector.stream');
     Route::get('files/pdf/stream', [FileStorageController::class, 'pdfStream'])->name('files.pdf.stream');
     /* END FILE STORAGE */
 });

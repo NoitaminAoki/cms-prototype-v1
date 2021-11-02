@@ -16,7 +16,9 @@ class CreateItemMarketingsTable extends Migration
         Schema::create('item_marketings', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
+            $table->uuid('origin_uuid')->nullable();
             $table->string('full_path');
+            $table->string('origin_sector_id', 15)->nullable();
             $table->unsignedBigInteger('marketing_id')->nullable();
             $table->string('sector_id', 15);
             $table->string('image_real_name');

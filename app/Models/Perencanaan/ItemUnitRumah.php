@@ -17,7 +17,9 @@ class ItemUnitRumah extends Model
      */
     protected $fillable = [
         'uuid',
+        'origin_uuid',
         'full_path',
+        'origin_sector_id',
         'konstruksi_unit_id',
         'sector_id',
         'pdf_real_name', 

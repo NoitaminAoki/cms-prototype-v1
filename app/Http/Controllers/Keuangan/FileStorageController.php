@@ -24,6 +24,22 @@ class FileStorageController extends Controller
         abort(404);
     }
 
+    public function imageSectorStream(Request $request)
+    {
+        $base_path = urldecode($request->query('path'));
+        $filename = $request->query('name');
+
+        if (Storage::disk('sector_base')->exists($base_path.$filename)) {
+            
+            $path = Storage::disk('sector_base')->path($base_path.$filename);
+            return response()
+            ->file($path, array('Content-Type' =>'image'));
+            
+        }
+        
+        abort(404);
+    }
+
     public function pdfStream(Request $request)
     {
         $base_path = urldecode($request->query('path'));

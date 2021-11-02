@@ -23,7 +23,9 @@ class RealisasiDana extends Model
      */
     protected $fillable = [
         'uuid',
+        'origin_uuid',
         'full_path',
+        'origin_sector_id',
         'sector_id',
         'image_real_name', 
         'image_name', 

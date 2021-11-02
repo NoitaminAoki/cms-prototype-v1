@@ -5,7 +5,17 @@
 @endsection
 
 @section('css')
+<style>
+    .article .article-header .article-top-badge {
+        position: absolute;
+        top: 10px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+</style>
 @endsection
+
+@inject('sectorDataHelper', 'App\Helpers\SectorData')
 
 <div>
     <section class="section">
@@ -60,6 +70,9 @@
                         <div class="card shadow-sm custom-card-folder">
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
+                                    <div class="article-top-badge w-100">
+                                        <span class="badge shadow badge-info">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
+                                    </div>
                                     <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
                                     </div>
                                     <div class="article-badge custom-article-badge w-100">

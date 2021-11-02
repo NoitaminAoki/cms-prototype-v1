@@ -17,7 +17,9 @@ class ItemKonstruksiSarana extends Model
      */
     protected $fillable = [
         'uuid',
+        'origin_uuid',
         'full_path',
+        'origin_sector_id',
         'konstruksi_sarana_id',
         'sector_id',
         'pdf_real_name', 

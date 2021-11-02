@@ -54,6 +54,22 @@ class SectorData
         return collect(self::$datas)->map(fn($val, $key) => $val['name'])->toArray();
     }
 
+    public static function getAllDatabases()
+    {
+        $data = [];
+        foreach (self::$datas as $key => $value) {
+            if ($value['db_name']) {
+                $data[] = $value['db_name'];
+            }
+        }
+        return $data;
+    }
+
+    public static function getNameById($sector_id)
+    {
+        return self::$datas[$sector_id]['name'] ?? '-';
+    }
+
     public static function getPropertiesById($sector_id)
     {
         return self::$datas[$sector_id] ?? null;
