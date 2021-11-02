@@ -50,7 +50,7 @@
                 </div>
                 @endforelse
             </div>
-            <div :class="{ 'd-block': control_tabs.detail }" class="row" style="display: none;">
+            <div :class="{ 'd-none': !control_tabs.detail }" class="row d-none">
                 <div class="col-12 mb-4">
                     <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning">Back</button>
                 </div>
