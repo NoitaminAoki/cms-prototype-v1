@@ -64,14 +64,14 @@
                 <div class="col-12 mb-4">
                     <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning">Back</button>
                 </div>
-                @forelse($selected_item_group as $item_group)
+                @foreach($selected_item_group['resume'] as $item_group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item_group['id']}})" data-toggle="modal" data-target="#modalViewItem">
+                    <a href="#" wire:click="setItem({{$item_group['id']}}, 'resume')" data-toggle="modal" data-target="#modalViewItem">
                         <div class="card shadow-sm custom-card-folder">
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
                                     <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-info">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
+                                        <span class="badge shadow badge-primary">Resume</span>
                                     </div>
                                     <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
                                     </div>
@@ -83,15 +83,27 @@
                         </div>
                     </a>
                 </div>
-                @empty
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <span>Empty</span>
+                @endforeach
+                @foreach($selected_item_group['jurnal'] as $item_group)
+                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                    <a href="#" wire:click="setItem({{$item_group['id']}}, 'jurnal')" data-toggle="modal" data-target="#modalViewItem">
+                        <div class="card shadow-sm custom-card-folder">
+                            <article class="article article-style-b mb-0">
+                                <div class="article-header">
+                                    <div class="article-top-badge w-100">
+                                        <span class="badge shadow badge-primary">Jurnal</span>
+                                    </div>
+                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
+                                    </div>
+                                    <div class="article-badge custom-article-badge w-100">
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
+                                    </div>
+                                </div>
+                            </article>
                         </div>
-                    </div>
+                    </a>
                 </div>
-                @endforelse
+                @endforeach
             </div>
         </div>
     </section>
@@ -107,6 +119,16 @@
                 </div>
                 <form wire:submit.prevent="addItem" x-data="{ isUploading: false, progress: 0 }" x-on:livewire-upload-start="isUploading = true" x-on:livewire-upload-finish="isUploading = false" x-on:livewire-upload-error="isUploading = false" x-on:livewire-upload-progress="progress = $event.detail.progress">
                     <div class="modal-body">
+                        <div class="form-group mb-3">
+                            <label>Tipe</label>
+                            <select wire:model="tipe_jurnal" class="form-control" required>
+                                <option value="jurnal">Jurnal Harian</option>
+                                <option value="resume">Resume Jurnal</option>
+                            </select>
+                        </div>
+                        @error('tipe_jurnal')
+                        <span class="text-danger">{{$message}}</span>
+                        @enderror
                         <div class="form-group mb-3">
                             <label for="input_date">Tanggal</label>
                             <input wire:model="input_tanggal" type="text" class="form-control form-date" name="input_date" id="input_date" />
@@ -171,7 +193,7 @@
                     <div class="mr-auto">
                         @if ($selected_item)
                         @can($page_permission['delete'])
-                        <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_item['id']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
+                        <button wire:target="delete" wire:loading.class="disabled btn-progress" data-id="{{$selected_item['id']}}" data-type="{{$selected_item['type']}}" type="button" class="btn btn-danger btn-delete"><i class="fas fa-trash"></i></button>
                         @endcan
                         <button wire:click="downloadImage" wire:target="downloadImage" wire:loading.class="disabled btn-progress" type="button" class="btn btn-primary"><i class="fas fa-download"></i></button>
                         @endif
@@ -193,6 +215,9 @@
         $('.form-date').daterangepicker({
             singleDatePicker: true,
             autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
         });
     })
     
@@ -202,7 +227,7 @@
     
     $(document).on('click', '.btn-delete', function() {
         var id = $(this).attr('data-id');
-        var target = $(this).attr('data-target');
+        var type = $(this).attr('data-type');
         Swal.fire({
             title: 'Are you sure?',
             text: "Once deleted, you will not be able to revert this!",
@@ -212,7 +237,7 @@
             showLoaderOnConfirm: true,
             reverseButtons: true,
             preConfirm: async () => {
-                var data = await @this.delete(id)
+                var data = await @this.delete(id, type)
                 return data
             },
             allowOutsideClick: () => !Swal.fire.isLoading()
@@ -238,12 +263,14 @@
         })
     })
     
-    document.addEventListener('notification:success', function (event) {
-        $('.modal').modal('hide');
-        
+    
+    document.addEventListener('notification:show', function (event) {
+        setTimeout(function() {
+            $('.modal').modal('hide');
+        }, 200);
         setTimeout(function() {
             Swal.fire({
-                icon: 'success',
+                icon: event.detail.type,
                 title: event.detail.title,
                 text: event.detail.message,
             });

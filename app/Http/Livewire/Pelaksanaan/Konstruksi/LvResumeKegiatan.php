@@ -76,7 +76,8 @@ class LvResumeKegiatan extends Component
             'file_image' => 'required|image',
             'input_tanggal' => 'required|string',
         ]);
-        $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
+        $date_parse = str_replace('/', '-', $this->input_tanggal);
+        $date_now = date('Y-m-d H:i:s', strtotime($date_parse));
         $image_name = StringGenerator::fileName($this->file_image->extension());
         $image_path = Storage::disk('sector_disk')->putFileAs(ResumeKegiatan::BASE_PATH, $this->file_image, $image_name);
         

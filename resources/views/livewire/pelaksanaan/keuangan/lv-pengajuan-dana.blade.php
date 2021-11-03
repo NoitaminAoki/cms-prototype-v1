@@ -198,6 +198,9 @@
         $('.form-date').daterangepicker({
             singleDatePicker: true,
             autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
         });
     })
     $(document).on('click', '.btn-delete', function() {

@@ -47,7 +47,8 @@ class LvBrosurPerumahan extends Component
             'file_pdf' => 'required|mimes:pdf',
             'input_tanggal' => 'required|string',
         ]);
-        $date_now = date('Y-m-d H:i:s', strtotime($this->input_tanggal));
+        $date_parse = str_replace('/', '-', $this->input_tanggal);
+        $date_now = date('Y-m-d H:i:s', strtotime($date_parse));
         $pdf_name = StringGenerator::fileName($this->file_pdf->extension());
         $pdf_path = Storage::disk('sector_disk')->putFileAs(BrosurPerumahan::BASE_PATH, $this->file_pdf, $pdf_name);
 

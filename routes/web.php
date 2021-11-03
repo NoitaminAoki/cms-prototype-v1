@@ -135,8 +135,8 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
                 Route::get('/pengajuan-dana', LvPengajuanDana::class)->name('pengajuan_dana.index');
             });
             Route::middleware(['permission:jurnal-harian view'])->group(function () {
-                Route::get('/jurnal-keuangan', LvJurnalKeuangan::class)->name('jurnal_keuangan.index');
-                Route::get('/jurnal-harian', LvJurnalHarian::class)->name('jurnal_harian.index');
+                Route::get('/jurnal-keuangan', LvJurnalHarian::class)->name('jurnal_keuangan.index');
+                // Route::get('/jurnal-harian', LvJurnalHarian::class)->name('jurnal_harian.index');
             });
             Route::middleware(['permission:resume-jurnal view'])->group(function () {
                 Route::get('/resume-jurnal', LvResumeJurnal::class)->name('resume_jurnal.index');
