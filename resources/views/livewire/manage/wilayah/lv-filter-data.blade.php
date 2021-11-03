@@ -18,37 +18,39 @@
         <div class="section-body">
             <div class="card">
                 <div class="card-body">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th class="text-left" style="width: 25px;" scope="col">#</th>
-                                <th class="text-left" scope="col">Asal</th>
-                                <th class="text-left" scope="col">Nama</th>
-                                <th class="text-left" scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @forelse ($sector_items as $key => $sector_item)
-                            <tr>
-                                <td>{{$key+1}}</td>
-                                <td>{{$sectorDataHelper::getNameById($sector_item->sector_id)}}</td>
-                                <td>{{$sector_item->image_real_name}}</td>
-                                <td>
-                                    <button id="container_sector_{{$key.'_'.$sector_item['id']}}" wire:click="setItem({{$sector_item['id']}}, '{{$sector_item['sector_id']}}')" data-toggle="modal" data-target="#modalViewSectorItem" class="btn btn-sm btn-info"><i class="fas fa-search"></i></button>
-                                    @if ($sector_item['jurnal_pusat'])
-                                    <span class="btn btn-sm btn-outline-success">Accepted.</span>
-                                    @else
-                                    <button wire:click="copyDataSector({{$sector_item['id']}},'{{$sector_item['sector_id']}}')" wire:target="copyDataSector({{$sector_item['id']}},'{{$sector_item['sector_id']}}')" wire:loading.class="disabled btn-progress" type="button" class="btn btn-sm btn-success"><i class="fas fa-sign-in-alt"></i> Accept</button>
-                                    @endif
-                                </td>
-                            </tr>
-                            @empty
-                            <tr>
-                                <td colspan="5" class="text-center text-muted">Empty</td>
-                            </tr>
-                            @endforelse
-                        </tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th class="text-left" style="width: 25px;" scope="col">#</th>
+                                    <th class="text-left" scope="col">Asal</th>
+                                    <th class="text-left" scope="col">Nama</th>
+                                    <th class="text-left" scope="col">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @forelse ($sector_items as $key => $sector_item)
+                                <tr>
+                                    <td>{{$key+1}}</td>
+                                    <td>{{$sectorDataHelper::getNameById($sector_item->sector_id)}}</td>
+                                    <td>{{$sector_item->image_real_name}}</td>
+                                    <td>
+                                        <button id="container_sector_{{$key.'_'.$sector_item['id']}}" wire:click="setItem({{$sector_item['id']}}, '{{$sector_item['sector_id']}}')" data-toggle="modal" data-target="#modalViewSectorItem" class="btn btn-sm btn-info"><i class="fas fa-search"></i></button>
+                                        @if ($sector_item['jurnal_pusat'])
+                                        <span class="btn btn-sm btn-outline-success">Accepted.</span>
+                                        @else
+                                        <button wire:click="copyDataSector({{$sector_item['id']}},'{{$sector_item['sector_id']}}')" wire:target="copyDataSector({{$sector_item['id']}},'{{$sector_item['sector_id']}}')" wire:loading.class="disabled btn-progress" type="button" class="btn btn-sm btn-success"><i class="fas fa-sign-in-alt"></i> Accept</button>
+                                        @endif
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="5" class="text-center text-muted">Empty</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
