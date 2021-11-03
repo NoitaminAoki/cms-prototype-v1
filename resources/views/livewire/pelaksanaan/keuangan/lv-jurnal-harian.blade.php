@@ -71,7 +71,7 @@
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
                                     <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-primary">Resume</span>
+                                        <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
                                     </div>
                                     <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
                                     </div>
@@ -91,7 +91,7 @@
                             <article class="article article-style-b mb-0">
                                 <div class="article-header">
                                     <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-primary">Jurnal</span>
+                                        <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
                                     </div>
                                     <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
                                     </div>
@@ -171,6 +171,10 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <div class="w-100">
+                        <div class="common-section-title">Lokasi</div>
+                        <p>{{$sectorDataHelper::getNameById($selected_item['origin_sector_id'] ?? null) ?? 'Pusat'}}</p>
+                    </div>
                     <div class="w-100">
                         <div class="common-section-title">Image Name</div>
                         <p>{{$selected_item['image_real_name'] ?? '-'}}</p>

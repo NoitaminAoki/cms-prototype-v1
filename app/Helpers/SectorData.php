@@ -67,7 +67,7 @@ class SectorData
 
     public static function getNameById($sector_id)
     {
-        return self::$datas[$sector_id]['name'] ?? '-';
+        return self::$datas[$sector_id]['name'] ?? null;
     }
 
     public static function getPropertiesById($sector_id)
