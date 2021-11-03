@@ -147,6 +147,9 @@
         $('.form-date').daterangepicker({
             singleDatePicker: true,
             autoApply: true,
+            locale: {
+                format: 'DD/MM/YYYY'
+            }
         });
     })
     
