@@ -19,6 +19,15 @@
   @yield('css')
   
   <style>
+    .custom-pagination-scroll-h {
+      display: inline-block;
+      overflow: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    .custom-pagination-scroll-h>.page-item {
+      display: inline-block;
+    }
     .card-link {
       cursor: pointer;
     }
@@ -26,14 +35,14 @@
       color: #0056b3;
     }
     .swal2-confirm.swal2-styled {
-        /* box-shadow: 0 2px 6px #acb5f6; */
-        background-color: #6777ef;
+      /* box-shadow: 0 2px 6px #acb5f6; */
+      background-color: #6777ef;
     }
     .swal2-cancel.swal2-styled {
-        color: #555;
-        background-color: #efefef;
+      color: #555;
+      background-color: #efefef;
     }
-
+    
     .custom-fa-10x {
       font-size: 10em;
     }

@@ -11,7 +11,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('manage.data_masuk.index') }}">Manage</a></div>
-                <div class="breadcrumb-item">Divisi Keuangan</div>
+                <div class="breadcrumb-item">{{$page_attribute['title']}}</div>
             </div>
         </div>
         
@@ -50,7 +50,7 @@
                         </table>
                     </div>
                     
-                    <livewire:components.pagination.lv-paginate key="{{ Str::random() }}" />
+                    {{-- <livewire:components.pagination.lv-paginate key="{{ Str::random() }}" /> --}}
                 </div>
             </div>
         </div>

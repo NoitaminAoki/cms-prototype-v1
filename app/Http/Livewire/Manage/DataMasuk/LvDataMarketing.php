@@ -12,16 +12,12 @@ use App\Helpers\{
     StringGenerator,
 };
 
-class LvDataKeuangan extends Component
+class LvDataMarketing extends Component
 {
     private $sector_properties;
-
-    protected $listeners = [
-        'parentEdited' => 'parentEdited'
-    ];
     
     public $page_attribute = [
-        'title' => 'Divisi Keuangan',
+        'title' => 'Divisi Marketing',
     ];
     
     public $selected_item;
@@ -36,7 +32,7 @@ class LvDataKeuangan extends Component
     {
         $db_pusat = Config::get("database.connections.mysql.database");
         $databases = SectorData::getAllDatabases();
-        $tables = CentralData::getAllTableByDivision("Keuangan");
+        $tables = CentralData::getAllTableByDivision("Marketing");
         $main_query = null;
         foreach ($databases as $db_key => $database) {
             foreach ($tables as $tb_key => $table) {
@@ -55,7 +51,7 @@ class LvDataKeuangan extends Component
         $main_query = $main_query->orderBy('created_at', 'DESC')->get();
         // dd($main_query);
         $data['sector_items'] = $main_query;
-        return view('livewire.manage.data-masuk.lv-data-keuangan')
+        return view('livewire.manage.data-masuk.lv-data-marketing')
         ->with($data)
         ->layout('layouts.dashboard.main');
     }
@@ -87,7 +83,7 @@ class LvDataKeuangan extends Component
     
     public function setItem($menu_id, $id, $sector_id)
     {
-        $table = CentralData::getDivisionTableById('Keuangan', $menu_id);
+        $table = CentralData::getDivisionTableById('Marketing', $menu_id);
         if(!$table) return $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data"]);
         
         $modelClass = $table['model'];
@@ -110,7 +106,7 @@ class LvDataKeuangan extends Component
     
     public function downloadImage($menu_id, $sector_id)
     {
-        $table = CentralData::getDivisionTableById('Keuangan', $menu_id);
+        $table = CentralData::getDivisionTableById('Marketing', $menu_id);
         if(!$table) return $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data"]);
         
         $modelClass = $table['model'];
@@ -130,7 +126,7 @@ class LvDataKeuangan extends Component
     
     public function copyDataSector($menu_id, $id, $sector_id)
     {
-        $table = CentralData::getDivisionTableById('Keuangan', $menu_id);
+        $table = CentralData::getDivisionTableById('Marketing', $menu_id);
         if(!$table) return $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data"]);
         
         $modelClass = $table['model'];
@@ -169,10 +165,5 @@ class LvDataKeuangan extends Component
             // dd($re_item);
         }
         return;
-    }
-
-    public function parentEdited()
-    {
-        $this->input_parent = "Changed";
     }
 }

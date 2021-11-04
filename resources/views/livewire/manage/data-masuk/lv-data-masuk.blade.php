@@ -19,6 +19,7 @@
     
     <div class="section-body">
       <div class="row">
+        @can('filter-data-masuk divisi-keuangan view')
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
           <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.keuangan.index') }}">
             <div class="card custom-card-folder">
@@ -33,8 +34,10 @@
             </div>
           </a>
         </div>
+        @endcan
+        @can('filter-data-masuk divisi-konstruksi view')
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-          <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.konstruksi.index') }}">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.konstruksi.index') }}">
             <div class="card custom-card-folder">
               <div class="card-body">
                 <div class="text-center">
@@ -47,8 +50,10 @@
             </div>
           </a>
         </div>
+        @endcan
+        @can('filter-data-masuk divisi-marketing view')
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-          <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.marketing.index') }}">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.marketing.index') }}">
             <div class="card custom-card-folder">
               <div class="card-body">
                 <div class="text-center">
@@ -61,8 +66,10 @@
             </div>
           </a>
         </div>
+        @endcan
+        @can('filter-data-masuk divisi-umum view')
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-          <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.index') }}">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.umum.index') }}">
             <div class="card custom-card-folder">
               <div class="card-body">
                 <div class="text-center">
@@ -75,6 +82,7 @@
             </div>
           </a>
         </div>
+        @endcan
       </div>
     </div>
   </section>

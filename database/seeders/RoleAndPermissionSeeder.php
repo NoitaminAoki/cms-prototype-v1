@@ -98,6 +98,10 @@ class RoleAndPermissionSeeder extends Seeder
             'brosur-perumahan add',
             'brosur-perumahan delete',
 
+            'filter-data-masuk divisi-keuangan view',
+            'filter-data-masuk divisi-konstruksi view',
+            'filter-data-masuk divisi-marketing view',
+            'filter-data-masuk divisi-umum view',
         ];
 
         $permissions = collect($arrayOfPermissionNames)->map(function ($permission) {

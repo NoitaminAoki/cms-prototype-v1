@@ -62,6 +62,7 @@ class SectorData
                 $data[] = $value['db_name'];
             }
         }
+        
         return $data;
     }
 

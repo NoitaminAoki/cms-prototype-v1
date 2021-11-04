@@ -93,9 +93,11 @@ use App\Http\Livewire\Master\{
 };
 
 use App\Http\Livewire\Manage\{
-    Wilayah\LvFilterData,
     DataMasuk\LvDataMasuk,
     DataMasuk\LvDataKeuangan,
+    DataMasuk\LvDataKonstruksi,
+    DataMasuk\LvDataMarketing,
+    DataMasuk\LvDataUmum,
 };
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -121,10 +123,23 @@ Route::get('/file-storage', LvFileStorage::class);
 Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     Route::get('/dashboard', LvDashboard::class)->name('dashboard');
     
-    /* PERENCANAAN */
-    // Route::prefix('perencanaan')->name('perencanaan.')->group(function () {
-    // });
-    /* END PERENCANAAN */
+    /* MANAGE */
+    Route::prefix('manage')->name('manage.')->group(function () {
+        Route::get('data-masuk', LvDataMasuk::class)->name('data_masuk.index');
+        Route::middleware(['permission:filter-data-masuk divisi-keuangan view'])->group(function () {
+            Route::get('data-masuk/divisi/keuangan', LvDataKeuangan::class)->name('data_masuk.keuangan.index');
+        });
+        Route::middleware(['permission:filter-data-masuk divisi-konstruksi view'])->group(function () {
+           Route::get('data-masuk/divisi/konstruksi', LvDataKonstruksi::class)->name('data_masuk.konstruksi.index');
+        });
+        Route::middleware(['permission:filter-data-masuk divisi-marketing view'])->group(function () {
+            Route::get('data-masuk/divisi/marketing', LvDataMarketing::class)->name('data_masuk.marketing.index');
+        });
+        Route::middleware(['permission:filter-data-masuk divisi-umum view'])->group(function () {
+            Route::get('data-masuk/divisi/umum', LvDataUmum::class)->name('data_masuk.umum.index');
+        });
+    });
+    /* END MANAGE */
 
     /* PELAKSANAAN */
     Route::prefix('pelaksanaan')->name('pelaksanaan.')->group(function () {
@@ -260,12 +275,5 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     });
     /* END MASTER */
     
-    /* MANAGE */
-    Route::prefix('manage')->name('manage.')->group(function () {
-        Route::get('data-masuk', LvDataMasuk::class)->name('data_masuk.index');
-        Route::get('data-masuk/divisi/keuangan', LvDataKeuangan::class)->name('data_masuk.keuangan.index');
-        Route::get('wilayah/filter-data-masuk', LvFilterData::class)->name('wilayah.filter_data.index');
-    });
-    /* END MANAGE */
     
 });
