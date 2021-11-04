@@ -59,7 +59,7 @@
           </a>
         </div>
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.wilayah.filter_data.index') }}">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.index') }}">
             <div class="card custom-card-folder">
               <div class="card-body">
                 <div class="text-center">

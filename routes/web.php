@@ -95,6 +95,7 @@ use App\Http\Livewire\Master\{
 use App\Http\Livewire\Manage\{
     Wilayah\LvFilterData,
     DataMasuk\LvDataMasuk,
+    DataMasuk\LvDataKeuangan,
 };
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -261,7 +262,8 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     
     /* MANAGE */
     Route::prefix('manage')->name('manage.')->group(function () {
-        Route::get('data-masuk', LvDataMasuk::class)->name('data_masuk');
+        Route::get('data-masuk', LvDataMasuk::class)->name('data_masuk.index');
+        Route::get('data-masuk/divisi/keuangan', LvDataKeuangan::class)->name('data_masuk.keuangan.index');
         Route::get('wilayah/filter-data-masuk', LvFilterData::class)->name('wilayah.filter_data.index');
     });
     /* END MANAGE */

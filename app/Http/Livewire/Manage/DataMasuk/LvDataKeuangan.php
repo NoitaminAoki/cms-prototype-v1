@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Livewire\Manage\Wilayah;
+namespace App\Http\Livewire\Manage\DataMasuk;
 
 use Livewire\Component;
 use Illuminate\Support\Facades\Storage;
@@ -10,16 +10,17 @@ use App\Models\{
     Keuangan\JurnalHarian,
 };
 use App\Helpers\{
+    CentralData,
     SectorData,
     StringGenerator,
 };
 
-class LvFilterData extends Component
+class LvDataKeuangan extends Component
 {
     private $sector_properties;
     
     public $page_attribute = [
-        'title' => 'Jurnal Harian',
+        'title' => 'Divisi Keuangan',
     ];
     
     public $selected_item;
@@ -30,34 +31,27 @@ class LvFilterData extends Component
     
     public function render()
     {
-        $table_pusat = Config::get("database.connections.mysql.database").".jurnal_harians";
+        $db_pusat = Config::get("database.connections.mysql.database");
         $databases = SectorData::getAllDatabases();
+        $tables = CentralData::getAllTableByDivision("Keuangan");
         $main_query = null;
-        foreach ($databases as $key => $value) {
-            if($key == 0) {
-                Config::set('database.connections.sector_db.database', $value);
-                DB::purge('sector_db');
-                $main_query = JurnalHarian::on('sector_db')
-                ->select('jurnal_harians.*')
-                ->leftJoin($table_pusat.' as t_pusat', 't_pusat.origin_uuid', '=', 'jurnal_harians.uuid')
-                ->whereNull('t_pusat.origin_uuid');
-            } else {
-                $sub_query = DB::table("{$value}.jurnal_harians")
-                ->select('jurnal_harians.*')
-                ->leftJoin($table_pusat.' as t_pusat', 't_pusat.origin_uuid', '=', 'jurnal_harians.uuid')
-                ->whereNull('t_pusat.origin_uuid');
-                $main_query = $main_query->unionAll($sub_query);
+        foreach ($databases as $db_key => $database) {
+            foreach ($tables as $tb_key => $table) {
+                $sub_query = DB::table("{$database}.{$table} as table_origin")
+                ->select("table_origin.id", "table_origin.uuid", "table_origin.sector_id", "table_origin.full_path", "table_origin.id", "table_origin.image_real_name", "table_origin.image_name" , "table_origin.tanggal", "table_origin.created_at")
+                ->leftJoin("{$db_pusat}.{$table} as table_main", 'table_main.origin_uuid', '=', 'table_origin.uuid')
+                ->whereNull('table_main.origin_uuid');
+                if($db_key == 0) {
+                    $main_query = $sub_query;
+                } else {
+                    $main_query = $main_query->unionAll($sub_query);
+                }
             }
         }
         $main_query = $main_query->orderBy('created_at', 'DESC')->get();
-        // $main_query = $main_query->with(['jurnal_pusat' => function ($query) use($table_pusat)
-        // {
-        //     $query->from($table_pusat);
-        // }])
-        // ->orderBy('created_at', 'DESC')->get();
-        // dd($main_query->toArray());
+        dd($main_query);
         $data['sector_items'] = $main_query;
-        return view('livewire.manage.wilayah.lv-filter-data')
+        return view('livewire.manage.data-masuk.lv-data-keuangan')
         ->with($data)
         ->layout('layouts.dashboard.main');
     }

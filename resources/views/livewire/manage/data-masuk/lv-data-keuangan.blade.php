@@ -10,8 +10,8 @@
           <h1>Filter Data Masuk</h1>
           <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('master.index') }}">Master</a></div>
-            <div class="breadcrumb-item">Wilayah</div>
+            <div class="breadcrumb-item"><a href="{{ route('manage.data_masuk.index') }}">Manage</a></div>
+            <div class="breadcrumb-item">Divisi Keuangan</div>
           </div>
         </div>
         
