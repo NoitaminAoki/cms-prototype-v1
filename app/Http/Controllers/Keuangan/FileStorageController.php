@@ -64,7 +64,7 @@ class FileStorageController extends Controller
             $type = File::mimeType($path);
             
             return response()
-            ->file($path, array('Content-Type' =>$type));
+            ->file($path, array('Content-Type' =>'image'));
 
     }
 }
