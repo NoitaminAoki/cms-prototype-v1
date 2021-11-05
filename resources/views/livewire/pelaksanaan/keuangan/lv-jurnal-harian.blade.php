@@ -5,14 +5,6 @@
 @endsection
 
 @section('css')
-<style>
-    .article .article-header .article-top-badge {
-        position: absolute;
-        top: 10px;
-        padding-left: 10px;
-        padding-right: 10px;
-    }
-</style>
 @endsection
 
 @inject('sectorDataHelper', 'App\Helpers\SectorData')
@@ -37,18 +29,19 @@
                 @endcan
                 @forelse ($items as $item)
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a class="text-decoration-none custom-color-inherit" wire:click="setGroupName('{{$item['name']}}')" href="#">
-                        <div class="card custom-card-folder">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
-                                </div>
-                                <div class="w-100 mt-2">
-                                    <h6 class="text-uppercase mb-0">{{$item['name']}}</h6>
-                                </div>
+                    <div id="overlay-card-{{Str::slug($item['name'])}}" wire:target="setGroupName('{{$item['name']}}')" wire:loading.flex class="custom-card-overlay" style="display: none">
+                        <i class="fas fa-3x fa-sync-alt fa-spin fa-3x"></i>
+                    </div>
+                    <div wire:click="setGroupName('{{$item['name']}}')" class="card custom-card-folder folder-event">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                            </div>
+                            <div class="w-100 mt-2">
+                                <h6 class="text-uppercase mb-0">{{$item['name']}}</h6>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 @empty
                 <div class="col-12">
@@ -66,42 +59,40 @@
                 </div>
                 @foreach($selected_item_group['resume'] as $item_group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item_group['id']}}, 'resume')" data-toggle="modal" data-target="#modalViewItem">
-                        <div class="card shadow-sm custom-card-folder">
-                            <article class="article article-style-b mb-0">
-                                <div class="article-header">
-                                    <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
-                                    </div>
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
-                                    </div>
-                                    <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
-                                    </div>
+                    <div class="card shadow-sm custom-card-folder">
+                        <article class="article article-style-b mb-0">
+                            <div class="article-header">
+                                <div class="article-top-badge w-100">
+                                    <button class="btn btn-sm btn-primary pb-0 float-right" wire:click="setItem({{$item_group['id']}}, 'resume')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                    <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
                                 </div>
-                            </article>
-                        </div>
-                    </a>
+                                <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
+                                </div>
+                                <div class="article-badge custom-article-badge w-100" data-toggle="lightbox" data-gallery="example-gallery" data-title="{{$item_group['image_real_name']}}" data-remote="{{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }}">
+                                    <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
                 @endforeach
                 @foreach($selected_item_group['jurnal'] as $item_group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item_group['id']}}, 'jurnal')" data-toggle="modal" data-target="#modalViewItem">
-                        <div class="card shadow-sm custom-card-folder">
-                            <article class="article article-style-b mb-0">
-                                <div class="article-header">
-                                    <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
-                                    </div>
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
-                                    </div>
-                                    <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
-                                    </div>
+                    <div class="card shadow-sm custom-card-folder">
+                        <article class="article article-style-b mb-0">
+                            <div class="article-header">
+                                <div class="article-top-badge w-100">
+                                    <button class="btn btn-sm btn-primary pb-0 float-right" wire:click="setItem({{$item_group['id']}}, 'jurnal')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                    <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
                                 </div>
-                            </article>
-                        </div>
-                    </a>
+                                <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
+                                </div>
+                                <div class="article-badge custom-article-badge w-100" data-toggle="lightbox" data-gallery="example-gallery" data-title="{{$item_group['image_real_name']}}" data-remote="{{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }}">
+                                    <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
+                                </div>
+                            </div>
+                        </article>
+                    </div>
                 </div>
                 @endforeach
             </div>
@@ -224,6 +215,10 @@
             }
         });
     })
+    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
+        event.preventDefault();
+        $(this).ekkoLightbox();
+    });
     
     $('.form-date').on('change', function(event) {
         Livewire.emit('evSetInputTanggal', event.target.value);

@@ -8,6 +8,7 @@
   <!-- General CSS Files -->
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" integrity="sha512-Velp0ebMKjcd9RiCoaHhLXkR1sFoCCWXNp6w4zj1hfMifYB5441C+sKeBl/T/Ka6NjBiRfBBQRaQq65ekYz3UQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   
   <!-- CSS Libraries -->
   @yield('css-libraries')
@@ -19,6 +20,9 @@
   @yield('css')
   
   <style>
+    .ekko-lightbox .modal-title {
+      font-size: 1rem;
+    }
     .custom-pagination-scroll-h {
       display: inline-block;
       overflow: auto;
@@ -61,7 +65,9 @@
     .custom-article-header-pdf {
       height: 170px !important;
     }
-    
+    .folder-event {
+      cursor: pointer;
+    }
     .custom-card-folder {
       transition: box-shadow 0.2s ease-in-out;
     }
@@ -76,10 +82,18 @@
       border-bottom: 1px solid #dee2e6!important;
     }
     
-    .custom-article-badge {
+    .article .article-header .article-top-badge {
+      position: absolute;
+      top: 10px;
       padding-left: 10px;
       padding-right: 10px;
+    }
+    
+    .custom-article-badge {
+      padding: 10px 10px;
       left: 0 !important;
+      cursor: pointer;
+      bottom: 0 !important;
     }
     .custom-article-badge>.article-badge-item {
       white-space: nowrap;
@@ -105,6 +119,29 @@
     }
     body.layout-3 .main-content {
       padding-top: 130px;
+    }
+    .custom-card-overlay {
+      border-radius: 0.25rem;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      background-color: rgba(255,255,255,.7);
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      z-index: 50;
+      height: calc(100% - 30px);
+      left: 15px;
+      right: 15px;
+      position: absolute;
+      top: 0;
+      width: calc(100% - 30px);
+    }
+    .fa-3x {
+      font-size: 3em;
     }
   </style>
   
@@ -141,6 +178,7 @@
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.nicescroll/3.7.6/jquery.nicescroll.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.min.js" integrity="sha512-Y2IiVZeaBwXG1wSV7f13plqlmFOx8MdjuHyYFVoYzhyRr3nH/NMDjTBSswijzADdNzMyWNetbLMfOpIPl6Cv9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <script src="{{ asset('assets/js/stisla.js') }}"></script>
   
   <!-- JS Libraies -->
