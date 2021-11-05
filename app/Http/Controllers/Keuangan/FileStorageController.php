@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Keuangan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class FileStorageController extends Controller
 {
@@ -54,5 +55,16 @@ class FileStorageController extends Controller
         }
         
         abort(404);
+    }
+
+    public function testerResponse()
+    {
+            
+            $path = Storage::disk('local')->path('image/example-image.jpg');
+            $type = File::mimeType($path);
+            
+            return response()
+            ->file($path, array('Content-Type' =>$type));
+
     }
 }

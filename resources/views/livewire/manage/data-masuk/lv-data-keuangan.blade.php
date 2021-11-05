@@ -32,7 +32,7 @@
                             <tbody>
                                 @forelse ($sector_items as $key => $sector_item)
                                 <tr>
-                                    <td>{{$key+1}}</td>
+                                    <td>{{$paginationAttributes['offset'] + ($key+1)}}</td>
                                     <td>{{$sectorDataHelper::getNameById($sector_item->sector_id)}}</td>
                                     <td>{{$sector_item->menu}}</td>
                                     <td>{{$sector_item->image_real_name}}</td>
@@ -49,8 +49,7 @@
                             </tbody>
                         </table>
                     </div>
-                    
-                    <livewire:components.pagination.lv-paginate key="{{ Str::random() }}" />
+                    <livewire:components.pagination.lv-paginate :paginationAttributes="$paginationAttributes" key="{{ Str::random() }}" />
                 </div>
             </div>
         </div>

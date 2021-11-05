@@ -125,6 +125,7 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
     
     /* MANAGE */
     Route::prefix('manage')->name('manage.')->group(function () {
+        Route::get('tester/image', [FileStorageController::class, 'testerResponse']);
         Route::get('data-masuk', LvDataMasuk::class)->name('data_masuk.index');
         Route::middleware(['permission:filter-data-masuk divisi-keuangan view'])->group(function () {
             Route::get('data-masuk/divisi/keuangan', LvDataKeuangan::class)->name('data_masuk.keuangan.index');
