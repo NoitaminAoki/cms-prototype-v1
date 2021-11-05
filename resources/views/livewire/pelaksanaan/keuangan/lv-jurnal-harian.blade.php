@@ -95,6 +95,15 @@
                     </div>
                 </div>
                 @endforeach
+                @if(empty($selected_item_group['jurnal'])&& empty($selected_item_group['resume']))
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <span>Empty</span>
+                        </div>
+                    </div>
+                </div>
+                @endif
             </div>
         </div>
     </section>
