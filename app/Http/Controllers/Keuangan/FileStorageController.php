@@ -17,8 +17,9 @@ class FileStorageController extends Controller
         if (Storage::disk('sector_disk')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);
+            $type = File::mimeType($path);
             return response()
-            ->file($path, array('Content-Type' =>'image'));
+            ->file($path, array('Content-Type' =>$type));
             
         }
         
@@ -33,8 +34,9 @@ class FileStorageController extends Controller
         if (Storage::disk('sector_base')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_base')->path($base_path.$filename);
+            $type = File::mimeType($path);
             return response()
-            ->file($path, array('Content-Type' =>'image'));
+            ->file($path, array('Content-Type' =>$type));
             
         }
         
@@ -49,8 +51,9 @@ class FileStorageController extends Controller
         if (Storage::disk('sector_disk')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);
+            $type = File::mimeType($path);
             return response()
-            ->file($path, array('Content-Type' =>'application/pdf'));
+            ->file($path, array('Content-Type' =>$type));
             
         }
         
@@ -64,7 +67,7 @@ class FileStorageController extends Controller
             $type = File::mimeType($path);
             
             return response()
-            ->file($path, array('Content-Type' =>'image'));
+            ->file($path, array('Content-Type' =>$type));
 
     }
 }
