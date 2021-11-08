@@ -79,7 +79,7 @@
                                 <article class="article article-style-b mb-0">
                                     <div class="article-header">
                                         <div class="article-top-badge w-100">
-                                            <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$item_group['id']}})" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                            <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$item_group['id']}}, '{{$item_group['type']}}')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
                                             <span class="badge shadow badge-primary text-capitalize">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
                                         </div>
                                         <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
