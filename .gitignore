@@ -15,3 +15,4 @@ yarn-error.log
 /.idea
 /.vscode
 /app/Helpers/SectorData.php
+/public/assets/img/homepage
