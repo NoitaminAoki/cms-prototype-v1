@@ -61,7 +61,7 @@ class LvProgressKeuangan extends Component
     {
         $items = ProgressKeuangan::query()
         ->select('*')
-        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date')
+        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, IFNULL(origin_sector_id, "ID-PST") as origin_sector_id')
         ->orderBy('tanggal', 'ASC')
         ->get()
         ->groupBy('date');
