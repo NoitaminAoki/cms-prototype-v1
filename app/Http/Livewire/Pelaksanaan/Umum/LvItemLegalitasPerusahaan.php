@@ -9,7 +9,10 @@ use App\Models\{
     Umum\LegalitasPerusahaan,
     Umum\ItemLegalitasPerusahaan,
 };
-use App\Helpers\StringGenerator;
+use App\Helpers\{
+    StringGenerator,
+    SectorData,
+};
 
 class LvItemLegalitasPerusahaan extends Component
 {
@@ -26,14 +29,26 @@ class LvItemLegalitasPerusahaan extends Component
         'add' => 'item-legalitas-perusahaan add',
         'delete' => 'item-legalitas-perusahaan delete',
     ];
+    public $control_tabs = [
+        'detail' => true,
+        'sector_list' => true,
+        'sector_detail' => false,
+    ];
 
     public $parent_id;
     public $file_image;
     public $input_tanggal;
     public $iteration;
 
+    public $selected_item_group = [];
+    public $selected_item_sector_group = [];
+    public $selected_group_name;
     public $selected_item;
     public $selected_url;
+    
+    public $wilayah;
+    public $selected_sector_id;
+    public $sector_name;
 
     public function mount($slug)
     {
@@ -43,14 +58,25 @@ class LvItemLegalitasPerusahaan extends Component
 
         $this->parent_id = $parent->id;
         $this->page_attribute['title'] = $parent->name;
+        $this->wilayah = SectorData::getAllNames();
     }
 
     public function render()
     {
-        $data['items'] = ItemLegalitasPerusahaan::query()
+        $items = ItemLegalitasPerusahaan::query()
+        ->select('*')
+        ->selectRaw('IFNULL(origin_sector_id, "ID-PST") as origin_sector_id')
         ->where('legalitas_perusahaan_id', $this->parent_id)
-        ->get();
+        ->orderBy('tanggal', 'ASC')
+        ->get()
+        ->groupBy('origin_sector_id');
+        $this->selected_item_group = $items['ID-PST'] ?? [];
 
+        if($this->selected_sector_id) {
+            $this->selected_item_sector_group = $items[$this->selected_sector_id] ?? [];
+        }
+        
+        $data['items'] = $items;
         return view('livewire.pelaksanaan.umum.lv-item-legalitas-perusahaan')
         ->with($data)
         ->layout('layouts.dashboard.main');
@@ -76,7 +102,7 @@ class LvItemLegalitasPerusahaan extends Component
 
         $this->resetInput();
         
-        return $this->dispatchBrowserEvent('notification:success', ['title' => 'Success!', 'message' => 'Successfully adding data.']);
+        return $this->dispatchBrowserEvent('notification:show', ['type'=>'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
 
     public function setInputTanggal($value)
@@ -91,11 +117,46 @@ class LvItemLegalitasPerusahaan extends Component
         $this->iteration++;
     }
 
+    
     public function setItem($id)
     {
         $item = ItemLegalitasPerusahaan::findOrFail($id);
         $this->selected_item = $item;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
+    }
+    public function setSector($sector_id, $attributes = ['notification' => false])
+    {
+        $sector_properties = SectorData::getPropertiesById($sector_id);
+        if($sector_properties) {
+            $this->sector_properties = $sector_properties;
+            return true;
+        }
+        if($attributes['notification']) {
+            $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data, try again later."]);
+        }
+        return false;
+    }
+
+    public function clearSector()
+    {
+        $this->selected_sector_id = null;
+        $this->sector_name = null;
+    }
+
+    public function setSectorId($sector_id)
+    {
+        $exists = $this->setSector($sector_id, ['notification' => true]);
+        if($exists) {
+            $this->selected_sector_id = $sector_id;
+            $this->control_tabs = [
+                'list' => false,
+                'detail' => true,
+                'sector_list' => false,
+                'sector_detail' => true,
+            ];
+            return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.sector-popup-link']);
+        }
     }
 
     public function downloadImage($image_number = 1)

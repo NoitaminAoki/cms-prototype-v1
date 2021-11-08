@@ -10,7 +10,10 @@ use App\Models\{
     Keuangan\PengajuanDana,
     Master\MsSubCode,
 };
-use App\Helpers\StringGenerator;
+use App\Helpers\{
+    StringGenerator,
+    SectorData,
+};
 
 class LvPengajuanDana extends Component
 {
@@ -32,6 +35,8 @@ class LvPengajuanDana extends Component
     public $control_tabs = [
         'list' => true,
         'detail' => false,
+        'sector_list' => true,
+        'sector_detail' => false,
     ];
     
     public $paket_id;
@@ -41,10 +46,20 @@ class LvPengajuanDana extends Component
     
     public $items;
     public $selected_item_group = [];
+    public $selected_item_sector_group = [];
     public $selected_group_name;
     public $selected_item;
     public $selected_url;
     
+    public $wilayah;
+    public $selected_sector_id;
+    public $sector_name;
+    
+    public function mount()
+    {
+        $this->wilayah = SectorData::getAllNames();
+    }
+
     public function render()
     {
         $data['pakets'] = MsSubCode::all();
@@ -55,18 +70,21 @@ class LvPengajuanDana extends Component
         ->get()
         ->groupBy('date');
 
-
         $this->items = collect($items)->map(function ($values, $index)
         {
+            $data_items = $values->groupBy('origin_sector_id');
             return [
                 'name' => $index,
-                'items' => $values,
+                'main_items' => $data_items['ID-PST'] ?? [],
+                'sector_items' => collect($data_items)->except('ID-PST'),
             ];
         });
-        
         if ($this->selected_group_name) {
             $item = $this->items->where('name', $this->selected_group_name)->first();
-            $this->selected_item_group = $item['items'] ?? [];
+            $this->selected_item_group = $item['main_items'];
+            if($this->selected_sector_id) {
+                $this->selected_item_sector_group = $item['sector_items'][$this->selected_sector_id] ?? [];
+            }
         }
         
         return view('livewire.pelaksanaan.keuangan.lv-pengajuan-dana')
@@ -98,7 +116,7 @@ class LvPengajuanDana extends Component
         
         $this->resetInput();
         
-        return $this->dispatchBrowserEvent('notification:success', ['title' => 'Success!', 'message' => 'Successfully adding data.']);
+        return $this->dispatchBrowserEvent('notification:show', ['type' => 'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
     
     public function setPaket($value)
@@ -123,6 +141,7 @@ class LvPengajuanDana extends Component
         $item = PengajuanDana::findOrFail($id);
         $this->selected_item = $item;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
     
     public function setGroupName($name)
@@ -131,7 +150,44 @@ class LvPengajuanDana extends Component
         $this->control_tabs = [
             'list' => false,
             'detail' => true,
+            'sector_list' => true,
+            'sector_detail' => false,
         ];
+        return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
+    }
+    
+    public function setSector($sector_id, $attributes = ['notification' => false])
+    {
+        $sector_properties = SectorData::getPropertiesById($sector_id);
+        if($sector_properties) {
+            $this->sector_properties = $sector_properties;
+            return true;
+        }
+        if($attributes['notification']) {
+            $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data, try again later."]);
+        }
+        return false;
+    }
+
+    public function clearSector()
+    {
+        $this->selected_sector_id = null;
+        $this->sector_name = null;
+    }
+
+    public function setSectorId($sector_id)
+    {
+        $exists = $this->setSector($sector_id, ['notification' => true]);
+        if($exists) {
+            $this->selected_sector_id = $sector_id;
+            $this->control_tabs = [
+                'list' => false,
+                'detail' => true,
+                'sector_list' => false,
+                'sector_detail' => true,
+            ];
+            return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.sector-popup-link']);
+        }
     }
     
     public function openList()

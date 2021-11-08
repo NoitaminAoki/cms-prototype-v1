@@ -10,7 +10,10 @@ use App\Models\{
     Keuangan\JurnalHarian,
     Keuangan\ResumeJurnal,
 };
-use App\Helpers\StringGenerator;
+use App\Helpers\{
+    StringGenerator,
+    SectorData,
+};
 
 class LvJurnalHarian extends Component
 {
@@ -31,6 +34,8 @@ class LvJurnalHarian extends Component
     public $control_tabs = [
         'list' => true,
         'detail' => false,
+        'sector_list' => true,
+        'sector_detail' => false,
     ];
     
     public $tipe_jurnal;
@@ -39,28 +44,31 @@ class LvJurnalHarian extends Component
     public $iteration;
     
     public $items;
-    public $selected_item_group = [
-        'resume' => [],
-        'jurnal' => [],
-    ];
+    public $selected_item_group = [];
+    public $selected_item_sector_group = [];
     public $selected_group_name;
     public $selected_item;
     public $selected_url;
     
+    public $wilayah;
+    public $selected_sector_id;
+    public $sector_name;
+    
     public function mount()
     {
         $this->tipe_jurnal = 'jurnal';
+        $this->wilayah = SectorData::getAllNames();
     }
     
     public function render()
     {
         $resume_items = ResumeJurnal::query()
         ->select('*')
-        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, "resume" as type');
+        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, "resume" as type, IFNULL(origin_sector_id, "ID-PST") as origin_sector_id');
         
         $items = JurnalHarian::query()
         ->select('*')
-        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, "jurnal" as type')
+        ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, "jurnal" as type, IFNULL(origin_sector_id, "ID-PST") as origin_sector_id')
         ->unionAll($resume_items)
         ->orderBy('tanggal', 'ASC')
         ->get()
@@ -69,22 +77,22 @@ class LvJurnalHarian extends Component
         
         $this->items = collect($items)->map(function ($values, $index)
         {
-            $data_items = $values->groupBy('type');
+            $data_items = $values->groupBy('origin_sector_id');
+            // dump($data_items->toArray());
             return [
                 'name' => $index,
-                'items' => [
-                    'resume' => $data_items['resume'] ?? [],
-                    'jurnal' => $data_items['jurnal'] ?? [],
-                ],
+                'main_items' => $data_items['ID-PST'] ?? [],
+                'sector_items' => collect($data_items)->except('ID-PST'),
             ];
         });
-        // dd($items, $this->items);
+        // dd($items->toArray(), $this->items);
         if ($this->selected_group_name) {
             $item = $this->items->where('name', $this->selected_group_name)->first();
-            $this->selected_item_group = $item['items'] ?? [
-                'resume' => [],
-                'jurnal' => [],
-            ];
+            $this->selected_item_group = $item['main_items'];
+            if($this->selected_sector_id) {
+                $this->selected_item_sector_group = array_values(collect($item['sector_items'][$this->selected_sector_id] ?? [])->sortByDesc('type')->toArray());
+                // dd($this->selected_item_sector_group);
+            }
         }
         
         return view('livewire.pelaksanaan.keuangan.lv-jurnal-harian')
@@ -142,6 +150,7 @@ class LvJurnalHarian extends Component
         $this->selected_item = $item->toArray();
         $this->selected_item['type'] = $type;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
     
     public function getItemById($id, $type)
@@ -163,7 +172,44 @@ class LvJurnalHarian extends Component
         $this->control_tabs = [
             'list' => false,
             'detail' => true,
+            'sector_list' => true,
+            'sector_detail' => false,
         ];
+        return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
+    }
+
+    public function setSector($sector_id, $attributes = ['notification' => false])
+    {
+        $sector_properties = SectorData::getPropertiesById($sector_id);
+        if($sector_properties) {
+            $this->sector_properties = $sector_properties;
+            return true;
+        }
+        if($attributes['notification']) {
+            $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data, try again later."]);
+        }
+        return false;
+    }
+
+    public function clearSector()
+    {
+        $this->selected_sector_id = null;
+        $this->sector_name = null;
+    }
+
+    public function setSectorId($sector_id)
+    {
+        $exists = $this->setSector($sector_id, ['notification' => true]);
+        if($exists) {
+            $this->selected_sector_id = $sector_id;
+            $this->control_tabs = [
+                'list' => false,
+                'detail' => true,
+                'sector_list' => false,
+                'sector_detail' => true,
+            ];
+            return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.sector-popup-link']);
+        }
     }
     
     public function openList()

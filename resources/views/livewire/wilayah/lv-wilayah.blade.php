@@ -19,7 +19,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="https://yogyakarta.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/YOGYAKARTA.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">
@@ -33,7 +33,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="#">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/SERANG.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">
@@ -47,7 +47,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="#">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/SUKABUMI.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">
@@ -61,7 +61,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="#">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/BANDUNG.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">
@@ -75,7 +75,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="#">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/JONGGOL.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">
@@ -89,7 +89,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="#">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/PASURUAN.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">
@@ -103,7 +103,7 @@
                     <a class="text-decoration-none custom-color-inherit" href="#">
                         <div class="card custom-card-folder">
                             <div class="w-100">
-                                <img class="w-100" src="{{ asset('assets/img/bg-image.png') }}" alt="">
+                                <img class="w-100" src="{{ asset('assets/img/homepage/GORONTALO.png') }}" alt="">
                             </div>
                             <div class="card-body">
                                 <div class="w-100">

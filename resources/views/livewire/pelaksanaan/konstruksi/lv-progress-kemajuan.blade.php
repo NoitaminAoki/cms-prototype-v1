@@ -16,7 +16,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.index') }}">Pelaksanaan</a></div>
-                <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.umum.index') }}">Divisi Konstruksi</a></div>
+                <div class="breadcrumb-item"><a href="{{ route('pelaksanaan.konstruksi.index') }}">Divisi Konstruksi</a></div>
                 <div class="breadcrumb-item">Progress Kemajuan</div>
             </div>
         </div>

@@ -5,6 +5,16 @@
 @endsection
 
 @section('css')
+<style>
+    .img-magnifier-glass {
+        position: absolute;
+        border: 3px solid #000;
+        cursor: none;
+        /*Set the size of the magnifier glass:*/
+        width: 100%;
+        height: 100px;
+    }
+</style>
 @endsection
 
 @inject('sectorDataHelper', 'App\Helpers\SectorData')
@@ -54,56 +64,107 @@
                 @endforelse
             </div>
             <div :class="{ 'd-none': !control_tabs.detail }" class="row d-none">
-                <div class="col-12 mb-4">
-                    <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning">Back</button>
-                </div>
-                @foreach($selected_item_group['resume'] as $item_group)
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="card shadow-sm custom-card-folder">
-                        <article class="article article-style-b mb-0">
-                            <div class="article-header">
-                                <div class="article-top-badge w-100">
-                                    <button class="btn btn-sm btn-primary pb-0 float-right" wire:click="setItem({{$item_group['id']}}, 'resume')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
-                                    <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
-                                </div>
-                                <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
-                                </div>
-                                <div class="article-badge custom-article-badge w-100" data-toggle="lightbox" data-gallery="example-gallery" data-title="{{$item_group['image_real_name']}}" data-remote="{{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }}">
-                                    <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-                @endforeach
-                @foreach($selected_item_group['jurnal'] as $item_group)
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <div class="card shadow-sm custom-card-folder">
-                        <article class="article article-style-b mb-0">
-                            <div class="article-header">
-                                <div class="article-top-badge w-100">
-                                    <button class="btn btn-sm btn-primary pb-0 float-right" wire:click="setItem({{$item_group['id']}}, 'jurnal')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
-                                    <span class="badge shadow badge-primary">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
-                                </div>
-                                <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
-                                </div>
-                                <div class="article-badge custom-article-badge w-100" data-toggle="lightbox" data-gallery="example-gallery" data-title="{{$item_group['image_real_name']}}" data-remote="{{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }}">
-                                    <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
-                                </div>
-                            </div>
-                        </article>
-                    </div>
-                </div>
-                @endforeach
-                @if(empty($selected_item_group['jurnal'])&& empty($selected_item_group['resume']))
                 <div class="col-12">
-                    <div class="card">
-                        <div class="card-body text-center">
-                            <span>Empty</span>
+                    <h2 class="section-title">Data Pusat</h2>
+                    <hr>
+                </div>
+                <div class="col-12 mb-4">
+                    <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning"><i class="fas fa-arrow-left"></i> Back</button>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        @forelse($selected_item_group as $item_group)
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card shadow-sm custom-card-folder">
+                                <article class="article article-style-b mb-0">
+                                    <div class="article-header">
+                                        <div class="article-top-badge w-100">
+                                            <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$item_group['id']}})" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                            <span class="badge shadow badge-primary text-capitalize">{{$sectorDataHelper::getNameById($item_group['origin_sector_id'])}}</span>
+                                        </div>
+                                        <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
+                                        </div>
+                                        <a class="main-popup-link" href="{{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }}">
+                                            <div class="article-badge custom-article-badge w-100">
+                                                <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </article>
+                            </div>
                         </div>
+                        @empty
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <span>Empty</span>
+                                </div>
+                            </div>
+                        </div>
+                        @endforelse
                     </div>
                 </div>
-                @endif
+                <div class="col-12 mb-4">
+                    <h2 class="section-title">Data Lokasi <div wire:loading wire:target="setSectorId" style="display: none"><i wire:loading.class="d-block" class="ml-2 text-primary fas fa-sync-alt fa-spin"></i></div></h2>
+                    <hr>
+                </div>
+                <div x-show="control_tabs.sector_list" class="col-12">
+                    <div class="row">
+                        @foreach ($wilayah as $key => $sector)
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div id="overlay-card-sector-{{Str::slug($sector)}}" wire:target="setSectorId('{{$key}}')" wire:loading.flex class="custom-card-overlay" style="display: none">
+                                <i class="fas fa-3x fa-sync-alt fa-spin fa-3x"></i>
+                            </div>
+                            <div wire:click="setSectorId('{{$key}}')" class="card custom-card-folder card-link">
+                                <div class="card-body">
+                                    <div class="text-center">
+                                        <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                                    </div>
+                                    <div class="w-100 mt-2">
+                                        <span class="text-uppercase font-weight-600 mb-0">{{$sector}}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                </div>
+                <div :class="{ 'd-none': !control_tabs.sector_detail }" class="col-12 d-none">
+                    <div class="row">
+                        <div class="col-12 mb-4">
+                            <button x-on:click="control_tabs.sector_list = true;control_tabs.sector_detail = false;$wire.clearSector()" class="btn btn-warning">Back</button>
+                        </div>
+                        @forelse ($selected_item_sector_group as $sector_item)
+                        <div class="col-12 col-sm-6 col-md-4 col-lg-3">
+                            <div class="card shadow-sm custom-card-folder">
+                                <article class="article article-style-b mb-0">
+                                    <div class="article-header">
+                                        <div class="article-top-badge w-100">
+                                            <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$sector_item['id']}}, '{{$sector_item['type']}}')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                            <span class="badge shadow badge-primary text-capitalize">{{$sector_item['type']}}</span>
+                                        </div>
+                                        <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$sector_item['base_path'], 'name' => $sector_item['image_name']]) }});">
+                                        </div>
+                                        <a class="sector-popup-link" href="{{ route('files.image.stream', ['path'=>$sector_item['base_path'], 'name' => $sector_item['image_name']]) }}">
+                                            <div class="article-badge custom-article-badge w-100">
+                                                <div class="article-badge-item text-black custom-bg-transparent-white">{{$sector_item['image_real_name']}}</div>
+                                            </div>
+                                        </a>
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        @empty
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-body text-center">
+                                    <span>Empty</span>
+                                </div>
+                            </div>
+                        </div>
+                        @endforelse
+                    </div>
+                </div>
             </div>
         </div>
     </section>
@@ -189,7 +250,7 @@
                     </div>
                     <div class="w-100">
                         @if ($selected_item)
-                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border img-wheel-zoom shadow">
                         @endif
                     </div>
                 </div>
@@ -224,10 +285,6 @@
             }
         });
     })
-    $(document).on('click', '[data-toggle="lightbox"]', function(event) {
-        event.preventDefault();
-        $(this).ekkoLightbox();
-    });
     
     $('.form-date').on('change', function(event) {
         Livewire.emit('evSetInputTanggal', event.target.value);
@@ -271,7 +328,26 @@
         })
     })
     
-    
+    document.addEventListener('wheelzoom:init', function (event) {
+        wheelzoom(document.querySelector('.img-wheel-zoom'));
+    });
+    document.addEventListener('magnific-popup:init', function (event) {
+        $(event.detail.target).magnificPopup({
+            gallery: {
+                enabled:true,
+                navigateByImgClick: false,
+            },
+            type: 'image',
+            callbacks: {
+                change: function(item) {
+                    setTimeout(() => {
+                        wheelzoom(document.querySelector('.mfp-img'));
+                    }, 100);
+                }
+            }
+            // other options
+        });
+    })
     document.addEventListener('notification:show', function (event) {
         setTimeout(function() {
             $('.modal').modal('hide');
