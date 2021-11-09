@@ -123,7 +123,7 @@ class LvJurnalHarian extends Component
     public function resetInput()
     {
         $this->reset('file_image', 'selected_item');
-        $this->input_tanggal = date('m/d/Y');
+        $this->input_tanggal = date('d/m/Y');
         $this->iteration++;
     }
     
