@@ -94,7 +94,8 @@ class LvLaporanKegiatan extends Component
 
         $this->resetInput();
         
-        return $this->dispatchBrowserEvent('notification:show', ['type'=>'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
+        $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
+        return $this->dispatchBrowserEvent('notification:show', ['type' => 'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
 
     public function setInputTanggal($value)

@@ -227,7 +227,7 @@
                     </div>
                     <div class="w-100">
                         @if ($selected_item)
-                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 img-wheel-zoom border shadow">
                         @endif
                     </div>
                 </div>
@@ -325,13 +325,20 @@
             // other options
         });
     })
+<<<<<<< HEAD
 
     document.addEventListener('notification:success', function (event) {
         $('.modal').modal('hide');
         
+=======
+    document.addEventListener('notification:show', function (event) {
+        setTimeout(function() {
+            $('.modal').modal('hide');
+        }, 200);
+>>>>>>> main
         setTimeout(function() {
             Swal.fire({
-                icon: 'success',
+                icon: event.detail.type,
                 title: event.detail.title,
                 text: event.detail.message,
             });

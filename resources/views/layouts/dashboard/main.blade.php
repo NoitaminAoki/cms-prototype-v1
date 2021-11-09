@@ -20,9 +20,6 @@
   @yield('css')
   
   <style>
-    .ekko-lightbox .modal-title {
-      font-size: 1rem;
-    }
     .custom-pagination-scroll-h {
       display: inline-block;
       overflow: auto;

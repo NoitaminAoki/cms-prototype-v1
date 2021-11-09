@@ -128,6 +128,7 @@ class LvResumeKegiatan extends Component
         $item = ResumeKegiatan::findOrFail($id);
         $this->selected_item = $item;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
     
     public function setGroupName($name)

@@ -250,7 +250,7 @@
                     </div>
                     <div class="w-100">
                         @if ($selected_item)
-                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border img-wheel-zoom shadow">
+                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 img-wheel-zoom border shadow">
                         @endif
                     </div>
                 </div>

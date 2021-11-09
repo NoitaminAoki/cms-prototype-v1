@@ -324,7 +324,10 @@
             // other options
         });
     })
+<<<<<<< HEAD
     
+=======
+>>>>>>> main
     document.addEventListener('notification:show', function (event) {
         setTimeout(function() {
             $('.modal').modal('hide');

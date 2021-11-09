@@ -22,8 +22,8 @@ class ItemUnitRumah extends Model
         'origin_sector_id',
         'konstruksi_unit_id',
         'sector_id',
-        'pdf_real_name', 
-        'pdf_name', 
+        'image_real_name', 
+        'image_name', 
         'base_path', 
         'tanggal',
     ];
