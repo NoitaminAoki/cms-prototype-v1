@@ -16,10 +16,20 @@ class LvDataMarketing extends Component
 {
     private $sector_properties;
     
+    protected $listeners = [
+        'setPaginationAttributes' => 'setPaginationAttributes'
+    ];
     public $page_attribute = [
         'title' => 'Divisi Marketing',
     ];
     
+    public $paginationAttributes = [
+        'total_data' => 0,
+        'offset' => 0,
+        'limit' => 15,
+        'current_page' => 1,
+    ];
+
     public $selected_item;
     public $selected_url;
     
@@ -34,6 +44,7 @@ class LvDataMarketing extends Component
         $databases = SectorData::getAllDatabases();
         $tables = CentralData::getAllTableByDivision("Marketing");
         $main_query = null;
+        $total_data = 0;
         foreach ($databases as $db_key => $database) {
             foreach ($tables as $tb_key => $table) {
                 $sub_query = DB::table("{$database}.{$table['table_name']} as table_origin")
@@ -41,6 +52,7 @@ class LvDataMarketing extends Component
                 ->selectRaw("'{$table['menu_name']}' as menu, '{$table['id']}' as menu_id")
                 ->leftJoin("{$db_pusat}.{$table['table_name']} as table_main", 'table_main.origin_uuid', '=', 'table_origin.uuid')
                 ->whereNull('table_main.origin_uuid');
+                $total_data += $sub_query->count();
                 if($db_key == 0 && $tb_key == 0) {
                     $main_query = $sub_query;
                 } else {
@@ -48,7 +60,12 @@ class LvDataMarketing extends Component
                 }
             }
         }
-        $main_query = $main_query->orderBy('created_at', 'DESC')->get();
+        $this->paginationAttributes['total_data'] = $total_data;
+        $main_query = $main_query->when($this->paginationAttributes['offset'], function ($query, $offset)
+        {
+            return $query->offset($offset);
+        })
+        ->limit($this->paginationAttributes['limit'])->orderBy('created_at', 'DESC')->get();
         // dd($main_query);
         $data['sector_items'] = $main_query;
         return view('livewire.manage.data-masuk.lv-data-marketing')
@@ -56,6 +73,10 @@ class LvDataMarketing extends Component
         ->layout('layouts.dashboard.main');
     }
     
+    public function setPaginationAttributes($paginationAttributes)
+    {
+        $this->paginationAttributes = $paginationAttributes;
+    }
     public function setSector($sector_id, $attributes = ['notification' => false])
     {
         $sector_properties = SectorData::getPropertiesById($sector_id);

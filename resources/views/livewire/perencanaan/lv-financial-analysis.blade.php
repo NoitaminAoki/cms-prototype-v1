@@ -7,6 +7,8 @@
 @section('css')
 @endsection
 
+@inject('sectorDataHelper', 'App\Helpers\SectorData')
+
 <div>
     <section class="section">
         <div class="section-header">
@@ -32,6 +34,7 @@
                             <div class="article-header">
                                 <div class="article-top-badge w-100">
                                     <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$item['id']}})" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                    <span class="badge shadow badge-primary text-capitalize">{{$sectorDataHelper::getNameById($item['origin_sector_id'])}}</span>
                                 </div>
                                 <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item['base_path'], 'name' => $item['image_name']]) }});">
                                 </div>

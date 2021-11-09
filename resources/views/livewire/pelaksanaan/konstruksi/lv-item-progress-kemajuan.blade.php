@@ -214,6 +214,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="w-100">
+                        <div class="common-section-title">Lokasi</div>
+                        <p>{{$sectorDataHelper::getNameById($selected_item['origin_sector_id'] ?? null) ?? 'Pusat'}}</p>
+                    </div>
+                    <div class="w-100">
                         <div class="common-section-title">Image Name</div>
                         <p>{{$selected_item['image_real_name'] ?? '-'}}</p>
                     </div>

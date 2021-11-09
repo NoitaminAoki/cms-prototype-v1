@@ -98,6 +98,7 @@ use App\Http\Livewire\Manage\{
     DataMasuk\LvDataKonstruksi,
     DataMasuk\LvDataMarketing,
     DataMasuk\LvDataUmum,
+    DataMasuk\LvDataPerencanaan,
 };
 
 Route::post('/email/verification-notification', function (Request $request) {
@@ -138,6 +139,9 @@ Route::middleware(['auth:web,admin', 'verified'])->group(function () {
         });
         Route::middleware(['permission:filter-data-masuk divisi-umum view'])->group(function () {
             Route::get('data-masuk/divisi/umum', LvDataUmum::class)->name('data_masuk.umum.index');
+        });
+        Route::middleware(['permission:filter-data-masuk perencanaan view'])->group(function () {
+            Route::get('data-masuk/Perencanaan', LvDataPerencanaan::class)->name('data_masuk.perencanaan.index');
         });
     });
     /* END MANAGE */

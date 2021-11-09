@@ -19,6 +19,22 @@
     
     <div class="section-body">
       <div class="row">
+        @can('filter-data-masuk perencanaan view')
+        <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+          <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.perencanaan.index') }}">
+            <div class="card custom-card-folder">
+              <div class="card-body">
+                <div class="text-center">
+                  <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                </div>
+                <div class="w-100 mt-2">
+                  <h6 class="text-uppercase mb-0">Perencanaan</h6>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+        @endcan
         @can('filter-data-masuk divisi-keuangan view')
         <div class="col-12 col-sm-6 col-md-6 col-lg-3">
           <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.keuangan.index') }}">

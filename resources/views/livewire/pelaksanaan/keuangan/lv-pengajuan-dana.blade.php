@@ -220,6 +220,10 @@
                 </div>
                 <div class="modal-body">
                     <div class="row">
+                        <div class="col-12">
+                            <div class="common-section-title">Lokasi</div>
+                            <p>{{$sectorDataHelper::getNameById($selected_item['origin_sector_id'] ?? null) ?? 'Pusat'}}</p>
+                        </div>
                         <div class="col-md-6 col-12">
                             <div class="common-section-title">Code</div>
                             <p>{{$selected_item['paket']['code'] ?? 'N/A'}} - {{$selected_item['paket']['nama'] ?? 'N/A'}}</p>

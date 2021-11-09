@@ -50,7 +50,7 @@
                         </table>
                     </div>
                     
-                    {{-- <livewire:components.pagination.lv-paginate key="{{ Str::random() }}" /> --}}
+                    <livewire:components.pagination.lv-paginate :paginationAttributes="$paginationAttributes" key="{{ Str::random() }}" />
                 </div>
             </div>
         </div>

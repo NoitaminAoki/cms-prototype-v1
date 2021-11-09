@@ -6,12 +6,14 @@ class CentralData
 {
     private static $db_name;
     private static $table_datas = [
-        'Perencanaan' => [
-            'brosur_perumahaans',
-            'financial_analyses',
-            'gambar_unit_rumahs',
-            'item_konstruksi_saranas',
-            'item_unit_rumahs',
+        'Menu' => [
+            'Perencanaan' => [
+                ['id' => 'P-BP', 'model' => 'App\Models\Perencanaan\BrosurPerumahan', 'menu_name' => 'Brosur Perumahan', 'table_name' => 'brosur_perumahans'],
+                ['id' => 'P-FA', 'model' => 'App\Models\Perencanaan\FinancialAnalysis', 'menu_name' => 'Financial Analysis', 'table_name' => 'financial_analyses'],
+                ['id' => 'P-GUR', 'model' => 'App\Models\Perencanaan\GambarUnitRumah', 'menu_name' => 'Gambar Unit Rumah', 'table_name' => 'gambar_unit_rumahs'],
+                ['id' => 'P-KS', 'model' => 'App\Models\Perencanaan\ItemKonstruksiSarana', 'menu_name' => 'Konstrusi Sarana', 'table_name' => 'item_konstruksi_saranas'],
+                ['id' => 'P-KUR', 'model' => 'App\Models\Perencanaan\ItemUnitRumah', 'menu_name' => 'Konstrusi Unit Rumah', 'table_name' => 'item_unit_rumahs'],
+            ],
         ],
         'Division' => [
             'Keuangan' => [
@@ -46,10 +48,20 @@ class CentralData
     {
         return self::$table_datas['Division'][$division_name] ?? [];
     }
+    public static function getAllTableByMenu($menu_name)
+    {
+        return self::$table_datas['Menu'][$menu_name] ?? [];
+    }
 
     public static function getDivisionTableById($division_name, $id)
     {
         $datas = self::$table_datas['Division'][$division_name];
+        $item = collect($datas)->where('id', $id)->first();
+        return $item;
+    }
+    public static function getMenuTableById($menu_name, $id)
+    {
+        $datas = self::$table_datas['Menu'][$menu_name];
         $item = collect($datas)->where('id', $id)->first();
         return $item;
     }

@@ -12,37 +12,36 @@ use App\Helpers\{
     StringGenerator,
 };
 
-class LvDataKonstruksi extends Component
+class LvDataPerencanaan extends Component
 {
     private $sector_properties;
-    
+
     protected $listeners = [
         'setPaginationAttributes' => 'setPaginationAttributes'
     ];
-    public $page_attribute = [
-        'title' => 'Divisi Konstruksi',
-    ];
     
+    public $page_attribute = [
+        'title' => 'Perencanaan',
+    ];
+
     public $paginationAttributes = [
         'total_data' => 0,
         'offset' => 0,
         'limit' => 15,
         'current_page' => 1,
     ];
-
+    
     public $selected_item;
     public $selected_url;
     
     public $selected_sector_id;
     public $sector_name;
 
-    public $input_parent;
-    
     public function render()
     {
         $db_pusat = Config::get("database.connections.mysql.database");
         $databases = SectorData::getAllDatabases();
-        $tables = CentralData::getAllTableByDivision("Konstruksi");
+        $tables = CentralData::getAllTableByMenu("Perencanaan");
         $main_query = null;
         $total_data = 0;
         foreach ($databases as $db_key => $database) {
@@ -68,15 +67,17 @@ class LvDataKonstruksi extends Component
         ->limit($this->paginationAttributes['limit'])->orderBy('created_at', 'DESC')->get();
         // dd($main_query);
         $data['sector_items'] = $main_query;
-        return view('livewire.manage.data-masuk.lv-data-konstruksi')
+        return view('livewire.manage.data-masuk.lv-data-perencanaan')
         ->with($data)
         ->layout('layouts.dashboard.main');
     }
+
     
     public function setPaginationAttributes($paginationAttributes)
     {
         $this->paginationAttributes = $paginationAttributes;
     }
+    
     public function setSector($sector_id, $attributes = ['notification' => false])
     {
         $sector_properties = SectorData::getPropertiesById($sector_id);
@@ -104,7 +105,7 @@ class LvDataKonstruksi extends Component
     
     public function setItem($menu_id, $id, $sector_id)
     {
-        $table = CentralData::getDivisionTableById('Konstruksi', $menu_id);
+        $table = CentralData::getMenuTableById('Perencanaan', $menu_id);
         if(!$table) return $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data"]);
         
         $modelClass = $table['model'];
@@ -127,7 +128,7 @@ class LvDataKonstruksi extends Component
     
     public function downloadImage($menu_id, $sector_id)
     {
-        $table = CentralData::getDivisionTableById('Konstruksi', $menu_id);
+        $table = CentralData::getMenuTableById('Perencanaan', $menu_id);
         if(!$table) return $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data"]);
         
         $modelClass = $table['model'];
@@ -147,7 +148,7 @@ class LvDataKonstruksi extends Component
     
     public function copyDataSector($menu_id, $id, $sector_id)
     {
-        $table = CentralData::getDivisionTableById('Konstruksi', $menu_id);
+        $table = CentralData::getMenuTableById('Perencanaan', $menu_id);
         if(!$table) return $this->dispatchBrowserEvent('notification:show', ['type' => 'warning', 'title' => 'Ops!', 'message' => "Sorry we can't find any data"]);
         
         $modelClass = $table['model'];

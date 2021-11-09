@@ -11,7 +11,7 @@
             <div class="section-header-breadcrumb">
                 <div class="breadcrumb-item active"><a href="{{ route('dashboard') }}">Dashboard</a></div>
                 <div class="breadcrumb-item"><a href="{{ route('manage.data_masuk.index') }}">Manage</a></div>
-                <div class="breadcrumb-item">{{$page_attribute['title']}}</div>
+                <div class="breadcrumb-item">Perencanaan</div>
             </div>
         </div>
         
@@ -32,7 +32,7 @@
                             <tbody>
                                 @forelse ($sector_items as $key => $sector_item)
                                 <tr>
-                                    <td>{{$key+1}}</td>
+                                    <td>{{$paginationAttributes['offset'] + ($key+1)}}</td>
                                     <td>{{$sectorDataHelper::getNameById($sector_item->sector_id)}}</td>
                                     <td>{{$sector_item->menu}}</td>
                                     <td>{{$sector_item->image_real_name}}</td>
@@ -49,7 +49,6 @@
                             </tbody>
                         </table>
                     </div>
-                    
                     <livewire:components.pagination.lv-paginate :paginationAttributes="$paginationAttributes" key="{{ Str::random() }}" />
                 </div>
             </div>
