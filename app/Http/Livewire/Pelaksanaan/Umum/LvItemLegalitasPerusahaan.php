@@ -76,7 +76,8 @@ class LvItemLegalitasPerusahaan extends Component
 
         $this->resetInput();
         
-        return $this->dispatchBrowserEvent('notification:success', ['title' => 'Success!', 'message' => 'Successfully adding data.']);
+        $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
+        return $this->dispatchBrowserEvent('notification:show', ['type' => 'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
 
     public function setInputTanggal($value)
@@ -96,6 +97,7 @@ class LvItemLegalitasPerusahaan extends Component
         $item = ItemLegalitasPerusahaan::findOrFail($id);
         $this->selected_item = $item;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
 
     public function downloadImage($image_number = 1)

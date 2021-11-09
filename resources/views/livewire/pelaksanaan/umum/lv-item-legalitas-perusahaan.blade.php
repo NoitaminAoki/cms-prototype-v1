@@ -28,19 +28,22 @@
                 @endcan
                 @forelse ($items as $item)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item->id}})" data-toggle="modal" data-target="#modalViewItem">
-                        <div class="card shadow-sm custom-card-folder">
-                            <article class="article article-style-b mb-0">
-                                <div class="article-header">
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item->base_path, 'name' => $item->image_name]) }});">
-                                    </div>
-                                    <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item->image_real_name}}</div>
-                                    </div>
+                    <div class="card shadow-sm custom-card-folder">
+                        <article class="article article-style-b mb-0">
+                            <div class="article-header">
+                                <div class="article-top-badge w-100">
+                                    <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$item['id']}})" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
                                 </div>
-                            </article>
-                        </div>
-                    </a>
+                                <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item['base_path'], 'name' => $item['image_name']]) }});">
+                                </div>
+                                <a class="main-popup-link" href="{{ route('files.image.stream', ['path'=>$item['base_path'], 'name' => $item['image_name']]) }}">
+                                    <div class="article-badge custom-article-badge w-100">
+                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item['image_real_name']}}</div>
+                                    </div>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
                 @empty
                 <div class="col-12">
@@ -122,7 +125,7 @@
                         </div>
                         <div class="w-100">
                             @if ($selected_item)
-                            <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                            <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 img-wheel-zoom border shadow">
                             @endif
                         </div>
                     </div>
@@ -155,6 +158,21 @@
             locale: {
                 format: 'DD/MM/YYYY'
             }
+        });
+        $('.main-popup-link').magnificPopup({
+            gallery: {
+                enabled:true,
+                navigateByImgClick: false,
+            },
+            type: 'image',
+            callbacks: {
+                change: function(item) {
+                    setTimeout(() => {
+                        wheelzoom(document.querySelector('.mfp-img'));
+                    }, 100);
+                }
+            }
+            // other options
         });
     })
     
@@ -200,12 +218,34 @@
         })
     })
     
-    document.addEventListener('notification:success', function (event) {
-        $('.modal').modal('hide');
-        
+    document.addEventListener('wheelzoom:init', function (event) {
+        wheelzoom(document.querySelector('.img-wheel-zoom'));
+    });
+    document.addEventListener('magnific-popup:init', function (event) {
+        $(event.detail.target).magnificPopup({
+            gallery: {
+                enabled:true,
+                navigateByImgClick: false,
+            },
+            type: 'image',
+            callbacks: {
+                change: function(item) {
+                    setTimeout(() => {
+                        wheelzoom(document.querySelector('.mfp-img'));
+                    }, 100);
+                }
+            }
+            // other options
+        });
+    })
+    
+    document.addEventListener('notification:show', function (event) {
+        setTimeout(function() {
+            $('.modal').modal('hide');
+        }, 200);
         setTimeout(function() {
             Swal.fire({
-                icon: 'success',
+                icon: event.detail.type,
                 title: event.detail.title,
                 text: event.detail.message,
             });

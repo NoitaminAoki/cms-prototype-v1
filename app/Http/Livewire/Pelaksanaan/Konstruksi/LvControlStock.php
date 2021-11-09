@@ -32,7 +32,6 @@ class LvControlStock extends Component
         'detail' => false,
     ];
     
-    public $paket_id;
     public $file_image;
     public $input_tanggal;
     public $iteration;
@@ -90,7 +89,7 @@ class LvControlStock extends Component
         
         $this->resetInput();
         
-        return $this->dispatchBrowserEvent('notification:success', ['title' => 'Success!', 'message' => 'Successfully adding data.']);
+        return $this->dispatchBrowserEvent('notification:show', ['type' => 'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
     
     public function setInputTanggal($value)
@@ -110,6 +109,7 @@ class LvControlStock extends Component
         $item = ControlStock::findOrFail($id);
         $this->selected_item = $item;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
     
     public function setGroupName($name)
@@ -119,6 +119,7 @@ class LvControlStock extends Component
             'list' => false,
             'detail' => true,
         ];
+        return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
     }
     
     public function openList()
@@ -132,7 +133,7 @@ class LvControlStock extends Component
     public function downloadImage()
     {
         $item = ControlStock::findOrFail($this->selected_item['id']);
-        $path = $item->base_path.$item->image_name;
+        $path = $item->full_path;
         
         return Storage::disk('sector_disk')->download($path, $item->image_real_name);
     }
@@ -140,7 +141,7 @@ class LvControlStock extends Component
     public function delete($id)
     {
         $item = ControlStock::findOrFail($id);
-        $path = $item->base_path.$item->image_name;
+        $path = $item->full_path;
         Storage::disk('sector_disk')->delete($path);
         $item->delete();
         $this->resetInput();

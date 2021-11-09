@@ -39,10 +39,7 @@ class LvJurnalHarian extends Component
     public $iteration;
     
     public $items;
-    public $selected_item_group = [
-        'resume' => [],
-        'jurnal' => [],
-    ];
+    public $selected_item_group = [];
     public $selected_group_name;
     public $selected_item;
     public $selected_url;
@@ -69,22 +66,17 @@ class LvJurnalHarian extends Component
         
         $this->items = collect($items)->map(function ($values, $index)
         {
-            $data_items = $values->groupBy('type');
+            $data_items = array_values(collect($values)->sortByDesc('type')->toArray());
+            // dump($data_items);
             return [
                 'name' => $index,
-                'items' => [
-                    'resume' => $data_items['resume'] ?? [],
-                    'jurnal' => $data_items['jurnal'] ?? [],
-                ],
+                'main_items' => $data_items ?? [],
             ];
         });
-        // dd($items, $this->items);
+        // dd($items->toArray(), $this->items);
         if ($this->selected_group_name) {
             $item = $this->items->where('name', $this->selected_group_name)->first();
-            $this->selected_item_group = $item['items'] ?? [
-                'resume' => [],
-                'jurnal' => [],
-            ];
+            $this->selected_item_group = $item['main_items'];
         }
         
         return view('livewire.pelaksanaan.keuangan.lv-jurnal-harian')
@@ -142,6 +134,7 @@ class LvJurnalHarian extends Component
         $this->selected_item = $item->toArray();
         $this->selected_item['type'] = $type;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
     
     public function getItemById($id, $type)
@@ -164,6 +157,7 @@ class LvJurnalHarian extends Component
             'list' => false,
             'detail' => true,
         ];
+        return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
     }
     
     public function openList()

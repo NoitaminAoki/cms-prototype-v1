@@ -100,7 +100,7 @@ class LvItemMarketing extends Component
         
         $this->resetInput();
         
-        return $this->dispatchBrowserEvent('notification:success', ['title' => 'Success!', 'message' => 'Successfully adding data.']);
+        return $this->dispatchBrowserEvent('notification:show', ['type' => 'success', 'title' => 'Success!', 'message' => 'Successfully adding data.']);
     }
     
     public function setInputTanggal($value)
@@ -120,6 +120,7 @@ class LvItemMarketing extends Component
         $item = ItemMarketing::findOrFail($id);
         $this->selected_item = $item;
         $this->selected_url = route('files.image.stream', ['path' => $item->base_path, 'name' => $item->image_name]);
+        return $this->dispatchBrowserEvent('wheelzoom:init');
     }
     
     public function setGroupName($name)
@@ -129,6 +130,7 @@ class LvItemMarketing extends Component
             'list' => false,
             'detail' => true,
         ];
+        return $this->dispatchBrowserEvent('magnific-popup:init', ['target' => '.main-popup-link']);
     }
     
     public function openList()

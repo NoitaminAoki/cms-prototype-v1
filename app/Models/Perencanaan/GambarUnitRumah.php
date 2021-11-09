@@ -19,8 +19,8 @@ class GambarUnitRumah extends Model
         'uuid',
         'full_path',
         'sector_id',
-        'pdf_real_name', 
-        'pdf_name', 
+        'image_real_name', 
+        'image_name', 
         'base_path', 
         'tanggal',
     ];

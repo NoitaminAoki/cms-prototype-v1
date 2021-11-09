@@ -10,6 +10,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
   
   <!-- CSS Libraries -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
   @yield('css-libraries')
   
   <!-- Template CSS -->
@@ -19,6 +20,15 @@
   @yield('css')
   
   <style>
+    .custom-pagination-scroll-h {
+      display: inline-block;
+      overflow: auto;
+      overflow-y: hidden;
+      white-space: nowrap;
+    }
+    .custom-pagination-scroll-h>.page-item {
+      display: inline-block;
+    }
     .card-link {
       cursor: pointer;
     }
@@ -26,14 +36,14 @@
       color: #0056b3;
     }
     .swal2-confirm.swal2-styled {
-        /* box-shadow: 0 2px 6px #acb5f6; */
-        background-color: #6777ef;
+      /* box-shadow: 0 2px 6px #acb5f6; */
+      background-color: #6777ef;
     }
     .swal2-cancel.swal2-styled {
-        color: #555;
-        background-color: #efefef;
+      color: #555;
+      background-color: #efefef;
     }
-
+    
     .custom-fa-10x {
       font-size: 10em;
     }
@@ -52,7 +62,9 @@
     .custom-article-header-pdf {
       height: 170px !important;
     }
-    
+    .folder-event {
+      cursor: pointer;
+    }
     .custom-card-folder {
       transition: box-shadow 0.2s ease-in-out;
     }
@@ -67,10 +79,18 @@
       border-bottom: 1px solid #dee2e6!important;
     }
     
-    .custom-article-badge {
+    .article .article-header .article-top-badge {
+      position: absolute;
+      top: 10px;
       padding-left: 10px;
       padding-right: 10px;
+    }
+    
+    .custom-article-badge {
+      padding: 10px 10px;
       left: 0 !important;
+      cursor: pointer;
+      bottom: 0 !important;
     }
     .custom-article-badge>.article-badge-item {
       white-space: nowrap;
@@ -96,6 +116,29 @@
     }
     body.layout-3 .main-content {
       padding-top: 130px;
+    }
+    .custom-card-overlay {
+      border-radius: 0.25rem;
+      -webkit-align-items: center;
+      -ms-flex-align: center;
+      align-items: center;
+      background-color: rgba(255,255,255,.7);
+      display: -webkit-flex;
+      display: -ms-flexbox;
+      display: flex;
+      -webkit-justify-content: center;
+      -ms-flex-pack: center;
+      justify-content: center;
+      z-index: 50;
+      height: calc(100% - 30px);
+      left: 15px;
+      right: 15px;
+      position: absolute;
+      top: 0;
+      width: calc(100% - 30px);
+    }
+    .fa-3x {
+      font-size: 3em;
     }
   </style>
   
@@ -135,6 +178,8 @@
   <script src="{{ asset('assets/js/stisla.js') }}"></script>
   
   <!-- JS Libraies -->
+  <script src="{{ asset('assets/library/wheelzoom/wheelzoom.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
   @stack('script-libraries')
   
   <!-- Page Specific JS File -->

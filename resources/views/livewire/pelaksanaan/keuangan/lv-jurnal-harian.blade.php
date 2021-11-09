@@ -35,18 +35,19 @@
                 @endcan
                 @forelse ($items as $item)
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
-                    <a class="text-decoration-none custom-color-inherit" wire:click="setGroupName('{{$item['name']}}')" href="#">
-                        <div class="card custom-card-folder">
-                            <div class="card-body">
-                                <div class="text-center">
-                                    <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
-                                </div>
-                                <div class="w-100 mt-2">
-                                    <h6 class="text-uppercase mb-0">{{$item['name']}}</h6>
-                                </div>
+                    <div id="overlay-card-{{Str::slug($item['name'])}}" wire:target="setGroupName('{{$item['name']}}')" wire:loading.flex class="custom-card-overlay" style="display: none">
+                        <i class="fas fa-3x fa-sync-alt fa-spin fa-3x"></i>
+                    </div>
+                    <div wire:click="setGroupName('{{$item['name']}}')" class="card custom-card-folder folder-event">
+                        <div class="card-body">
+                            <div class="text-center">
+                                <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                            </div>
+                            <div class="w-100 mt-2">
+                                <h6 class="text-uppercase mb-0">{{$item['name']}}</h6>
                             </div>
                         </div>
-                    </a>
+                    </div>
                 </div>
                 @empty
                 <div class="col-12">
@@ -62,46 +63,35 @@
                 <div class="col-12 mb-4">
                     <button x-on:click="control_tabs.list = true;control_tabs.detail = false;" class="btn btn-warning">Back</button>
                 </div>
-                @foreach($selected_item_group['resume'] as $item_group)
+                @forelse($selected_item_group as $item_group)
                 <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item_group['id']}}, 'resume')" data-toggle="modal" data-target="#modalViewItem">
-                        <div class="card shadow-sm custom-card-folder">
-                            <article class="article article-style-b mb-0">
-                                <div class="article-header">
-                                    <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-primary">Resume</span>
-                                    </div>
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
-                                    </div>
+                    <div class="card shadow-sm custom-card-folder">
+                        <article class="article article-style-b mb-0">
+                            <div class="article-header">
+                                <div class="article-top-badge w-100">
+                                    <button class="btn btn-sm btn-primary pb-0 float-right btn-open-modal" wire:click="setItem({{$item_group['id']}}, '{{$item_group['type']}}')" data-toggle="modal" data-target="#modalViewItem"><i class="fas fa-expand"></i></button>
+                                    <span class="badge shadow badge-primary text-capitalize">{{$item_group['type']}}</span>
+                                </div>
+                                <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
+                                </div>
+                                <a class="main-popup-link" href="{{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }}">
                                     <div class="article-badge custom-article-badge w-100">
                                         <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
                                     </div>
-                                </div>
-                            </article>
-                        </div>
-                    </a>
+                                </a>
+                            </div>
+                        </article>
+                    </div>
                 </div>
-                @endforeach
-                @foreach($selected_item_group['jurnal'] as $item_group)
-                <div class="col-12 col-sm-6 col-md-4 col-lg-3">
-                    <a href="#" wire:click="setItem({{$item_group['id']}}, 'jurnal')" data-toggle="modal" data-target="#modalViewItem">
-                        <div class="card shadow-sm custom-card-folder">
-                            <article class="article article-style-b mb-0">
-                                <div class="article-header">
-                                    <div class="article-top-badge w-100">
-                                        <span class="badge shadow badge-primary">Jurnal</span>
-                                    </div>
-                                    <div class="article-image" style="background-image: url({{ route('files.image.stream', ['path'=>$item_group['base_path'], 'name' => $item_group['image_name']]) }});">
-                                    </div>
-                                    <div class="article-badge custom-article-badge w-100">
-                                        <div class="article-badge-item text-black custom-bg-transparent-white">{{$item_group['image_real_name']}}</div>
-                                    </div>
-                                </div>
-                            </article>
+                @empty
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body text-center">
+                            <span>Empty</span>
                         </div>
-                    </a>
+                    </div>
                 </div>
-                @endforeach
+                @endforelse
             </div>
         </div>
     </section>
@@ -183,7 +173,7 @@
                     </div>
                     <div class="w-100">
                         @if ($selected_item)
-                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 border shadow">
+                        <img id="img_id_{{$selected_item['id']}}" src="{{$selected_url}}" class="w-100 img-wheel-zoom border shadow">
                         @endif
                     </div>
                 </div>
@@ -261,7 +251,26 @@
         })
     })
     
-    
+    document.addEventListener('wheelzoom:init', function (event) {
+        wheelzoom(document.querySelector('.img-wheel-zoom'));
+    });
+    document.addEventListener('magnific-popup:init', function (event) {
+        $(event.detail.target).magnificPopup({
+            gallery: {
+                enabled:true,
+                navigateByImgClick: false,
+            },
+            type: 'image',
+            callbacks: {
+                change: function(item) {
+                    setTimeout(() => {
+                        wheelzoom(document.querySelector('.mfp-img'));
+                    }, 100);
+                }
+            }
+            // other options
+        });
+    })
     document.addEventListener('notification:show', function (event) {
         setTimeout(function() {
             $('.modal').modal('hide');
