@@ -11,6 +11,7 @@
   
   <!-- CSS Libraries -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.css" />
+  <link rel="stylesheet" href="{{ asset('assets/library/izitoast/css/iziToast.min.css') }}" />
   @yield('css-libraries')
   
   <!-- Template CSS -->
@@ -180,6 +181,7 @@
   <!-- JS Libraies -->
   <script src="{{ asset('assets/library/wheelzoom/wheelzoom.js') }}"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
+  <script src="{{ asset('assets/library/izitoast/js/iziToast.min.js') }}"></script>
   @stack('script-libraries')
   
   <!-- Page Specific JS File -->

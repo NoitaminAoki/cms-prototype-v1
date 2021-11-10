@@ -30,7 +30,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://serang.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/homepage/SERANG.png') }}" alt="">
@@ -44,7 +44,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://sukabumi.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/homepage/SUKABUMI.png') }}" alt="">
@@ -58,7 +58,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://bandung.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/homepage/BANDUNG.png') }}" alt="">
@@ -72,7 +72,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://jonggol.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/homepage/JONGGOL.png') }}" alt="">
@@ -86,7 +86,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://pasuruan.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/homepage/PASURUAN.png') }}" alt="">
@@ -100,7 +100,7 @@
                     </a>
                 </div>
                 <div class="col-12 col-sm-6 col-md-6 col-lg-4">
-                    <a class="text-decoration-none custom-color-inherit" href="#">
+                    <a class="text-decoration-none custom-color-inherit" href="https://gorontalo.managementgb.com/login">
                         <div class="card custom-card-folder">
                             <div class="w-100">
                                 <img class="w-100" src="{{ asset('assets/img/homepage/GORONTALO.png') }}" alt="">

@@ -1,5 +1,4 @@
 @section('css-libraries')
-<link rel="stylesheet" href="{{ asset('assets/library/sweetalert2/css/sweetalert2.min.css') }}">
 @endsection
 
 @inject('sectorDataHelper', 'App\Helpers\SectorData')
@@ -110,20 +109,17 @@
 </div>
 
 @push('script-libraries')
-<script src="{{ asset('assets/library/sweetalert2/js/sweetalert2.min.js') }}"></script>
 @endpush
 @push('script')
 <script>
     document.addEventListener('notification:show', function (event) {
-        $('.modal').modal('hide');
+        let attr = {
+            title: event.detail.title,
+            message: event.detail.message,
+            position: 'topRight'
+        };
         
-        setTimeout(function() {
-            Swal.fire({
-                icon: event.detail.type,
-                title: event.detail.title,
-                text: event.detail.message,
-            });
-        }, 300);
+        iziToast[event.detail.type](attr);
     })
 </script>
 @endpush
