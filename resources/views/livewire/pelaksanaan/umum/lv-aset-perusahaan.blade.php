@@ -1,4 +1,4 @@
-@section('title-page', ' - AsetPerusahaan')
+@section('title-page', ' - Aset Perusahaan')
 @section('css-libraries')
 @endsection
 
@@ -22,8 +22,36 @@
             </div>
         </div>
         
-        <div class="section-body">
-            <div class="row">
+        <div x-data="{ layouts: { grid: true, details: false } }" class="section-body">
+            <div class="w-100 mb-4 menu-layout">
+                <div class="d-flex justify-content-end">
+                    <div class="layout-item" :class="{ 'active': layouts.details }" x-on:click="layouts.grid = false; layouts.details = true;">
+                        <i class="fas fa-list fa-1x-3"></i>
+                    </div>
+                    <div class="layout-item" :class="{ 'active': layouts.grid }" x-on:click="layouts.grid = true; layouts.details = false;">
+                        <i class="fas fa-th fa-1x-3"></i>
+                    </div>
+                </div>
+            </div>
+            <div x-show="layouts.grid" class="row">
+                @foreach ($items as $key => $item)
+                <div class="col-12 col-sm-6 col-md-6 col-lg-3">
+                    <a class="text-decoration-none custom-color-inherit" href="{{ route($route_item_name, ['slug' => $item->slug_name]) }}">
+                        <div class="card custom-card-folder">
+                            <div class="card-body">
+                                <div class="text-center">
+                                    <i class="fas fa-folder custom-fa-10x custom-bg-folder"></i>
+                                </div>
+                                <div class="w-100 mt-2">
+                                    <h6 class="text-uppercase mb-0">{{ $converter_class::numberToRoman($key+1) }}. {{$item->name}}</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                @endforeach
+            </div>
+            <div :class="{ 'd-none': !layouts.details }" class="row d-none">
                 <div class="col-12">
                     <div class="card rounded-0 shadow-none border-bottom">
                         <div class="card-body py-3">

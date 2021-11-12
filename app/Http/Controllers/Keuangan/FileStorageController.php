@@ -13,7 +13,7 @@ class FileStorageController extends Controller
     {
         $base_path = urldecode($request->query('path'));
         $filename = $request->query('name');
-
+        
         if (Storage::disk('sector_disk')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);
@@ -42,12 +42,12 @@ class FileStorageController extends Controller
         
         abort(404);
     }
-
+    
     public function pdfStream(Request $request)
     {
         $base_path = urldecode($request->query('path'));
         $filename = $request->query('name');
-
+        
         if (Storage::disk('sector_disk')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);

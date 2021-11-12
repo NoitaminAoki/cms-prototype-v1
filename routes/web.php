@@ -282,3 +282,15 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     
     
 });
+
+Route::get('test/email', function(){
+  
+    return view('layouts.mail.notification-mail');
+	$details = ['email' => 's2.DanielAoki@gmail.com'];
+  
+    dispatch(new App\Jobs\SendEmailNotifJob($details));
+  
+    dd('send mail successfully !!');
+});
+
+Route::get('test/roles', [FileStorageController::class, 'tester']);

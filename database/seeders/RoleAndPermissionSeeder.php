@@ -6,6 +6,7 @@ use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
+use App\Helpers\RolesData;
 
 class RoleAndPermissionSeeder extends Seeder
 {
@@ -119,7 +120,40 @@ class RoleAndPermissionSeeder extends Seeder
         // dd($list_permission);
         $role = Role::create(['name' => 'Super Admin', 'guard_name' => 'admin']);
         $role->syncPermissions($list_permission);
+        
+        $divisis = ['Keuangan', 'Konstruksi', 'Marketing', 'Umum'];
 
+        foreach ($divisis as $key => $divisi) {
+            $permission = RolesData::getAllPermissionByDivision($divisi);
+            $permission_view = collect($permission)->filter(function($value, $index) {
+                return false !== stripos($value, "view");
+            });
+            $list_permission = Permission::query()
+            ->where('guard_name', 'web')
+            ->whereIn('name', $permission_view)
+            ->get();
+            $role = Role::create(['name' => "Divisi {$divisi} [VIEW ONLY]", 'guard_name' => 'web']);
+            $role->syncPermissions($list_permission);
+        }
+
+        $menus = ['Pelaksanaan', 'Perencanaan'];
+
+        foreach ($menus as $key => $menu) {
+            $permission = RolesData::getMenus($menu);
+            $permission_view = collect($permission)->filter(function($value, $index) {
+                return false !== stripos($value, "view");
+            });
+            $list_permission = Permission::query()
+            ->where('guard_name', 'web')
+            ->whereIn('name', $permission_view)
+            ->get();
+            $role = Role::create(['name' => "Menu {$menu} [VIEW ONLY]", 'guard_name' => 'web']);
+            $role->syncPermissions($list_permission);
+        }
+        // $list_permission = Permission::whereIn('name', $role_keuangan)->get();
+        // $list_permission = Permission::where([['guard_name', '=', 'admin']])->get();
+        // $role = Role::create(['name' => 'Super Admin', 'guard_name' => 'admin']);
+        // $role->syncPermissions($list_permission);
         // $user->givePermissionTo([$arrayOfPermissionNames]);
         // $user->assignRole(['jurnal harian']);
 
