@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Keuangan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use App\Models\User;
 
 class FileStorageController extends Controller
 {
@@ -12,7 +13,7 @@ class FileStorageController extends Controller
     {
         $base_path = urldecode($request->query('path'));
         $filename = $request->query('name');
-
+        
         if (Storage::disk('sector_disk')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);
@@ -23,12 +24,12 @@ class FileStorageController extends Controller
         
         abort(404);
     }
-
+    
     public function pdfStream(Request $request)
     {
         $base_path = urldecode($request->query('path'));
         $filename = $request->query('name');
-
+        
         if (Storage::disk('sector_disk')->exists($base_path.$filename)) {
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);
@@ -38,5 +39,20 @@ class FileStorageController extends Controller
         }
         
         abort(404);
+    }
+    
+    public function tester()
+    {
+        $details = (object) [
+            'divisi' => "Keuangan",
+            'path' => "images/keuangan/jurnal-harian/",
+            'image_name' => "JURNAL - JULI 2021 - 2.jpg",
+            'file_name' => "J03T3FSNbFO7AGhmKL4zOHJyXRGPwKu5mI7rsGCBHte0I.jpg",
+        ];
+        $details->pathToImage = Storage::disk('sector_disk')->path($details->path.$details->file_name);
+        dump(public_path());
+        dd(public_path() . '/' . $details->pathToImage);
+        return view('layouts.mail.notification-mail')
+        ->with(['data' => $details]);
     }
 }

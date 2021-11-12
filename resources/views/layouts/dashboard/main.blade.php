@@ -26,6 +26,17 @@
       overflow-y: hidden;
       white-space: nowrap;
     }
+    .menu-layout .layout-item {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease-in-out;
+    }
+    /* .menu-layout .layout-item:hover {
+      box-shadow: 0 .2rem .5rem rgba(0,0,0,.15)!important;
+    } */
+    .menu-layout .layout-item.active {
+      border-bottom: 2px solid #007bff!important;
+    }
     .custom-pagination-scroll-h>.page-item {
       display: inline-block;
     }
@@ -50,6 +61,9 @@
     
     .custom-fa-1x-2 {
       font-size: 1.2em;
+    }
+    .fa-1x-3 {
+      font-size: 1.3rem;
     }
     .custom-bg-folder {
       color: #FFE8A1;
