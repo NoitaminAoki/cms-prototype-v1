@@ -5,7 +5,12 @@ namespace App\Http\Controllers\Keuangan;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
-use App\Models\User;
+use App\Models\{
+    User,
+    Keuangan\JurnalHarian,
+    Marketing\ItemMarketing,
+};
+use App\Helpers\RolesData;
 
 class FileStorageController extends Controller
 {
@@ -43,6 +48,11 @@ class FileStorageController extends Controller
     
     public function tester()
     {
+        $divisi = ItemMarketing::DIVISI;
+        $menu = ItemMarketing::MENU;
+        $users = User::role("Divisi {$divisi} [VIEW ONLY]");
+        $all_users = User::role("Menu {$menu} [VIEW ONLY]")->unionAll($users)->get();
+        dd($all_users);
         $details = (object) [
             'divisi' => "Keuangan",
             'path' => "images/keuangan/jurnal-harian/",

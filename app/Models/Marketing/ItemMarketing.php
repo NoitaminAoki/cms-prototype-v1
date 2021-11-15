@@ -25,6 +25,7 @@ class ItemMarketing extends Model
         'tanggal',
     ];
 
+    public const MENU = 'Pelaksanaan';
     public const DIVISI = 'Marketing';
     public const BASE_PATH = 'images/marketing/item-marketing/';
 }

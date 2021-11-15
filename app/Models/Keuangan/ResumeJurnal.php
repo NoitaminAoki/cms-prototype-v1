@@ -24,6 +24,7 @@ class ResumeJurnal extends Model
         'tanggal',
     ];
 
+    public const MENU = 'Pelaksanaan';
     public const DIVISI = 'Keuangan';
     public const BASE_PATH = 'images/keuangan/resume-jurnal/';
 }

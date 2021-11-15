@@ -29,6 +29,7 @@ class PengajuanDana extends Model
         'tanggal',
     ];
 
+    public const MENU = 'Pelaksanaan';
     public const DIVISI = 'Keuangan';
     public const BASE_PATH = 'images/keuangan/pengajuan-dana/';
 

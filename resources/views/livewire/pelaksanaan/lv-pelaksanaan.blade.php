@@ -109,6 +109,7 @@
             <div class="table-responsive">
               <table class="table custom-table-folder mb-0">
                 <tbody>
+                  @canany($rolesData::getAllPermissionByDivision('Keuangan'))
                   <tr class="border-bottom">
                     <td>
                       <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.index') }}">
@@ -119,6 +120,8 @@
                       </a>
                     </td>
                   </tr>
+                  @endcanany
+                  @canany($rolesData::getAllPermissionByDivision('Konstruksi'))
                   <tr class="border-bottom">
                     <td>
                       <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.konstruksi.index') }}">
@@ -129,6 +132,8 @@
                       </a>
                     </td>
                   </tr>
+                  @endcanany
+                  @canany($rolesData::getAllPermissionByDivision('Marketing'))
                   <tr class="border-bottom">
                     <td>
                       <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.marketing.index') }}">
@@ -139,6 +144,8 @@
                       </a>
                     </td>
                   </tr>
+                  @endcanany
+                  @canany($rolesData::getAllPermissionByDivision('Umum'))
                   <tr class="border-bottom">
                     <td>
                       <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.umum.index') }}">
@@ -149,6 +156,7 @@
                       </a>
                     </td>
                   </tr>
+                  @endcanany
                 </tbody>
               </table>
             </div>
