@@ -51,6 +51,7 @@ class FileStorageController extends Controller
         ];
         $details->pathToImage = Storage::disk('sector_disk')->path($details->path.$details->file_name);
         dump(public_path());
+        dump(public_path() . '/' . $details->pathToImage);
         dd(env('SECTOR_PUBLIC_PATH') . '/' . $details->pathToImage);
         return view('layouts.mail.notification-mail')
         ->with(['data' => $details]);
