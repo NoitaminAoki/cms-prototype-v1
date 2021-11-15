@@ -329,17 +329,10 @@
             // other options
         });
     })
-<<<<<<< HEAD
-
-    document.addEventListener('notification:success', function (event) {
-        $('.modal').modal('hide');
-        
-=======
     document.addEventListener('notification:show', function (event) {
         setTimeout(function() {
             $('.modal').modal('hide');
         }, 200);
->>>>>>> main
         setTimeout(function() {
             Swal.fire({
                 icon: event.detail.type,
