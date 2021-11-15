@@ -18,7 +18,7 @@ class FileStorageController extends Controller
             
             $path = Storage::disk('sector_disk')->path($base_path.$filename);
             return response()
-            ->file($path, array('Content-Type' =>'image', 'X-Content-Type-Options' => 'sniff'));
+            ->file($path, array('Content-Type' =>'image'));
             
         }
         
