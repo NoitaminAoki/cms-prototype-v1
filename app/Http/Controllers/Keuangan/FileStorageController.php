@@ -60,14 +60,18 @@ class FileStorageController extends Controller
         abort(404);
     }
 
-    public function testerResponse()
+    public function tester()
     {
-            
-            $path = Storage::disk('local')->path('image/example-image.jpg');
-            $type = File::mimeType($path);
-            
-            return response()
-            ->file($path, array('Content-Type' =>$type));
-
+        $details = (object) [
+            'divisi' => "Keuangan",
+            'path' => "images/keuangan/jurnal-harian/",
+            'image_name' => "JURNAL - JULI 2021 - 2.jpg",
+            'file_name' => "J03T3FSNbFO7AGhmKL4zOHJyXRGPwKu5mI7rsGCBHte0I.jpg",
+        ];
+        $details->pathToImage = Storage::disk('sector_disk_public_path')->path($details->path.$details->file_name);
+        dump(public_path());
+        dd(public_path() . '/' . $details->pathToImage);
+        return view('layouts.mail.notification-mail')
+        ->with(['data' => $details]);
     }
 }
