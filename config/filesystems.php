@@ -47,6 +47,11 @@ return [
             'root'   => env('SECTOR_BASE').env('SECTOR_ID'),
         ],
 
+        'sector_disk_raw' => [
+            'driver' => 'local',
+            'root'   => env('SECTOR_BASE_RAW').env('SECTOR_ID'),
+        ],
+
         's3' => [
             'driver' => 's3',
             'key' => env('AWS_ACCESS_KEY_ID'),
