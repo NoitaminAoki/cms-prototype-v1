@@ -49,9 +49,9 @@ class FileStorageController extends Controller
             'image_name' => "JURNAL - JULI 2021 - 2.jpg",
             'file_name' => "J03T3FSNbFO7AGhmKL4zOHJyXRGPwKu5mI7rsGCBHte0I.jpg",
         ];
-        $details->pathToImage = Storage::disk('sector_disk_public_path')->path($details->path.$details->file_name);
+        $details->pathToImage = Storage::disk('sector_disk')->path($details->path.$details->file_name);
         dump(public_path());
-        dd(public_path() . '/' . $details->pathToImage);
+        dd(env('SECTOR_PUBLIC_PATH') . '/' . $details->pathToImage);
         return view('layouts.mail.notification-mail')
         ->with(['data' => $details]);
     }
