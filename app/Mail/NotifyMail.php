@@ -30,7 +30,7 @@ class NotifyMail extends Mailable
      */
     public function build()
     {
-        $this->details->pathToImage = public_path() . '/' . Storage::disk('sector_disk')->path($this->details->path.$this->details->file_name);
+        $this->details->pathToImage = public_path() . '/' . Storage::disk('sector_disk_public_path')->path($this->details->path.$this->details->file_name);
         return $this->subject('New Report: '.$this->details->image_name)
         ->view('layouts.mail.notification-mail')
         ->with(['data' => $this->details]);
