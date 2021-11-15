@@ -39,7 +39,7 @@ class SendEmailNotifJob implements ShouldQueue
 
         if($users) {
             $email = new NotifyMail($this->details);
-            Mail::to($users)
+            Mail::bcc($users)
             ->send($email);
         }
     }
