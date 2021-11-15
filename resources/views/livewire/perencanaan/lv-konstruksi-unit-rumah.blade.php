@@ -1,4 +1,4 @@
-@section('title-page', ' - AsetPerusahaan')
+@section('title-page', ' - Konstruksi Unit Rumah')
 @section('css-libraries')
 @endsection
 
