@@ -26,6 +26,7 @@ class SdmPerusahaan extends Model
         'tanggal',
     ];
 
+    public const MENU = 'Pelaksanaan';
     public const DIVISI = 'Umum';
     public const BASE_PATH = 'images/umum/sdm-perusahaan/';
 }

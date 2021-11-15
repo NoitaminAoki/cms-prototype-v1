@@ -26,6 +26,7 @@ class ControlStock extends Model
         'tanggal',
     ];
 
+    public const MENU = 'Pelaksanaan';
     public const DIVISI = 'Konstruksi';
     public const BASE_PATH = 'images/konstruksi/control-stock/';
 

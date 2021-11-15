@@ -73,5 +73,6 @@ class LvUserRoles extends Component
             'email' => null,
         ];
         $this->reset('selected_role_id');
+        $this->dispatchBrowserEvent('select2:set', ['selector' => '#select_role', 'value' => ""]);
     }
 }

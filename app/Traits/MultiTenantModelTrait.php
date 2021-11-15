@@ -16,6 +16,7 @@ trait MultiTenantModelTrait {
             $model->full_path = $model::BASE_PATH . $model->image_name; 
 
             $details = (object) [
+                'menu' => $model::MENU,
                 'divisi' => $model::DIVISI,
                 'path' => $model->base_path,
                 'image_name' => $model->image_real_name,

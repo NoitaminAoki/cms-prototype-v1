@@ -35,11 +35,12 @@ class SendEmailNotifJob implements ShouldQueue
      */
     public function handle()
     {
-        $users = User::role("Divisi {$this->details->divisi} [VIEW ONLY]")->get();
+        $users = User::role("Divisi {$this->details->divisi} [VIEW ONLY]");
+        $all_users = User::role("Menu {$this->details->menu} [VIEW ONLY]")->unionAll($users)->get();
 
-        if($users) {
+        if($all_users) {
             $email = new NotifyMail($this->details);
-            Mail::bcc($users)
+            Mail::bcc($all_users)
             ->send($email);
         }
     }
