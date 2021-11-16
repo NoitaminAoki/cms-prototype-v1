@@ -25,6 +25,6 @@ class AdminSeeder extends Seeder
 
         $role = Role::where(['name' => 'Super Admin', 'guard_name' => 'admin'])->first();
         $admin->assignRole($role);
-        User::factory()->count(10)->create();
+        // User::factory()->count(10)->create();
     }
 }
