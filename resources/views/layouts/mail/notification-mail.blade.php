@@ -346,7 +346,7 @@
                   <td style="width:100%;padding:0;vertical-align:top;color:#153643;">
                     <p style="margin:0 0 25px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><img src="{{ $message->embed($data->pathToImage) }}" alt="" width="100%" style="height:auto;display:block;" /></p>
                     <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">Filename: {{$data->image_name}}</p>
-                    <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="{{ route('files.image.stream', ['path' => $data->path, 'name' => $data->file_name]) }}" target="_blank" style="color:#ee4c50;text-decoration:underline;">Open in website</a></p>
+                    {{-- <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="{{ route('files.image.stream', ['path' => $data->path, 'name' => $data->file_name]) }}" target="_blank" style="color:#ee4c50;text-decoration:underline;">Open in website</a></p> --}}
                   </td>
                 </tr>
               </table>
