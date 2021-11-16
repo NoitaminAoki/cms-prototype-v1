@@ -33,6 +33,7 @@
                 </div>
             </div>
             <div x-show="layouts.grid" class="row">
+                @can('pengajuan-dana view')
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.pengajuan_dana.index') }}">
                         <div class="card custom-card-folder">
@@ -47,6 +48,8 @@
                         </div>
                     </a>
                 </div>
+                @endcan
+                @can('realisasi-dana view')
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.realisasi_dana.index') }}">
                         <div class="card custom-card-folder">
@@ -61,6 +64,8 @@
                         </div>
                     </a>
                 </div>
+                @endcan
+                @can('jurnal-harian view')
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.jurnal_keuangan.index') }}">
                         <div class="card custom-card-folder">
@@ -75,6 +80,8 @@
                         </div>
                     </a>
                 </div>
+                @endcan
+                @can('progress-keuangan view')
                 <div class="col-12 col-sm-6 col-md-6 col-lg-3">
                     <a class="text-decoration-none custom-color-inherit" href="{{ route('pelaksanaan.keuangan.progress_keuangan.index') }}">
                         <div class="card custom-card-folder">
@@ -89,6 +96,7 @@
                         </div>
                     </a>
                 </div>
+                @endcan
             </div>
             <div :class="{ 'd-none': !layouts.details }" class="row d-none">
                 <div class="col-12">

@@ -76,7 +76,11 @@
             {{-- <div class="login-brand">
               <img src="../assets/img/stisla-fill.svg" alt="logo" width="100" class="shadow-light rounded-circle">
             </div> --}}
-            
+            @if (session('status'))
+            <div class="alert alert-success">
+              {{ session('status') }}
+            </div>
+            @endif
             <div class="card card-primary">
               <div class="card-header">
                 <img src="{{ asset('assets/img/logo-dark.png') }}" alt="logo gantari" width="300px">
@@ -97,8 +101,8 @@
                     <div class="d-block">
                       <label for="password" class="control-label">Password</label>
                       <div class="float-right">
-                        <a href="auth-forgot-password.html" class="text-small">
-                          Forgot Password?
+                        <a href="{{ route('password.request') }}" class="text-small">
+                          {{ __('Forgot your password?') }}
                         </a>
                       </div>
                     </div>
@@ -108,11 +112,11 @@
                     </div>
                   </div>
                   
-                @error('email')
-                <div class="mt-4">
-                  <span class="text-danger">Invalid email or password. Please try again.</span>
-                </div>
-                @enderror
+                  @error('email')
+                  <div class="mt-4 mb-2">
+                    <span class="text-danger">Invalid email or password. Please try again.</span>
+                  </div>
+                  @enderror
                   {{-- <div class="form-group">
                     <div class="custom-control custom-checkbox">
                       <input type="checkbox" name="remember_me" class="custom-control-input" tabindex="3" id="remember_me">
