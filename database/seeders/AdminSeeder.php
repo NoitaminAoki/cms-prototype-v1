@@ -25,10 +25,5 @@ class AdminSeeder extends Seeder
 
         $role = Role::where(['name' => 'Super Admin', 'guard_name' => 'admin'])->first();
         $admin->assignRole($role);
-        User::factory()->count(15)->create();
-        // dump('admin has permission [jurnal-harian view]: '.$admin->hasPermissionTo('jurnal-harian view'));
-        // dump('admin has permission [jurnal-harian add]: '.$admin->hasPermissionTo('jurnal-harian add'));
-        // dump('admin has permission [jurnal-harian update]: '.$admin->hasPermissionTo('jurnal-harian update'));
-        // dump('admin has permission [jurnal-harian delete]: '.$admin->hasPermissionTo('jurnal-harian delete'));
     }
 }
