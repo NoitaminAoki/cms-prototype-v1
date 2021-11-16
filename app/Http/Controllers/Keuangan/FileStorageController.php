@@ -68,11 +68,27 @@ class FileStorageController extends Controller
 
     public function tester()
     {
-        $divisi = ItemMarketing::DIVISI;
-        $menu = ItemMarketing::MENU;
-        $users = User::role("Divisi {$divisi} [VIEW ONLY]");
-        $all_users = User::role("Menu {$menu} [VIEW ONLY]")->unionAll($users)->get();
-        dd($all_users);
+        
+        $details = (object) [
+            'divisi' => 'Keuangan',
+            'menu' => 'Pelaksanaan',
+        ];
+        $users = User::with('roles')->whereHas(
+            'roles', function ($query) use($details)
+            {
+                $query->where(function ($query) use($details)
+                {
+                    $query->where(['name' => "Divisi {$details->divisi} [VIEW ONLY]", 'guard_name' => 'web']);
+                })->orWhere(function ($query) use($details)
+                {
+                    $query->where(['name' => "Menu {$details->menu} [VIEW ONLY]", 'guard_name' => 'web']);
+                })->orWhere(function ($query)
+                {
+                    $query->where(['name' => "Menu All[VIEW ONLY]", 'guard_name' => 'web']);
+                });
+            }
+        )->get();
+        dd($users);
         $details = (object) [
             'divisi' => "Keuangan",
             'path' => "images/keuangan/jurnal-harian/",

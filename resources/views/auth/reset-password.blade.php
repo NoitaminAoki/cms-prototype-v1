@@ -1,7 +1,9 @@
 <x-guest-layout>
     <x-jet-authentication-card>
         <x-slot name="logo">
-            <x-jet-authentication-card-logo />
+            <div>
+                <img src="{{ asset('assets/img/logo-dark.png') }}" alt="logo gantari" width="300px">
+            </div>
         </x-slot>
 
         <x-jet-validation-errors class="mb-4" />

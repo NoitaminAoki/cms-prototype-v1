@@ -123,6 +123,18 @@
                                     </a>
                                 </td>
                             </tr>
+                            @canany($rolesData::getMenus('Manage'))
+                            <tr class="border-bottom">
+                                <td>
+                                    <a class="text-decoration-none custom-color-inherit" href="{{ route('manage.data_masuk.index') }}">
+                                        <h6 class="text-uppercase mb-0">
+                                            <i class="fas fa-folder custom-fa-1x-2 custom-bg-folder ml-0 mr-2"></i>
+                                            Manage
+                                        </h6>
+                                    </a>
+                                </td>
+                            </tr>
+                            @endcanany
                             @auth('admin')
                             <tr class="border-bottom">
                                 <td>

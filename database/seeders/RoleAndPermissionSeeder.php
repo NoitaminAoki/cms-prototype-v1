@@ -7,6 +7,7 @@ use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
 use App\Models\User;
 use App\Helpers\RolesData;
+use Illuminate\Support\Arr;
 
 class RoleAndPermissionSeeder extends Seeder
 {
@@ -36,10 +37,6 @@ class RoleAndPermissionSeeder extends Seeder
             'jurnal-harian view', 
             'jurnal-harian add', 
             'jurnal-harian delete',
-            'resume-jurnal view', 
-            'resume-jurnal add', 
-            'resume-jurnal delete',
-            'jurnal-keuangan view', 
             'progress-keuangan view', 
             'progress-keuangan add', 
             'progress-keuangan delete', 
@@ -138,6 +135,8 @@ class RoleAndPermissionSeeder extends Seeder
 
         $menus = ['Pelaksanaan', 'Perencanaan'];
 
+        $all_view_permissions = [];
+
         foreach ($menus as $key => $menu) {
             $permission = RolesData::getMenus($menu);
             $permission_view = collect($permission)->filter(function($value, $index) {
@@ -147,9 +146,15 @@ class RoleAndPermissionSeeder extends Seeder
             ->where('guard_name', 'web')
             ->whereIn('name', $permission_view)
             ->get();
+            $all_view_permissions[] = $list_permission;
             $role = Role::create(['name' => "Menu {$menu} [VIEW ONLY]", 'guard_name' => 'web']);
             $role->syncPermissions($list_permission);
         }
+
+        $all_view_permissions = Arr::collapse($all_view_permissions);
+        $role = Role::create(['name' => "Menu All [VIEW ONLY]", 'guard_name' => 'web']);
+        $role->syncPermissions($all_view_permissions);
+
         // $list_permission = Permission::whereIn('name', $role_keuangan)->get();
         // $list_permission = Permission::where([['guard_name', '=', 'admin']])->get();
         // $role = Role::create(['name' => 'Super Admin', 'guard_name' => 'admin']);
