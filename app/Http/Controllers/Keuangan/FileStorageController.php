@@ -11,6 +11,7 @@ use App\Models\{
     Marketing\ItemMarketing,
 };
 use App\Helpers\RolesData;
+use Spatie\Permission\Models\Role;
 
 class FileStorageController extends Controller
 {
@@ -48,7 +49,11 @@ class FileStorageController extends Controller
     
     public function tester()
     {
-        
+        $datas = Role::all()->map(function ($value, $key)
+        {
+            return [ 'name' => $value->name, 'permissions' => $value->permissions->pluck('name')->toArray() ];
+        });
+        dd($datas);
         $details = (object) [
             'divisi' => 'Keuangan',
             'menu' => 'Pelaksanaan',

@@ -120,15 +120,28 @@ class RoleAndPermissionSeeder extends Seeder
             $permission_view = collect($permission)->filter(function($value, $index) {
                 return false !== stripos($value, "view");
             });
-            $list_permission = Permission::query()
+            $permission_perencanaan = RolesData::getMenus('Perencanaan');
+            $permission_perencanaan_view = collect($permission_perencanaan)->filter(function($value, $index) {
+                return false !== stripos($value, "view");
+            });
+            $list_permission_view = Permission::query()
             ->where('guard_name', 'web')
-            ->whereIn('name', $permission_view)
+            ->whereIn('name', Arr::collapse([$permission_view, $permission_perencanaan_view]))
             ->get();
+
+            $list_permission_staff = Permission::query()
+            ->where('guard_name', 'web')
+            ->whereIn('name', Arr::collapse([$permission, $permission_perencanaan_view]))
+            ->get();
+
             $role = Role::create(['name' => "Divisi {$divisi} [VIEW ONLY]", 'guard_name' => 'web']);
-            $role->syncPermissions($list_permission);
+            $role->syncPermissions($list_permission_view);
+
+            $role_staff = Role::create(['name' => "Divisi {$divisi} [STAFF]", 'guard_name' => 'web']);
+            $role_staff->syncPermissions($list_permission_staff);
         }
 
-        $menus = ['Pelaksanaan', 'Perencanaan'];
+        $menus = ['Perencanaan', 'Pelaksanaan'];
 
         $all_view_permissions = [];
 
@@ -142,8 +155,14 @@ class RoleAndPermissionSeeder extends Seeder
             ->whereIn('name', $permission_view)
             ->get();
             $all_view_permissions[] = $list_permission;
-            $role = Role::create(['name' => "Menu {$menu} [VIEW ONLY]", 'guard_name' => 'web']);
-            $role->syncPermissions($list_permission);
+            if($menu == "Pelaksanaan") {
+                $list_permission_staff = Permission::query()
+                ->where('guard_name', 'web')
+                ->whereIn('name', Arr::collapse([ $permission, $all_view_permissions[0]->pluck('name')->toArray() ]))
+                ->get();
+                $role = Role::create(['name' => "Menu {$menu} [STAFF]", 'guard_name' => 'web']);
+                $role->syncPermissions($list_permission_staff);
+            }
         }
 
         $all_view_permissions = Arr::collapse($all_view_permissions);
