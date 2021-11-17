@@ -174,6 +174,14 @@ class RoleAndPermissionSeeder extends Seeder
         $role = Role::create(['name' => "Menu All [VIEW ONLY]", 'guard_name' => 'web']);
         $role->syncPermissions($all_view_permissions);
 
+        $permission = RolesData::getMenus("Manage");
+        $list_permission = Permission::query()
+        ->where('guard_name', 'web')
+        ->whereIn('name', $permission)
+        ->get();
+        $role = Role::create(['name' => "Manage Data Masuk [STAFF]", 'guard_name' => 'web']);
+        $role->syncPermissions($list_permission);
+
         // $list_permission = Permission::whereIn('name', $role_keuangan)->get();
         // $list_permission = Permission::where([['guard_name', '=', 'admin']])->get();
         // $role = Role::create(['name' => 'Super Admin', 'guard_name' => 'admin']);
