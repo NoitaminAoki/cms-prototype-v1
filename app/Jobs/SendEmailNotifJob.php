@@ -47,7 +47,7 @@ class SendEmailNotifJob implements ShouldQueue
                     $query->where(['name' => "Menu {$details->menu} [VIEW ONLY]", 'guard_name' => 'web']);
                 })->orWhere(function ($query)
                 {
-                    $query->where(['name' => "Menu All[VIEW ONLY]", 'guard_name' => 'web']);
+                    $query->where(['name' => "Menu All [VIEW ONLY]", 'guard_name' => 'web']);
                 });
             }
         )->get();
