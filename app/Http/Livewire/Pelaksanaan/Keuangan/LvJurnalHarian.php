@@ -70,6 +70,7 @@ class LvJurnalHarian extends Component
         ->select('*')
         ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, "jurnal" as type, IFNULL(origin_sector_id, "ID-PST") as origin_sector_id')
         ->unionAll($resume_items)
+        ->orderBy('type', 'DESC')
         ->orderBy('tanggal', 'ASC')
         ->get()
         ->groupBy('date');
