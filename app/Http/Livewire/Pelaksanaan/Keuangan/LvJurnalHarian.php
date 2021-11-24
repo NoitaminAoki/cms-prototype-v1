@@ -59,6 +59,7 @@ class LvJurnalHarian extends Component
         ->select('*')
         ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date, "jurnal" as type')
         ->unionAll($resume_items)
+        ->orderBy('type', 'DESC')
         ->orderBy('tanggal', 'ASC')
         ->get()
         ->groupBy('date');
