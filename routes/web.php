@@ -28,6 +28,9 @@ use App\Http\Livewire\Dashboard\{
     LvDashboard,
 };
 
+use App\Http\Livewire\Landing\{
+    LvLandingPage,
+};
 use App\Http\Livewire\Wilayah\{
     LvWilayah,
 };
@@ -117,7 +120,8 @@ Route::get('/email/verify', function () {
     return view('auth.verify-email');
 })->middleware('auth')->name('verification.notice');
 
-Route::get('/', LvWilayah::class);
+Route::get('/', LvLandingPage::class)->name('landing.page');
+Route::get('/wilayah', LvWilayah::class)->name('landing.sector');
 
 Route::get('/file-storage', LvFileStorage::class);
 
