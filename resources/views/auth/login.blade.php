@@ -82,7 +82,7 @@
             </div>
             @endif
             <div class="card card-primary">
-              <div class="card-header">
+              <div class="card-header justify-content-center">
                 <img src="{{ asset('assets/img/logo-dark.png') }}" alt="logo gantari" width="300px">
               </div>
               

@@ -107,11 +107,19 @@ class RoleAndPermissionSeeder extends Seeder
             return ['name' => $permission, 'guard_name' => 'web'];
         });
 
+        $permission_view = collect($arrayOfPermissionNames)->map(function ($permission) {
+            if(stripos($permission, "view")) {
+                return ['name' => $permission, 'guard_name' => 'otp_user'];
+            }
+        });
+        $otp_permissions = array_values(array_filter($permission_view->toArray()));
+
         $admin_permissions = collect($arrayOfPermissionNames)->map(function ($permission) {
             return ['name' => $permission, 'guard_name' => 'admin'];
         });
     
         Permission::insert($permissions->toArray());
+        Permission::insert($otp_permissions);
         Permission::insert($admin_permissions->toArray());
         $list_permission = Permission::where([['guard_name', '=', 'admin']])->get();
         // dd($list_permission);
@@ -133,6 +141,10 @@ class RoleAndPermissionSeeder extends Seeder
             ->where('guard_name', 'web')
             ->whereIn('name', Arr::collapse([$permission_view, $permission_perencanaan_view]))
             ->get();
+            $list_permission_otp_view = Permission::query()
+            ->where('guard_name', 'otp_user')
+            ->whereIn('name', Arr::collapse([$permission_view, $permission_perencanaan_view]))
+            ->get();
 
             $list_permission_staff = Permission::query()
             ->where('guard_name', 'web')
@@ -142,6 +154,9 @@ class RoleAndPermissionSeeder extends Seeder
             $role = Role::create(['name' => "Divisi {$divisi} [VIEW ONLY]", 'guard_name' => 'web']);
             $role->syncPermissions($list_permission_view);
 
+            $role_otp = Role::create(['name' => "Divisi {$divisi} [VIEW ONLY]", 'guard_name' => 'otp_user']);
+            $role_otp->syncPermissions($list_permission_otp_view);
+
             $role_staff = Role::create(['name' => "Divisi {$divisi} [STAFF]", 'guard_name' => 'web']);
             $role_staff->syncPermissions($list_permission_staff);
         }
@@ -149,6 +164,7 @@ class RoleAndPermissionSeeder extends Seeder
         $menus = ['Perencanaan', 'Pelaksanaan'];
 
         $all_view_permissions = [];
+        $all_view_otp_permissions = [];
 
         foreach ($menus as $key => $menu) {
             $permission = RolesData::getMenus($menu);
@@ -159,7 +175,12 @@ class RoleAndPermissionSeeder extends Seeder
             ->where('guard_name', 'web')
             ->whereIn('name', $permission_view)
             ->get();
+            $list_otp_permission = Permission::query()
+            ->where('guard_name', 'otp_user')
+            ->whereIn('name', $permission_view)
+            ->get();
             $all_view_permissions[] = $list_permission;
+            $all_view_otp_permissions[] = $list_otp_permission;
             if($menu == "Pelaksanaan") {
                 $list_permission_staff = Permission::query()
                 ->where('guard_name', 'web')
@@ -173,6 +194,10 @@ class RoleAndPermissionSeeder extends Seeder
         $all_view_permissions = Arr::collapse($all_view_permissions);
         $role = Role::create(['name' => "Menu All [VIEW ONLY]", 'guard_name' => 'web']);
         $role->syncPermissions($all_view_permissions);
+
+        $all_view_otp_permissions = Arr::collapse($all_view_otp_permissions);
+        $role = Role::create(['name' => "Menu All [VIEW ONLY]", 'guard_name' => 'otp_user']);
+        $role->syncPermissions($all_view_otp_permissions);
 
         $permission = RolesData::getMenus("Manage");
         $list_permission = Permission::query()

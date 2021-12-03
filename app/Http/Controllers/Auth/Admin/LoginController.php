@@ -21,6 +21,7 @@ class LoginController extends Controller
             //Authentication passed...
             return redirect()->route('dashboard');
         }
+        return redirect()->back()->withErrors(['email' => 'Invalid email or password. Please try again.']);
     }
     
     private function validator(Request $request)

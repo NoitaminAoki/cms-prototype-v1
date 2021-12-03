@@ -33,6 +33,14 @@
           </a>
         </form>
         @endauth
+        @auth('otp_user')
+        <form method="POST" action="{{ route('otp_user.logout') }}">
+          @csrf
+          <a href="{{ route('otp_user.logout') }}" class="dropdown-item has-icon text-danger" onclick="event.preventDefault();this.closest('form').submit();">
+            <i class="fas fa-sign-out-alt"></i> {{ __('Log Out') }}
+          </a>
+        </form>
+        @endauth
       </div>
     </li>
   </ul>

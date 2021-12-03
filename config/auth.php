@@ -41,6 +41,11 @@ return [
             'provider' => 'users',
         ],
 
+        'otp_user' => [
+            'driver' => 'session',
+            'provider' => 'otp_users',
+        ],
+
         'admin' => [
             'driver' => 'session',
             'provider' => 'admins',
@@ -68,6 +73,11 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
+        ],
+
+        'otp_users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Guards\OtpUser::class,
         ],
 
         'admins' => [
@@ -99,6 +109,13 @@ return [
     'passwords' => [
         'users' => [
             'provider' => 'users',
+            'table' => 'password_resets',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'otp_users' => [
+            'provider' => 'otp_users',
             'table' => 'password_resets',
             'expire' => 60,
             'throttle' => 60,

@@ -11,6 +11,11 @@ class StringGenerator
         return Str::upper($text);
     }
 
+    public static function token($length)
+    {
+        return Str::random($length);
+    }
+
     public static function fileName($extension)
     {
         return Str::random(45).'.'.$extension;

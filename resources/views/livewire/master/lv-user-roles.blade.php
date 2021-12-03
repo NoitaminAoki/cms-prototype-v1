@@ -23,7 +23,7 @@
                                 <th class="text-left" style="width: 25px;" scope="col">#</th>
                                 <th class="text-left" scope="col">User Name</th>
                                 <th class="text-left" scope="col">Email</th>
-                                <th class="text-left" style="width: 150px;" scope="col">Role</th>
+                                <th class="text-left" style="width: 250px;" scope="col">Role</th>
                                 <th class="text-left" scope="col">Action</th>
                             </tr>
                         </thead>
@@ -50,7 +50,7 @@
         </div>
     </section>
     
-    <div wire:ignore.self class="modal fade" tabindex="-1" role="dialog" id="modalEditUserRole">
+    <div wire:ignore.self class="modal fade" role="dialog" id="modalEditUserRole">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

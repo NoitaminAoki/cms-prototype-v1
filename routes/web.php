@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\Auth\{
     Admin\LoginController as AdminLoginController,
+    OtpUser\LoginController as OtpLoginController,
 };
 
 use App\Http\Controllers\Keuangan\{
@@ -91,6 +92,7 @@ use App\Http\Livewire\Master\{
     LvMasterAdmin,
     LvUserRoles as LvUserRolesAdmin,
     LvRoles as LvRolesAdmin,
+    LvOtpUser,
     LvMsCode,
     LvMsSubCode,
 };
@@ -125,7 +127,7 @@ Route::get('/wilayah', LvWilayah::class)->name('landing.sector');
 
 Route::get('/file-storage', LvFileStorage::class);
 
-Route::middleware(['auth:web,admin', 'verified'])->group(function () {
+Route::middleware(['auth:web,otp_user,admin', 'verified'])->group(function () {
     Route::get('/dashboard', LvDashboard::class)->name('dashboard');
     
     /* MANAGE */
@@ -277,6 +279,7 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     /* MASTER */
     Route::prefix('master')->name('master.')->group(function () {
         Route::get('/', LvMasterAdmin::class)->name('index');
+        Route::get('/otp-user', LvOtpUser::class)->name('otp_user.index');
         Route::get('/user-roles', LvUserRolesAdmin::class)->name('user_roles.index');
         Route::get('/roles', LvRolesAdmin::class)->name('roles.index');
         Route::get('/code', LvMsCode::class)->name('code.index');
@@ -287,14 +290,8 @@ Route::middleware(['auth:admin', 'verified'])->prefix('admin')->group(function (
     
 });
 
-Route::get('test/email', function(){
-  
-    return view('layouts.mail.notification-mail');
-	$details = ['email' => 's2.DanielAoki@gmail.com'];
-  
-    dispatch(new App\Jobs\SendEmailNotifJob($details));
-  
-    dd('send mail successfully !!');
-});
+Route::get('otp-user/login', [OtpLoginController::class, 'loginForm'])->name('otp_user.form_login');
+Route::post('otp-user/login', [OtpLoginController::class, 'login'])->name('otp_user.login');
+Route::post('otp-user/logout', [OtpLoginController::class, 'logout'])->name('otp_user.logout');
 
 Route::get('test/roles', [FileStorageController::class, 'tester']);
