@@ -21,6 +21,9 @@
             transition: none;
             width: 2.4rem;
             height: 2.4rem !important;
+            padding-left: 0px !important;
+            padding-right: 0px !important;
+            font-size: 16px !important;
             text-align: center;
             transition: width .5s, color 0.15s ease, background-color 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
         }

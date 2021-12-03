@@ -20,6 +20,8 @@
                     <div class="w-100 mb-4">
                         <button wire:click="addUser" wire:click="addUser" wire:loading.class="btn-progress disabled" class="btn btn-primary"><i class="fas fa-plus-circle"></i> Add User</button>
                     </div>
+                    <div class="table-responsive">
+                        
                     <table class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -63,6 +65,7 @@
                             @endforelse
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
