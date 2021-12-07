@@ -85,7 +85,7 @@ class LvItemMarketing extends Component
         });
         if ($this->selected_group_name) {
             $item = $this->items->where('name', $this->selected_group_name)->first();
-            $this->selected_item_group = $item['main_items'];
+            $this->selected_item_group = $item['main_items'] ?? [];
             if($this->selected_sector_id) {
                 $this->selected_item_sector_group = $item['sector_items'][$this->selected_sector_id] ?? [];
             }

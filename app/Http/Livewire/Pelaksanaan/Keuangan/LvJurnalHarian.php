@@ -89,7 +89,8 @@ class LvJurnalHarian extends Component
         // dd($items->toArray(), $this->items);
         if ($this->selected_group_name) {
             $item = $this->items->where('name', $this->selected_group_name)->first();
-            $this->selected_item_group = $item['main_items'];
+            // dd($item);
+            $this->selected_item_group = $item['main_items'] ?? [];
             if($this->selected_sector_id) {
                 $this->selected_item_sector_group = array_values(collect($item['sector_items'][$this->selected_sector_id] ?? [])->sortByDesc('type')->toArray());
                 // dd($this->selected_item_sector_group);
