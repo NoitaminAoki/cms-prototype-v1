@@ -86,7 +86,7 @@
         target: "{{ route('files.upload') }}",
         query:{_token:'{{ csrf_token() }}'} ,// CSRF token
         fileType: ['jpg', 'jpeg', 'png', 'mp4'],
-        chunkSize: 5*1024*1024, // default is 1*1024*1024, this should be less than your maximum limit in php.ini
+        chunkSize: 1*1024*1024, // default is 1*1024*1024, this should be less than your maximum limit in php.ini
         headers: {
             'Accept' : 'application/json'
         },
