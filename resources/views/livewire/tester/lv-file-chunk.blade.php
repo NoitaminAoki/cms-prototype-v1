@@ -86,7 +86,7 @@
         target: "{{ route('files.upload') }}",
         query:{_token:'{{ csrf_token() }}'} ,// CSRF token
         fileType: ['jpg', 'jpeg', 'png'],
-        chunkSize: 10*1024*1024, // default is 1*1024*1024, this should be less than your maximum limit in php.ini
+        chunkSize: 2*1024*1024, // default is 1*1024*1024, this should be less than your maximum limit in php.ini
         headers: {
             'Accept' : 'application/json'
         },
@@ -103,7 +103,7 @@
     });
     
     resumable.on('fileProgress', function (file) { // trigger when file progress update
-        console.log("Phase 2");
+        console.log("Phase 2: " + Math.floor(file.progress() * 100));
         updateProgress(Math.floor(file.progress() * 100));
     });
     
