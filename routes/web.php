@@ -84,6 +84,8 @@ use App\Http\Livewire\Master\{
     LvMsSubCode,
 };
 
+use App\Http\Livewire\Tester\LvFileChunk;
+
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
     
@@ -264,3 +266,7 @@ Route::get('test/email', function(){
 });
 
 Route::get('test/roles', [FileStorageController::class, 'tester']);
+//FILE UPLOADS CONTROLER
+Route::get('tester/medialibrary/', LvFileChunk::class)->name('files.index');
+Route::post('medialibrary/upload', [App\Http\Controllers\File\FileController::class, 'upload'])->name('files.upload');
+// Route::post('medialibrary/delete', [App\Http\Controllers\File\FileController::class, 'delete'])->name('files.delete');
