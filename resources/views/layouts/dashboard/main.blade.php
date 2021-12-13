@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=6.0, shrink-to-fit=no" name="viewport">
   <title>Gantari Bawana @yield('title-page')</title>
   <link rel="icon" href="{{ asset('assets/img/logo-gantari.png') }}">
   <!-- General CSS Files -->
