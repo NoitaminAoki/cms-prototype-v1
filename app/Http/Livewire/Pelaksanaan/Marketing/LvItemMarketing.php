@@ -58,6 +58,7 @@ class LvItemMarketing extends Component
         $items = ItemMarketing::query()
         ->select('*')
         ->selectRaw('DATE_FORMAT(tanggal, "%M %Y") as date')
+        ->where('marketing_id', $this->parent_id)
         ->orderBy('tanggal', 'ASC')
         ->get()
         ->groupBy('date');
@@ -93,6 +94,7 @@ class LvItemMarketing extends Component
         $image_path = Storage::disk('sector_disk')->putFileAs(ItemMarketing::BASE_PATH, $this->file_image, $image_name);
         
         $insert = ItemMarketing::create([
+            'marketing_id' => $this->parent_id,
             'image_real_name' => $this->file_image->getClientOriginalName(),
             'image_name' => $image_name,
             'tanggal' => $date_now,
